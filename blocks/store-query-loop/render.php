@@ -54,36 +54,35 @@ function dokan_render_store_list_block( array $attributes, string $content, WP_B
 	}
 
 	$user_args = array(
-		'role'    => 'seller',
-		'number'  => $per_page,
-		'paged'   => $paged,
-		'orderby' => $wp_orderby,
+		'role'       => 'seller',
+		'number'     => $per_page,
+		'paged'      => $paged,
+		'orderby'    => $wp_orderby,
+		'meta_query' => array( // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
+			'relation' => 'AND',
+			array(
+				'key'     => 'dokan_enable_selling',
+				'value'   => 'yes',
+				'compare' => '=',
+			),
+		),
 	);
 
 	// Add search query if provided.
 	if ( ! empty( $dokan_seller_search ) ) {
-		$user_args['meta_query'] = array( // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
-			array(
-				'key'     => 'dokan_store_name',
-				'value'   => $dokan_seller_search,
-				'compare' => 'LIKE',
-			),
+		$user_args['meta_query'][] = array(
+			'key'     => 'dokan_store_name',
+			'value'   => $dokan_seller_search,
+			'compare' => 'LIKE',
 		);
 	}
 
 	if ( $show_featured_only ) {
-		// If meta_query exists, merge featured filter with it.
-		if ( ! empty( $user_args['meta_query'] ) ) {
-			$user_args['meta_query']['relation'] = 'AND';
-			$user_args['meta_query'][]           = array(
-				'key'     => 'dokan_feature_seller',
-				'value'   => 'yes',
-				'compare' => '=',
-			);
-		} else {
-			$user_args['meta_key']   = 'dokan_feature_seller'; // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
-			$user_args['meta_value'] = 'yes'; // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_value
-		}
+		$user_args['meta_query'][] = array(
+			'key'     => 'dokan_feature_seller',
+			'value'   => 'yes',
+			'compare' => '=',
+		);
 	}
 
 	/**

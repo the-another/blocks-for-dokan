@@ -4,7 +4,7 @@ Tags: dokan, woocommerce, multivendor, blocks, fse, full-site-editing, gutenberg
 Requires at least: 6.0
 Tested up to: 6.9
 Requires PHP: 8.3
-Stable tag: 1.0.1
+Stable tag: 1.0.3
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -37,6 +37,14 @@ PHP 8.3 or higher is required.
 == Changelog ==
 
 
+
+
+
+= 1.0.3 - 2026-02-18 =
+* Version bump
+
+= 1.0.2 - 2026-02-18 =
+* Fix: Store Query Loop now only lists sellers who are allowed to sell (filters by dokan_enable_selling status)
 
 = 1.0.1 - 2026-01-19 =
 * Fixes issue where blocks were not rendering correctly for anonymous users.
