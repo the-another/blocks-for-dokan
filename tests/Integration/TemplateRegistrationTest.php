@@ -11,7 +11,7 @@ namespace The_Another\Plugin\Blocks_Dokan\Blocks\Tests\Integration;
 use PHPUnit\Framework\TestCase;
 use Brain\Monkey;
 use Brain\Monkey\Functions;
-use Another_Blocks_Dokan\Templates\Block_Templates_Controller;
+use The_Another\Plugin\Blocks_Dokan\Templates\Block_Templates_Controller;
 
 /**
  * Template registration test class.
@@ -48,6 +48,13 @@ class TemplateRegistrationTest extends TestCase {
 		Functions\when( 'get_block_templates' )->justReturn( array() );
 		Functions\when( 'add_filter' )->justReturn( true );
 		Functions\when( 'add_action' )->justReturn( true );
+		Functions\when( '__' )->returnArg();
+		Functions\when( 'register_block_template' )->justReturn( null );
+		Functions\when( 'apply_filters' )->alias(
+			function ( $filter, $value ) {
+				return $value;
+			}
+		);
 
 		$controller = new Block_Templates_Controller();
 		$controller->init();
@@ -55,7 +62,7 @@ class TemplateRegistrationTest extends TestCase {
 		$templates = $controller->get_templates();
 
 		$this->assertNotEmpty( $templates );
-		$this->assertCount( 2, $templates ); // Store and Store List templates.
+		$this->assertCount( 2, $templates );
 	}
 
 	/**
@@ -68,13 +75,12 @@ class TemplateRegistrationTest extends TestCase {
 		Functions\when( 'get_block_templates' )->justReturn( array() );
 		Functions\when( 'add_filter' )->justReturn( true );
 		Functions\when( 'add_action' )->justReturn( true );
-		Functions\when( 'file_exists' )->andReturn( true );
-
-		add_filter(
-			'dokan_blocks_registered_templates',
-			function ( $templates ) {
-				$this->assertIsArray( $templates );
-				return $templates;
+		Functions\when( '__' )->returnArg();
+		Functions\when( 'register_block_template' )->justReturn( null );
+		Functions\when( 'apply_filters' )->alias(
+			function ( $filter, $value ) {
+				$this->assertIsArray( $value );
+				return $value;
 			}
 		);
 

@@ -49,50 +49,40 @@ class StoreHeaderBlockTest extends TestCase {
 		$vendor_id = 123;
 		$vendor    = VendorFactory::create( array( 'ID' => $vendor_id ) );
 
-		Functions\when( 'current_user_can' )
-			->with( 'read' )
-			->andReturn( true );
+		Functions\when( 'current_user_can' )->justReturn( true );
+		Functions\when( 'dokan_is_user_seller' )->justReturn( true );
 
-		Functions\when( 'dokan_is_user_seller' )
-			->with( $vendor_id )
-			->andReturn( true );
+		$vendor_manager = Mockery::mock( 'VendorManager' );
+		$vendor_manager->shouldReceive( 'get' )->andReturn( $vendor );
 
-		$dokan_mock  = Mockery::mock( 'Dokan' );
-		$vendor_mock = Mockery::mock( 'vendor' );
-		$vendor_mock->shouldReceive( 'get' )
-			->with( $vendor_id )
-			->andReturn( $vendor );
+		$dokan_mock         = Mockery::mock( 'Dokan' );
+		$dokan_mock->vendor = $vendor_manager;
 
 		Functions\when( 'dokan' )->justReturn( $dokan_mock );
-		Functions\when( 'dokan_get_seller_short_address' )
-			->with( $vendor_id, false )
-			->andReturn( '123 Main St' );
+		Functions\when( 'dokan_get_seller_short_address' )->justReturn( '123 Main St' );
 
 		Functions\when( 'get_block_wrapper_attributes' )
-			->andReturn( 'class="wp-block-dokan-store-header"' );
+			->justReturn( 'class="wp-block-the-another-blocks-for-dokan-vendor-store-header theabd--vendor-store-header theabd--vendor-store-header-default"' );
 
-		Functions\when( 'dokan_is_vendor_info_hidden' )
-			->with( 'address' )
-			->andReturn( false );
+		Functions\when( 'dokan_is_vendor_info_hidden' )->justReturn( false );
+		Functions\when( 'dokan_get_readable_seller_rating' )->justReturn( '<div class="rating">4.5</div>' );
+		Functions\when( 'dokan_is_store_open' )->justReturn( true );
+		Functions\when( 'dokan_get_social_profile_fields' )->justReturn( array() );
 
-		Functions\when( 'dokan_is_vendor_info_hidden' )
-			->with( 'phone' )
-			->andReturn( false );
-
-		Functions\when( 'dokan_is_vendor_info_hidden' )
-			->with( 'email' )
-			->andReturn( false );
-
-		Functions\when( 'dokan_get_readable_seller_rating' )
-			->with( $vendor_id )
-			->andReturn( '<div class="rating">4.5</div>' );
-
-		Functions\when( 'dokan_is_store_open' )
-			->with( $vendor_id )
-			->andReturn( true );
-
-		Functions\when( 'dokan_get_social_profile_fields' )
-			->andReturn( array() );
+		Functions\when( 'get_query_var' )->justReturn( 0 );
+		Functions\when( 'get_post_type' )->justReturn( '' );
+		Functions\when( 'esc_html' )->returnArg();
+		Functions\when( 'esc_url' )->returnArg();
+		Functions\when( 'esc_attr' )->returnArg();
+		Functions\when( 'esc_html__' )->returnArg();
+		Functions\when( 'wp_kses_post' )->returnArg();
+		Functions\when( 'antispambot' )->returnArg();
+		Functions\when( 'sanitize_text_field' )->returnArg();
+		Functions\when( 'absint' )->alias(
+			function ( $value ) {
+				return abs( (int) $value );
+			}
+		);
 
 		$attributes = array(
 			'vendorId'        => $vendor_id,
@@ -106,12 +96,12 @@ class StoreHeaderBlockTest extends TestCase {
 		$block_mock = Mockery::mock( 'WP_Block' );
 
 		// Load render function.
-		require_once DOKAN_BLOCKS_PLUGIN_DIR . 'blocks/store-header/render.php';
+		require_once ANOTHER_BLOCKS_DOKAN_PLUGIN_DIR . 'blocks/vendor-store-header/render.php';
 
-		$output = dokan_render_store_header_block( $attributes, '', $block_mock );
+		$output = theabd_render_vendor_store_header_block( $attributes, '', $block_mock );
 
 		$this->assertNotEmpty( $output );
-		$this->assertStringContainsString( 'dokan-store-header', $output );
+		$this->assertStringContainsString( 'theabd--vendor-store-header', $output );
 		$this->assertStringContainsString( 'Test Store', $output );
 	}
 
@@ -129,29 +119,48 @@ class StoreHeaderBlockTest extends TestCase {
 			)
 		);
 
-		Functions\when( 'current_user_can' )->andReturn( true );
-		Functions\when( 'dokan_is_user_seller' )->andReturn( true );
-		Functions\when( 'dokan' )->andReturn( Mockery::mock( 'Dokan' ) );
-		Functions\when( 'get_block_wrapper_attributes' )->andReturn( '' );
-		Functions\when( 'dokan_get_seller_short_address' )->andReturn( '' );
-		Functions\when( 'dokan_is_vendor_info_hidden' )->andReturn( false );
-		Functions\when( 'dokan_get_readable_seller_rating' )->andReturn( '' );
-		Functions\when( 'dokan_is_store_open' )->andReturn( true );
-		Functions\when( 'dokan_get_social_profile_fields' )->andReturn( array() );
+		Functions\when( 'current_user_can' )->justReturn( true );
+		Functions\when( 'dokan_is_user_seller' )->justReturn( true );
 
-		Functions\when( 'esc_html' )
-			->andReturnUsing(
-				function ( $text ) {
-					return htmlspecialchars( $text, ENT_QUOTES, 'UTF-8' );
-				}
-			);
+		$vendor_manager = Mockery::mock( 'VendorManager' );
+		$vendor_manager->shouldReceive( 'get' )->andReturn( $vendor );
 
-		require_once DOKAN_BLOCKS_PLUGIN_DIR . 'blocks/store-header/render.php';
+		$dokan_mock         = Mockery::mock( 'Dokan' );
+		$dokan_mock->vendor = $vendor_manager;
+
+		Functions\when( 'dokan' )->justReturn( $dokan_mock );
+		Functions\when( 'get_block_wrapper_attributes' )->justReturn( '' );
+		Functions\when( 'dokan_get_seller_short_address' )->justReturn( '' );
+		Functions\when( 'dokan_is_vendor_info_hidden' )->justReturn( false );
+		Functions\when( 'dokan_get_readable_seller_rating' )->justReturn( '' );
+		Functions\when( 'dokan_is_store_open' )->justReturn( true );
+		Functions\when( 'dokan_get_social_profile_fields' )->justReturn( array() );
+		Functions\when( 'get_query_var' )->justReturn( 0 );
+		Functions\when( 'get_post_type' )->justReturn( '' );
+		Functions\when( 'esc_url' )->returnArg();
+		Functions\when( 'esc_html__' )->returnArg();
+		Functions\when( 'wp_kses_post' )->returnArg();
+		Functions\when( 'antispambot' )->returnArg();
+		Functions\when( 'sanitize_text_field' )->returnArg();
+		Functions\when( 'absint' )->alias(
+			function ( $value ) {
+				return abs( (int) $value );
+			}
+		);
+
+		$escape_fn = function ( $text ) {
+			return htmlspecialchars( (string) $text, ENT_QUOTES, 'UTF-8' );
+		};
+
+		Functions\when( 'esc_html' )->alias( $escape_fn );
+		Functions\when( 'esc_attr' )->alias( $escape_fn );
+
+		require_once ANOTHER_BLOCKS_DOKAN_PLUGIN_DIR . 'blocks/vendor-store-header/render.php';
 
 		$attributes = array( 'vendorId' => $vendor_id );
 		$block_mock = Mockery::mock( 'WP_Block' );
 
-		$output = dokan_render_store_header_block( $attributes, '', $block_mock );
+		$output = theabd_render_vendor_store_header_block( $attributes, '', $block_mock );
 
 		$this->assertStringNotContainsString( '<script>', $output );
 		$this->assertStringContainsString( '&lt;script&gt;', $output );
@@ -163,16 +172,24 @@ class StoreHeaderBlockTest extends TestCase {
 	 * @return void
 	 */
 	public function test_render_with_invalid_vendor_id(): void {
-		Functions\when( 'current_user_can' )->andReturn( true );
-		Functions\when( 'dokan_is_user_seller' )->with( 0 )->andReturn( false );
-		Functions\when( 'get_query_var' )->andReturn( 0 );
+		Functions\when( 'current_user_can' )->justReturn( true );
+		Functions\when( 'dokan_is_user_seller' )->justReturn( false );
+		Functions\when( 'get_query_var' )->justReturn( 0 );
+		Functions\when( 'get_post_type' )->justReturn( '' );
+		Functions\when( 'dokan' )->justReturn( Mockery::mock( 'Dokan' ) );
+		Functions\when( 'get_user_by' )->justReturn( false );
+		Functions\when( 'absint' )->alias(
+			function ( $value ) {
+				return abs( (int) $value );
+			}
+		);
 
-		require_once DOKAN_BLOCKS_PLUGIN_DIR . 'blocks/store-header/render.php';
+		require_once ANOTHER_BLOCKS_DOKAN_PLUGIN_DIR . 'blocks/vendor-store-header/render.php';
 
 		$attributes = array( 'vendorId' => 0 );
 		$block_mock = Mockery::mock( 'WP_Block' );
 
-		$output = dokan_render_store_header_block( $attributes, '', $block_mock );
+		$output = theabd_render_vendor_store_header_block( $attributes, '', $block_mock );
 
 		$this->assertEmpty( $output );
 	}

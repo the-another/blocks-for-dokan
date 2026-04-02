@@ -1,6 +1,6 @@
 <?php
 /**
- * PHPUnit bootstrap file for Dokan Blocks plugin tests.
+ * PHPUnit bootstrap file for Another Blocks for Dokan plugin tests.
  *
  * @package AnotherBlocksDokan
  * @since 1.0.0
@@ -69,10 +69,6 @@ Functions\when( '_x' )->returnArg();
 Functions\when( '_n' )->returnArg();
 Functions\when( '_nx' )->returnArg();
 
-// Translation functions
-Functions\when( '__' )->returnArg();
-Functions\when( '_e' )->returnArg();
-
 // Dokan function stubs (will be mocked in individual tests)
 Functions\when( 'dokan' )->justReturn( null );
 Functions\when( 'dokan_is_user_seller' )->returnArg();
@@ -83,58 +79,31 @@ Functions\when( 'dokan_get_readable_seller_rating' )->returnArg();
 Functions\when( 'dokan_generate_ratings' )->returnArg();
 Functions\when( 'dokan_get_social_profile_fields' )->justReturn( array() );
 Functions\when( 'dokan_is_store_open' )->justReturn( true );
+Functions\when( 'dokan_is_store_page' )->justReturn( false );
+Functions\when( 'dokan_get_store_tabs' )->justReturn( array() );
+Functions\when( 'dokan_get_option' )->justReturn( '' );
+Functions\when( 'dokan_current_datetime' )->justReturn( new \DateTime() );
+Functions\when( 'dokan_get_translated_days' )->justReturn( array() );
+Functions\when( 'dokan_get_page_url' )->justReturn( '' );
+Functions\when( 'dokan_get_toc_url' )->justReturn( '' );
 
 // WooCommerce function stubs
 Functions\when( 'wc_get_template_part' )->returnArg();
-Functions\when( 'wc_get_product' )->returnArg();
+Functions\when( 'wc_get_product' )->justReturn( null );
 
 // WordPress query/context functions
 Functions\when( 'get_query_var' )->justReturn( '' );
 Functions\when( 'get_user_by' )->justReturn( false );
+Functions\when( 'get_post_type' )->justReturn( '' );
 Functions\when( 'is_singular' )->justReturn( false );
 Functions\when( 'is_page' )->justReturn( false );
 Functions\when( 'wp_is_block_theme' )->justReturn( true );
 Functions\when( 'current_user_can' )->justReturn( true );
 Functions\when( 'get_block_wrapper_attributes' )->justReturn( '' );
 Functions\when( 'register_block_type' )->justReturn( null );
+Functions\when( 'register_block_type_from_metadata' )->justReturn( null );
 Functions\when( 'get_block_template' )->justReturn( null );
 Functions\when( 'wp_kses_post' )->returnArg();
-Functions\when( 'wp_get_current_user' )->justReturn( (object) array( 'exists' => false ) );
-Functions\when( 'wp_get_attachment_url' )->returnArg();
-Functions\when( 'wp_dropdown_categories' )->justReturn( '' );
-Functions\when( 'remove_query_arg' )->returnArg();
-Functions\when( 'get_option' )->justReturn( '' );
-Functions\when( 'wp_nonce_field' )->justReturn( '' );
-Functions\when( 'do_action' )->justReturn( null );
-Functions\when( 'apply_filters' )->alias(
-	function ( $filter, $value ) {
-		return $value;
-	}
-);
-Functions\when( 'add_filter' )->justReturn( true );
-Functions\when( 'add_action' )->justReturn( true );
-Functions\when( 'get_current_user_id' )->justReturn( 0 );
-Functions\when( 'wc_get_product' )->justReturn( null );
-Functions\when( 'dokan_get_page_url' )->justReturn( '' );
-Functions\when( 'dokan_get_toc_url' )->justReturn( '' );
-
-// Utility functions
-Functions\when( 'absint' )->alias(
-	function ( $value ) {
-		return abs( (int) $value );
-	}
-);
-
-Functions\when( 'sanitize_text_field' )->returnArg();
-Functions\when( 'sanitize_email' )->returnArg();
-Functions\when( 'antispambot' )->returnArg();
-Functions\when( 'number_format_i18n' )->alias(
-	function ( $number ) {
-		return number_format( $number, 2 );
-	}
-);
-
-// Additional WordPress/WooCommerce/Dokan function stubs
 Functions\when( 'wp_get_current_user' )->justReturn(
 	(object) array(
 		'exists'       => false,
@@ -156,18 +125,27 @@ Functions\when( 'apply_filters' )->alias(
 Functions\when( 'add_filter' )->justReturn( true );
 Functions\when( 'add_action' )->justReturn( true );
 Functions\when( 'get_current_user_id' )->justReturn( 0 );
-Functions\when( 'wc_get_product' )->justReturn( null );
-Functions\when( 'dokan_get_page_url' )->justReturn( '' );
-Functions\when( 'dokan_get_toc_url' )->justReturn( '' );
-Functions\when( 'dokan_get_store_tabs' )->justReturn( array() );
-Functions\when( 'dokan_get_option' )->justReturn( '' );
-Functions\when( 'dokan_current_datetime' )->andReturn( new \DateTime() );
-Functions\when( 'dokan_get_translated_days' )->justReturn( array() );
 Functions\when( 'wp_reset_postdata' )->justReturn( null );
 Functions\when( 'the_post' )->justReturn( null );
 Functions\when( 'have_posts' )->justReturn( false );
 Functions\when( 'dynamic_sidebar' )->justReturn( false );
 Functions\when( 'get_sidebar' )->justReturn( null );
+
+// Utility functions
+Functions\when( 'absint' )->alias(
+	function ( $value ) {
+		return abs( (int) $value );
+	}
+);
+
+Functions\when( 'sanitize_text_field' )->returnArg();
+Functions\when( 'sanitize_email' )->returnArg();
+Functions\when( 'antispambot' )->returnArg();
+Functions\when( 'number_format_i18n' )->alias(
+	function ( $number ) {
+		return number_format( $number, 2 );
+	}
+);
 
 // Load plugin autoloader if available
 if ( file_exists( dirname( __DIR__ ) . '/vendor/autoload.php' ) ) {
@@ -175,14 +153,14 @@ if ( file_exists( dirname( __DIR__ ) . '/vendor/autoload.php' ) ) {
 }
 
 // Define plugin constants for tests
-if ( ! defined( 'DOKAN_BLOCKS_PLUGIN_FILE' ) ) {
-	define( 'DOKAN_BLOCKS_PLUGIN_FILE', dirname( __DIR__ ) . '/dokan-blocks.php' );
+if ( ! defined( 'ANOTHER_BLOCKS_DOKAN_PLUGIN_FILE' ) ) {
+	define( 'ANOTHER_BLOCKS_DOKAN_PLUGIN_FILE', dirname( __DIR__ ) . '/another-blocks-for-dokan.php' );
 }
 
-if ( ! defined( 'DOKAN_BLOCKS_PLUGIN_DIR' ) ) {
-	define( 'DOKAN_BLOCKS_PLUGIN_DIR', dirname( __DIR__ ) . '/' );
+if ( ! defined( 'ANOTHER_BLOCKS_DOKAN_PLUGIN_DIR' ) ) {
+	define( 'ANOTHER_BLOCKS_DOKAN_PLUGIN_DIR', dirname( __DIR__ ) . '/' );
 }
 
-if ( ! defined( 'DOKAN_BLOCKS_VERSION' ) ) {
-	define( 'DOKAN_BLOCKS_VERSION', '1.0.0' );
+if ( ! defined( 'ANOTHER_BLOCKS_DOKAN_VERSION' ) ) {
+	define( 'ANOTHER_BLOCKS_DOKAN_VERSION', '1.0.3' );
 }

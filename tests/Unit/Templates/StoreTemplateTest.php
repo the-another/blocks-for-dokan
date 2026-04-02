@@ -11,7 +11,7 @@ namespace The_Another\Plugin\Blocks_Dokan\Blocks\Tests\Unit\Templates;
 use PHPUnit\Framework\TestCase;
 use Brain\Monkey;
 use Brain\Monkey\Functions;
-use Another_Blocks_Dokan\Templates\Store_Template;
+use The_Another\Plugin\Blocks_Dokan\Templates\Store_Template;
 
 /**
  * Store template test class.
@@ -26,6 +26,17 @@ class StoreTemplateTest extends TestCase {
 	protected function setUp(): void {
 		parent::setUp();
 		Monkey\setUp();
+
+		// Common stubs needed for Store_Template.
+		Functions\when( '__' )->returnArg();
+		Functions\when( 'register_block_template' )->justReturn( null );
+		Functions\when( 'add_filter' )->justReturn( true );
+		Functions\when( 'add_action' )->justReturn( true );
+		Functions\when( 'apply_filters' )->alias(
+			function ( $filter, $value ) {
+				return $value;
+			}
+		);
 	}
 
 	/**
@@ -44,7 +55,6 @@ class StoreTemplateTest extends TestCase {
 	 * @return void
 	 */
 	public function test_template_slug(): void {
-		$template = new Store_Template();
 		$this->assertEquals( 'dokan-store', Store_Template::SLUG );
 	}
 
@@ -79,9 +89,11 @@ class StoreTemplateTest extends TestCase {
 	 * @return void
 	 */
 	public function test_template_file_path(): void {
-		Functions\when( 'plugin_dir_path' )
-			->with( DOKAN_BLOCKS_PLUGIN_FILE )
-			->andReturn( '/path/to/plugin/' );
+		Functions\when( 'plugin_dir_path' )->alias(
+			function ( $file ) {
+				return dirname( $file ) . '/';
+			}
+		);
 
 		$template   = new Store_Template();
 		$reflection = new \ReflectionClass( $template );
@@ -90,7 +102,7 @@ class StoreTemplateTest extends TestCase {
 
 		$path = $method->invoke( $template );
 
-		$this->assertStringEndsWith( 'templates/dokan-store.html', $path );
+		$this->assertStringEndsWith( 'templates/store.html', $path );
 	}
 
 	/**
@@ -99,8 +111,8 @@ class StoreTemplateTest extends TestCase {
 	 * @return void
 	 */
 	public function test_should_render_template(): void {
-		Functions\when( 'get_query_var' )->with( 'author', 0 )->andReturn( 123 );
-		Functions\when( 'dokan_is_user_seller' )->with( 123 )->andReturn( true );
+		Functions\when( 'is_singular' )->justReturn( false );
+		Functions\when( 'dokan_is_store_page' )->justReturn( true );
 
 		$template   = new Store_Template();
 		$reflection = new \ReflectionClass( $template );

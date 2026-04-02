@@ -11,7 +11,7 @@ namespace The_Another\Plugin\Blocks_Dokan\Blocks\Tests\Integration;
 use PHPUnit\Framework\TestCase;
 use Brain\Monkey;
 use Brain\Monkey\Functions;
-use Another_Blocks_Dokan\Block_Registry;
+use The_Another\Plugin\Blocks_Dokan\Block_Registry;
 
 /**
  * Block registration test class.
@@ -45,24 +45,37 @@ class BlockRegistrationTest extends TestCase {
 	 */
 	public function test_all_blocks_are_registered(): void {
 		Functions\when( 'register_block_type' )->justReturn( true );
+		Functions\when( 'register_block_type_from_metadata' )->justReturn( true );
+		Functions\when( 'apply_filters' )->alias(
+			function ( $filter, $value ) {
+				return $value;
+			}
+		);
 
 		$registry = new Block_Registry();
-		$registry->register_all_blocks();
 
 		$expected_blocks = array(
-			'the-another/dokan-store-header',
-			'the-another/dokan-store-products',
-			'the-another/dokan-store-sidebar',
-			'the-another/dokan-store-tabs',
-			'the-another/dokan-store-list',
-			'the-another/dokan-store-card',
-			'the-another/dokan-store-search',
-			'the-another/dokan-product-vendor-info',
-			'the-another/dokan-more-from-seller',
-			'the-another/dokan-become-vendor-cta',
-			'the-another/dokan-store-contact-form',
-			'the-another/dokan-store-location',
-			'the-another/dokan-store-hours',
+			'the-another/blocks-for-dokan-vendor-store-header',
+			'the-another/blocks-for-dokan-vendor-store-sidebar',
+			'the-another/blocks-for-dokan-vendor-store-tabs',
+			'the-another/blocks-for-dokan-vendor-store-terms-conditions',
+			'the-another/blocks-for-dokan-vendor-query-loop',
+			'the-another/blocks-for-dokan-vendor-query-pagination',
+			'the-another/blocks-for-dokan-vendor-card',
+			'the-another/blocks-for-dokan-vendor-search',
+			'the-another/blocks-for-dokan-vendor-store-name',
+			'the-another/blocks-for-dokan-vendor-avatar',
+			'the-another/blocks-for-dokan-vendor-rating',
+			'the-another/blocks-for-dokan-vendor-store-address',
+			'the-another/blocks-for-dokan-vendor-store-phone',
+			'the-another/blocks-for-dokan-vendor-store-status',
+			'the-another/blocks-for-dokan-vendor-store-banner',
+			'the-another/blocks-for-dokan-product-vendor-info',
+			'the-another/blocks-for-dokan-more-from-seller',
+			'the-another/blocks-for-dokan-become-vendor-cta',
+			'the-another/blocks-for-dokan-vendor-contact-form',
+			'the-another/blocks-for-dokan-vendor-store-location',
+			'the-another/blocks-for-dokan-vendor-store-hours',
 		);
 
 		$registered_blocks = $registry->get_registered_blocks();
@@ -83,17 +96,18 @@ class BlockRegistrationTest extends TestCase {
 	 */
 	public function test_block_registry_filter(): void {
 		Functions\when( 'register_block_type' )->justReturn( true );
-
-		add_filter(
-			'dokan_blocks_registered_blocks',
-			function ( $blocks ) {
-				$blocks['the-another/dokan-custom-block'] = '/path/to/custom-block';
-				return $blocks;
+		Functions\when( 'register_block_type_from_metadata' )->justReturn( true );
+		Functions\when( 'apply_filters' )->alias(
+			function ( $filter, $value ) {
+				if ( 'dokan_blocks_registered_blocks' === $filter ) {
+					$value['the-another/blocks-for-dokan-custom-block'] = '/path/to/custom-block';
+				}
+				return $value;
 			}
 		);
 
 		$registry = new Block_Registry();
 
-		$this->assertTrue( $registry->is_registered( 'the-another/dokan-custom-block' ) );
+		$this->assertTrue( $registry->is_registered( 'the-another/blocks-for-dokan-custom-block' ) );
 	}
 }

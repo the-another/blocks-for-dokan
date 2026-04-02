@@ -8,10 +8,11 @@ This document provides comprehensive information about the **Another Blocks for 
 
 ### Key Information
 - **Plugin Name**: Another Blocks for Dokan
-- **Version**: 1.0.1
+- **Version**: 1.0.3
 - **Namespace**: `The_Another\Plugin\Blocks_Dokan`
 - **Text Domain**: `another-blocks-for-dokan`
-- **Prefix**: `dokan` (for functions and variables)
+- **Prefix**: `theabd` (for render functions: `theabd_render_*_block()`)
+- **CSS Prefix**: `theabd--` (BEM-like: `theabd--vendor-store-header`)
 - **Author**: The Another
 - **License**: GPL v2 or later
 
@@ -19,9 +20,9 @@ This document provides comprehensive information about the **Another Blocks for 
 
 ### Minimum Requirements
 - **WordPress**: 6.0+ (for FSE support)
-- **PHP**: 7.4+
-- **WooCommerce**: 7.0+
-- **Dokan**: Latest stable version
+- **PHP**: 8.3+
+- **WooCommerce**: 10.0.0+
+- **Dokan**: 4.0.0+
 
 ### Development Environment
 The plugin includes DDEV configuration for local development with a complete WordPress environment.
@@ -100,13 +101,12 @@ another-blocks-for-dokan/
 - Use **WordPress-Docs** for documentation
 - Minimum supported WordPress version: 6.0
 - Text domain: `dokan-blocks`
-- All global functions/classes must use `dokan` prefix
+- All render functions must use `theabd` prefix (e.g., `theabd_render_*_block()`)
 
 #### PHP Version Features
-- Use PHP 7.4+ features (typed properties, arrow functions, null coalescing assignment, etc.)
+- Target PHP 8.3+ — use modern PHP features (typed properties, arrow functions, null coalescing, union types, named arguments, match expressions, nullsafe operator, constructor property promotion, readonly properties, enums, fibers, etc.)
 - Use strict typing: type hints for parameters and return types
 - Use nullable types (`?Type`) where appropriate
-- Avoid PHP 8.0+ features (union types, named arguments, match expressions, nullsafe operator, constructor property promotion)
 
 #### Architecture Patterns
 1. **Singleton Pattern**: Main plugin class uses singleton pattern
@@ -198,7 +198,7 @@ Each block consists of:
 All blocks use server-side rendering via `render.php`:
 
 ```php
-function dokan_render_block_name( array $attributes, string $content, WP_Block $block ): string {
+function theabd_render_block_name_block( array $attributes, string $content, WP_Block $block ): string {
     // 1. Get vendor ID from attributes or context
     $vendor_id = $attributes['vendorId'] ?? 0;
 
@@ -393,7 +393,7 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-function dokan_render_new_block( array $attributes, string $content, WP_Block $block ): string {
+function theabd_render_new_block_block( array $attributes, string $content, WP_Block $block ): string {
     // Implementation
 }
 ```
@@ -565,5 +565,5 @@ make lint              # Run linter in Docker
 
 ---
 
-**Last Updated**: 2026-01-22
-**Plugin Version**: 1.0.1
+**Last Updated**: 2026-04-03
+**Plugin Version**: 1.0.3

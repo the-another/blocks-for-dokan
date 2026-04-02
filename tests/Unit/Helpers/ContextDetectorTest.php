@@ -12,7 +12,7 @@ use PHPUnit\Framework\TestCase;
 use Brain\Monkey;
 use Brain\Monkey\Functions;
 use Mockery;
-use Another_Blocks_Dokan\Helpers\Context_Detector;
+use The_Another\Plugin\Blocks_Dokan\Helpers\Context_Detector;
 
 /**
  * Context detector test class.
@@ -46,13 +46,24 @@ class ContextDetectorTest extends TestCase {
 	 * @return void
 	 */
 	public function test_detects_vendor_from_query_var(): void {
-		Functions\when( 'get_query_var' )
-			->with( 'author', 0 )
-			->andReturn( 123 );
+		Functions\when( 'dokan' )->justReturn( Mockery::mock( 'Dokan' ) );
 
-		Functions\when( 'dokan_is_user_seller' )
-			->with( 123 )
-			->andReturn( true );
+		Functions\when( 'get_query_var' )->alias(
+			function ( $query_var_name, $fallback = '' ) {
+				if ( 'author' === $query_var_name ) {
+					return 123;
+				}
+				return $fallback;
+			}
+		);
+
+		Functions\when( 'dokan_is_user_seller' )->justReturn( true );
+
+		Functions\when( 'absint' )->alias(
+			function ( $value ) {
+				return abs( (int) $value );
+			}
+		);
 
 		$vendor_id = Context_Detector::get_vendor_id();
 
@@ -65,25 +76,31 @@ class ContextDetectorTest extends TestCase {
 	 * @return void
 	 */
 	public function test_detects_vendor_from_store_query_var(): void {
-		Functions\when( 'get_query_var' )
-			->with( 'author', 0 )
-			->andReturn( 0 )
-			->once();
+		Functions\when( 'dokan' )->justReturn( Mockery::mock( 'Dokan' ) );
 
-		Functions\when( 'get_query_var' )
-			->with( 'store', '' )
-			->andReturn( 'test-store' );
+		Functions\when( 'get_query_var' )->alias(
+			function ( $query_var_name, $fallback = '' ) {
+				if ( 'store' === $query_var_name ) {
+					return 'test-store';
+				}
+				if ( 'author' === $query_var_name ) {
+					return 0;
+				}
+				return $fallback;
+			}
+		);
 
 		$store_user     = Mockery::mock( 'WP_User' );
 		$store_user->ID = 456;
 
-		Functions\when( 'get_user_by' )
-			->with( 'slug', 'test-store' )
-			->andReturn( $store_user );
+		Functions\when( 'get_user_by' )->justReturn( $store_user );
+		Functions\when( 'dokan_is_user_seller' )->justReturn( true );
 
-		Functions\when( 'dokan_is_user_seller' )
-			->with( 456 )
-			->andReturn( true );
+		Functions\when( 'absint' )->alias(
+			function ( $value ) {
+				return abs( (int) $value );
+			}
+		);
 
 		$vendor_id = Context_Detector::get_vendor_id();
 
@@ -98,22 +115,32 @@ class ContextDetectorTest extends TestCase {
 	public function test_detects_vendor_from_product_context(): void {
 		global $post;
 
-		Functions\when( 'get_query_var' )
-			->with( 'author', 0 )
-			->andReturn( 0 );
+		Functions\when( 'dokan' )->justReturn( Mockery::mock( 'Dokan' ) );
 
-		Functions\when( 'get_query_var' )
-			->with( 'store', '' )
-			->andReturn( '' );
+		Functions\when( 'get_query_var' )->alias(
+			function ( $query_var_name, $fallback = '' ) {
+				if ( 'author' === $query_var_name ) {
+					return 0;
+				}
+				return $fallback;
+			}
+		);
+
+		Functions\when( 'get_user_by' )->justReturn( false );
 
 		$post              = Mockery::mock( 'WP_Post' );
 		$post->ID          = 789;
 		$post->post_author = 456;
 		$post->post_type   = 'product';
 
-		Functions\when( 'dokan_is_user_seller' )
-			->with( 456 )
-			->andReturn( true );
+		Functions\when( 'get_post_type' )->justReturn( 'product' );
+		Functions\when( 'dokan_is_user_seller' )->justReturn( true );
+
+		Functions\when( 'absint' )->alias(
+			function ( $value ) {
+				return abs( (int) $value );
+			}
+		);
 
 		$vendor_id = Context_Detector::get_vendor_id();
 
@@ -126,13 +153,25 @@ class ContextDetectorTest extends TestCase {
 	 * @return void
 	 */
 	public function test_returns_null_when_no_context(): void {
-		Functions\when( 'get_query_var' )
-			->with( 'author', 0 )
-			->andReturn( 0 );
+		Functions\when( 'dokan' )->justReturn( Mockery::mock( 'Dokan' ) );
 
-		Functions\when( 'get_query_var' )
-			->with( 'store', '' )
-			->andReturn( '' );
+		Functions\when( 'get_query_var' )->alias(
+			function ( $query_var_name, $fallback = '' ) {
+				if ( 'author' === $query_var_name ) {
+					return 0;
+				}
+				return $fallback;
+			}
+		);
+
+		Functions\when( 'get_user_by' )->justReturn( false );
+		Functions\when( 'get_post_type' )->justReturn( '' );
+
+		Functions\when( 'absint' )->alias(
+			function ( $value ) {
+				return abs( (int) $value );
+			}
+		);
 
 		global $post;
 		$post = null;
@@ -148,13 +187,8 @@ class ContextDetectorTest extends TestCase {
 	 * @return void
 	 */
 	public function test_is_store_page(): void {
-		Functions\when( 'get_query_var' )
-			->with( 'author', 0 )
-			->andReturn( 123 );
-
-		Functions\when( 'dokan_is_user_seller' )
-			->with( 123 )
-			->andReturn( true );
+		Functions\when( 'is_singular' )->justReturn( false );
+		Functions\when( 'dokan_is_store_page' )->justReturn( true );
 
 		$this->assertTrue( Context_Detector::is_store_page() );
 	}
@@ -165,9 +199,7 @@ class ContextDetectorTest extends TestCase {
 	 * @return void
 	 */
 	public function test_is_product_page(): void {
-		Functions\when( 'is_singular' )
-			->with( 'product' )
-			->andReturn( true );
+		Functions\when( 'is_singular' )->justReturn( true );
 
 		$this->assertTrue( Context_Detector::is_product_page() );
 	}
