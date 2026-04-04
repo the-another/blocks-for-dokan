@@ -4,7 +4,7 @@
 	"name": "the-another/blocks-for-dokan-vendor-store-location",
 	"title": "Vendor Store Location",
 	"category": "dokan",
-	"ancestor": [ "the-another/blocks-for-dokan-vendor-query-loop", "the-another/blocks-for-dokan-vendor-card", "the-another/blocks-for-dokan-vendor-store-banner" ],
+	"ancestor": [ "the-another/blocks-for-dokan-vendor-query-loop", "the-another/blocks-for-dokan-vendor-card", "the-another/blocks-for-dokan-vendor-store-banner", "the-another/blocks-for-dokan-product-vendor-info" ],
 	"icon": "location",
 	"description": "Display store location on map.",
 	"keywords": [ "dokan", "vendor", "store", "location", "map" ],

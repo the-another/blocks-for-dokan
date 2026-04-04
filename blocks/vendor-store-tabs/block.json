@@ -8,6 +8,7 @@
 	"description": "Display store navigation tabs with active state.",
 	"keywords": [ "dokan", "vendor", "store", "tabs", "navigation" ],
 	"textdomain": "dokan-blocks",
+	"usesContext": [ "dokan/vendor" ],
 	"supports": {
 		"html": false,
 		"align": true,

@@ -4,7 +4,7 @@
 	"name": "the-another/blocks-for-dokan-vendor-store-status",
 	"title": "Vendor Store Status",
 	"category": "dokan",
-	"ancestor": [ "the-another/blocks-for-dokan-vendor-query-loop", "the-another/blocks-for-dokan-vendor-card", "the-another/blocks-for-dokan-vendor-store-banner", "the-another/dokan-product-vendor-info" ],
+	"ancestor": [ "the-another/blocks-for-dokan-vendor-query-loop", "the-another/blocks-for-dokan-vendor-card", "the-another/blocks-for-dokan-vendor-store-banner", "the-another/blocks-for-dokan-product-vendor-info" ],
 	"icon": "clock",
 	"description": "Display the vendor store open/closed status.",
 	"keywords": [ "dokan", "vendor", "store", "status", "open", "closed", "hours" ],

@@ -7,7 +7,8 @@
 
 import { registerBlockType } from '@wordpress/blocks';
 import { useBlockProps, InspectorControls } from '@wordpress/block-editor';
-import { PanelBody, ToggleControl, SelectControl } from '@wordpress/components';
+import { PanelBody, ToggleControl, SelectControl, Placeholder } from '@wordpress/components';
+import { RawHTML } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import metadata from './block.json';
 
@@ -15,11 +16,18 @@ import metadata from './block.json';
  * Store terms and conditions block edit component.
  *
  * @param {Object} props Block props.
+ * @param {Object} props.attributes Block attributes.
+ * @param {Function} props.setAttributes Function to update attributes.
+ * @param {Object} props.context Block context.
  * @return {JSX.Element} Block edit component.
  */
-function Edit( { attributes, setAttributes } ) {
+function Edit( { attributes, setAttributes, context } ) {
 	const blockProps = useBlockProps();
 	const { showTitle, titleTag } = attributes;
+	const vendor = context['dokan/vendor'] || {};
+
+	const tocContent = vendor.store_info?.dokan_store_toc || '';
+	const TitleTag = titleTag || 'h2';
 
 	return (
 		<>
@@ -45,15 +53,22 @@ function Edit( { attributes, setAttributes } ) {
 					) }
 				</PanelBody>
 			</InspectorControls>
+
 			<div { ...blockProps }>
-				<div className="dokan-vendor-store-terms-conditions-placeholder">
-					{ showTitle && (
-						<h2>{ __( 'Terms and Conditions', 'dokan-blocks' ) }</h2>
-					) }
-					<p className="dokan-block-placeholder-text">
-						{ __( 'Vendor\'s terms and conditions content will appear here.', 'dokan-blocks' ) }
-					</p>
-				</div>
+				{ tocContent ? (
+					<div className="theabd--vendor-store-terms-conditions">
+						{ showTitle && (
+							<TitleTag>{ __( 'Terms and Conditions', 'dokan-blocks' ) }</TitleTag>
+						) }
+						<RawHTML>{ tocContent }</RawHTML>
+					</div>
+				) : (
+					<Placeholder
+						icon="media-document"
+						label={ __( 'Terms & Conditions', 'dokan-blocks' ) }
+						instructions={ __( 'Displays vendor terms and conditions. Content will appear when vendor context is available.', 'dokan-blocks' ) }
+					/>
+				) }
 			</div>
 		</>
 	);

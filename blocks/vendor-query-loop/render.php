@@ -178,7 +178,7 @@ function theabd_render_vendor_query_loop_block( array $attributes, string $conte
 	$has_pagination_block = false;
 	if ( ! empty( $block->inner_blocks ) ) {
 		foreach ( $block->inner_blocks as $inner_block ) {
-			if ( 'the-another/dokan-store-query-pagination' === $inner_block->name ) {
+			if ( 'the-another/blocks-for-dokan-vendor-query-pagination' === $inner_block->name ) {
 				$has_pagination_block = true;
 				break;
 			}
@@ -189,7 +189,7 @@ function theabd_render_vendor_query_loop_block( array $attributes, string $conte
 	$has_search_block = false;
 	if ( ! empty( $block->inner_blocks ) ) {
 		foreach ( $block->inner_blocks as $inner_block ) {
-			if ( 'the-another/dokan-store-search' === $inner_block->name ) {
+			if ( 'the-another/blocks-for-dokan-vendor-search' === $inner_block->name ) {
 				$has_search_block = true;
 				break;
 			}
@@ -221,11 +221,11 @@ function theabd_render_vendor_query_loop_block( array $attributes, string $conte
 
 		if ( ! empty( $block->inner_blocks ) ) {
 			foreach ( $block->inner_blocks as $inner_block ) {
-				if ( 'the-another/dokan-store-search' === $inner_block->name ) {
+				if ( 'the-another/blocks-for-dokan-vendor-search' === $inner_block->name ) {
 					$search_blocks[] = $inner_block;
-				} elseif ( 'the-another/dokan-store-query-pagination' === $inner_block->name ) {
+				} elseif ( 'the-another/blocks-for-dokan-vendor-query-pagination' === $inner_block->name ) {
 					$pagination_blocks[] = $inner_block;
-				} elseif ( 'the-another/dokan-vendor-card' === $inner_block->name ) {
+				} elseif ( 'the-another/blocks-for-dokan-vendor-card' === $inner_block->name ) {
 					$template_blocks[] = $inner_block;
 				}
 			}
@@ -279,7 +279,7 @@ function theabd_render_vendor_query_loop_block( array $attributes, string $conte
 								if ( function_exists( 'theabd_render_vendor_avatar_block' ) ) {
 									$avatar_block = new WP_Block(
 										array(
-											'blockName' => 'the-another/dokan-store-avatar',
+											'blockName' => 'the-another/blocks-for-dokan-vendor-avatar',
 											'attrs'     => array(
 												'width'  => '80px',
 												'height' => '80px',
@@ -293,7 +293,7 @@ function theabd_render_vendor_query_loop_block( array $attributes, string $conte
 								if ( function_exists( 'theabd_render_vendor_store_name_block' ) ) {
 									$name_block = new WP_Block(
 										array(
-											'blockName' => 'the-another/dokan-store-name',
+											'blockName' => 'the-another/blocks-for-dokan-vendor-store-name',
 											'attrs'     => array( 'tagName' => 'h3' ),
 										),
 										array( 'dokan/vendor' => $vendor_data )
@@ -354,11 +354,11 @@ function theabd_render_vendor_query_loop_block( array $attributes, string $conte
 
 		if ( ! empty( $block->inner_blocks ) ) {
 			foreach ( $block->inner_blocks as $inner_block ) {
-				if ( 'the-another/dokan-store-search' === $inner_block->name ) {
+				if ( 'the-another/blocks-for-dokan-vendor-search' === $inner_block->name ) {
 					$search_blocks[] = $inner_block;
-				} elseif ( 'the-another/dokan-store-query-pagination' === $inner_block->name ) {
+				} elseif ( 'the-another/blocks-for-dokan-vendor-query-pagination' === $inner_block->name ) {
 					$pagination_blocks[] = $inner_block;
-				} elseif ( 'the-another/dokan-vendor-card' === $inner_block->name ) {
+				} elseif ( 'the-another/blocks-for-dokan-vendor-card' === $inner_block->name ) {
 					$template_blocks[] = $inner_block;
 				}
 			}

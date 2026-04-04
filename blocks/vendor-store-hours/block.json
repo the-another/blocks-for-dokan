@@ -4,7 +4,7 @@
 	"name": "the-another/blocks-for-dokan-vendor-store-hours",
 	"title": "Vendor Store Hours",
 	"category": "dokan",
-	"ancestor": [ "the-another/blocks-for-dokan-vendor-query-loop", "the-another/blocks-for-dokan-vendor-card", "the-another/blocks-for-dokan-vendor-store-banner" ],
+	"ancestor": [ "the-another/blocks-for-dokan-vendor-query-loop", "the-another/blocks-for-dokan-vendor-card", "the-another/blocks-for-dokan-vendor-store-banner", "the-another/blocks-for-dokan-product-vendor-info" ],
 	"icon": "clock",
 	"description": "Display store opening hours.",
 	"keywords": [ "dokan", "vendor", "store", "hours", "time" ],

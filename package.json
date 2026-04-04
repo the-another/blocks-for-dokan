@@ -9,6 +9,10 @@
     "build": "wp-scripts build src/blocks.js --output-path=dist",
     "start": "wp-scripts start src/blocks.js --output-path=dist",
     "format": "wp-scripts format blocks/*/src/*.js",
+    "lint:js": "wp-scripts lint-js blocks/*/index.js src/",
+    "lint:css": "wp-scripts lint-style blocks/*/editor.scss blocks/*/style.scss",
+    "test:e2e": "WP_BASE_URL=http://localhost:8881 npx playwright test --config playwright.config.ts",
+    "test:e2e:ui": "WP_BASE_URL=http://localhost:8881 npx playwright test --config playwright.config.ts --ui",
     "plugin-zip": "composer build && npm run build && wp-scripts plugin-zip > /dev/null 2>&1 && node scripts/version-zip.js",
     "version": "node scripts/version-bump.js",
     "version:patch": "node scripts/version-bump.js patch",
@@ -16,7 +20,10 @@
     "version:major": "node scripts/version-bump.js major"
   },
   "devDependencies": {
-    "@wordpress/scripts": "^31.2.0"
+    "@playwright/test": "^1.59.1",
+    "@wordpress/e2e-test-utils-playwright": "^1.43.0",
+    "@wordpress/scripts": "^31.2.0",
+    "@wp-now/wp-now": "^0.1.74"
   },
   "files": [
     "another-blocks-for-dokan.php",

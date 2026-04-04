@@ -8,6 +8,7 @@
 	"description": "Display vendor's terms and conditions content.",
 	"keywords": [ "dokan", "vendor", "store", "terms", "conditions", "toc", "policy" ],
 	"textdomain": "dokan-blocks",
+	"usesContext": [ "dokan/vendor" ],
 	"supports": {
 		"html": false,
 		"align": true,
