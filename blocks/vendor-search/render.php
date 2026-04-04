@@ -119,12 +119,12 @@ function theabd_render_vendor_search_block( array $attributes, string $content, 
 					<?php if ( $enable_search ) : ?>
 						<div class="theabd--store-filter-right-item">
 							<div class="theabd--item">
-								<div class="theabd--icons">
+								<div class="theabd--icons" aria-hidden="true">
 									<div class="theabd--icon-div"></div>
 									<div class="theabd--icon-div"></div>
 									<div class="theabd--icon-div"></div>
 								</div>
-								<button type="button" class="theabd--vendor-query-loop-filter-button <?php echo esc_attr( $button_class_string ); ?>" style="<?php echo ! empty( $button_style_string ) ? esc_attr( $button_style_string ) : ''; ?>" aria-expanded="false" aria-controls="theabd--vendor-query-looping-filter-form-wrap">
+								<button type="button" class="theabd--vendor-query-loop-filter-button <?php echo esc_attr( $button_class_string ); ?>" style="<?php echo ! empty( $button_style_string ) ? esc_attr( $button_style_string ) : ''; ?>" aria-expanded="false" aria-controls="theabd--vendor-query-looping-filter-form-wrap" aria-label="<?php esc_attr_e( 'Toggle search filters', 'another-blocks-for-dokan' ); ?>">
 									<span class="theabd--btn-text"><?php echo esc_html__( 'Filter', 'another-blocks-for-dokan' ); ?></span>
 								</button>
 							</div>
@@ -168,7 +168,7 @@ function theabd_render_vendor_search_block( array $attributes, string $content, 
 			// Show filter form if there's an active search query.
 			$has_active_filters = ! empty( $search_query ) || ! empty( $_GET['dokan_store_location'] ) || ! empty( $_GET['dokan_store_rating'] ) || ! empty( $_GET['dokan_store_category'] ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			?>
-			<form role="store-list-filter" method="get" name="dokan_store_lists_filter_form" id="theabd--vendor-query-looping-filter-form-wrap" class="theabd--vendor-search-filter-form" style="<?php echo $has_active_filters ? 'display: block;' : 'display: none;'; ?>">
+			<form role="search" method="get" name="dokan_store_lists_filter_form" id="theabd--vendor-query-looping-filter-form-wrap" class="theabd--vendor-search-filter-form" style="<?php echo $has_active_filters ? 'display: block;' : 'display: none;'; ?>">
 				<?php do_action( 'dokan_before_store_lists_filter_search' ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Dokan core action for compatibility. ?>
 
 				<?php
@@ -182,7 +182,9 @@ function theabd_render_vendor_search_block( array $attributes, string $content, 
 
 				<div class="theabd--vendor-search-filter-row">
 					<div class="theabd--vendor-search theabd--grid-item">
+						<label for="dokan-seller-search" class="screen-reader-text"><?php echo esc_html( $search_placeholder ); ?></label>
 						<input type="search"
+							id="dokan-seller-search"
 							class="theabd--vendor-search-input theabd--vendor-search-input"
 							name="dokan_seller_search"
 							value="<?php echo esc_attr( $search_query ); ?>"
