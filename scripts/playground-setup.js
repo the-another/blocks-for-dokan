@@ -148,6 +148,16 @@ async function restRequest( method, restPath, cookies, nonce, data ) {
 	return json;
 }
 
+/**
+ * Find the REST API plugin identifier for an installed plugin by matching its
+ * directory name against the slug. Returns e.g. "dokan-lite/dokan" for slug "dokan-lite".
+ */
+async function findPluginId( slug, cookies, nonce ) {
+	const plugins = await restRequest( 'GET', '/wp/v2/plugins', cookies, nonce );
+	const match = plugins.find( ( p ) => p.plugin.startsWith( slug + '/' ) );
+	return match ? match.plugin : null;
+}
+
 /** Install a plugin from wordpress.org and activate it, with retries. */
 async function installRemotePlugin( slug, cookies, nonce, retries = 3 ) {
 	for ( let attempt = 1; attempt <= retries; attempt++ ) {
@@ -159,24 +169,32 @@ async function installRemotePlugin( slug, cookies, nonce, retries = 3 ) {
 			console.log( `  ✓ ${ slug } installed and activated` );
 			return;
 		} catch {
-			// Already installed — try activating.
-			try {
-				await restRequest(
-					'POST',
-					`/wp/v2/plugins/${ slug }/${ slug }`,
-					cookies,
-					nonce,
-					{ status: 'active' }
-				);
-				console.log( `  ✓ ${ slug } activated` );
-				return;
-			} catch ( e2 ) {
-				if ( attempt < retries ) {
-					console.log( `  ⏳ ${ slug } install attempt ${ attempt } failed, retrying in 5s…` );
-					await new Promise( ( r ) => setTimeout( r, 5_000 ) );
-				} else {
-					console.warn( `  ⚠ Could not install or activate ${ slug }: ${ e2.message }` );
+			// Already installed, or install failed. Try to find and activate.
+			const pluginId = await findPluginId( slug, cookies, nonce ).catch( () => null );
+			if ( pluginId ) {
+				try {
+					await restRequest(
+						'POST',
+						`/wp/v2/plugins/${ pluginId }`,
+						cookies,
+						nonce,
+						{ status: 'active' }
+					);
+					console.log( `  ✓ ${ slug } activated` );
+					return;
+				} catch ( e2 ) {
+					if ( attempt < retries ) {
+						console.log( `  ⏳ ${ slug } attempt ${ attempt } failed, retrying in 5s…` );
+						await new Promise( ( r ) => setTimeout( r, 5_000 ) );
+					} else {
+						console.warn( `  ⚠ Could not activate ${ slug }: ${ e2.message }` );
+					}
 				}
+			} else if ( attempt < retries ) {
+				console.log( `  ⏳ ${ slug } not found yet, retrying in 5s…` );
+				await new Promise( ( r ) => setTimeout( r, 5_000 ) );
+			} else {
+				console.warn( `  ⚠ Could not install or find ${ slug } after ${ retries } attempts` );
 			}
 		}
 	}
@@ -184,18 +202,20 @@ async function installRemotePlugin( slug, cookies, nonce, retries = 3 ) {
 
 /** Activate the local plugin (already on disk via wp-now mount). */
 async function activateLocalPlugin( cookies, nonce ) {
-	const pluginSlug = 'another-blocks-for-dokan';
+	const slug = 'another-blocks-for-dokan';
+	const pluginId = await findPluginId( slug, cookies, nonce ).catch( () => null );
+	const id = pluginId || `${ slug }/${ slug }`;
 	try {
 		await restRequest(
 			'POST',
-			`/wp/v2/plugins/${ pluginSlug }/${ pluginSlug }`,
+			`/wp/v2/plugins/${ id }`,
 			cookies,
 			nonce,
 			{ status: 'active' }
 		);
-		console.log( `  ✓ ${ pluginSlug } activated` );
+		console.log( `  ✓ ${ slug } activated` );
 	} catch ( e ) {
-		console.warn( `  ⚠ Could not activate ${ pluginSlug }: ${ e.message }` );
+		console.warn( `  ⚠ Could not activate ${ slug }: ${ e.message }` );
 	}
 }
 
