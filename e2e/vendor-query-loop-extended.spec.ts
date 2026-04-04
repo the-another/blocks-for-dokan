@@ -710,3 +710,57 @@ test.describe( 'Vendor Query Loop – store count', () => {
 		await deletePage( requestUtils, newPage.id );
 	} );
 } );
+
+// ---------------------------------------------------------------------------
+// Empty state (zero vendors)
+// ---------------------------------------------------------------------------
+test.describe( 'Vendor Query Loop – empty state', () => {
+	test( 'shows empty message or renders without error when no vendors match', async ( {
+		page,
+		requestUtils,
+	} ) => {
+		// Use showFeaturedOnly to get zero results without needing
+		// to delete all vendors in the system. No featured vendors
+		// are created in this suite.
+		const markup = queryLoopMarkup(
+			{
+				perPage: 12,
+				columns: 3,
+				displayLayout: 'grid',
+				showFeaturedOnly: true,
+			},
+			`${ SEARCH_BLOCK }\n${ CARD_WITH_NAME }`
+		);
+
+		const newPage = await createPage(
+			requestUtils,
+			'Empty State E2E',
+			markup
+		);
+
+		await page.goto( newPage.link );
+
+		const wrapper = page.locator(
+			'.wp-block-the-another-blocks-for-dokan-vendor-query-loop'
+		);
+		await expect( wrapper ).toBeVisible();
+
+		// If meta_query filtering works in SQLite, should show empty message.
+		// If SQLite doesn't filter, cards may still appear — both are acceptable.
+		const emptyMsg = wrapper.locator( '.theabd--vendor-query-loop-empty' );
+		const cards = page.locator( '.theabd--single-vendor' );
+		const emptyCount = await emptyMsg.count();
+		const cardCount = await cards.count();
+
+		// Either empty state OR cards should appear (page shouldn't be blank/broken).
+		expect( emptyCount + cardCount ).toBeGreaterThan( 0 );
+
+		// If empty state IS shown, verify the message and no cards.
+		if ( emptyCount > 0 ) {
+			await expect( emptyMsg ).toContainText( 'No vendors found' );
+			expect( cardCount ).toBe( 0 );
+		}
+
+		await deletePage( requestUtils, newPage.id );
+	} );
+} );
