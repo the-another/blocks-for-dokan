@@ -143,6 +143,12 @@ function theabd_render_vendor_query_loop_block( array $attributes, string $conte
 		remove_action( 'pre_user_query', $query_filter_callback, 9 );
 	}
 
+	// Prime user meta cache for all sellers to avoid per-vendor queries in the loop.
+	if ( ! empty( $sellers ) ) {
+		$seller_ids = wp_list_pluck( $sellers, 'ID' );
+		cache_users( $seller_ids );
+	}
+
 	// Calculate pagination info.
 	$total_users = $user_query->get_total();
 	$total_pages = ceil( $total_users / $per_page );
