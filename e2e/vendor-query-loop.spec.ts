@@ -8,7 +8,7 @@
  */
 
 import { test, expect } from '@wordpress/e2e-test-utils-playwright';
-import { createVendor, deleteVendor } from './helpers';
+import { createVendors, deleteVendors } from './helpers';
 
 const VENDOR_COUNT = 10;
 const PER_PAGE = 3;
@@ -34,17 +34,16 @@ function buildPageContent(): string {
 test.describe( 'Vendor Query Loop – frontend rendering', () => {
 	// ---- Setup: create 10 vendors before the suite runs. ----
 	test.beforeAll( async ( { requestUtils } ) => {
-		for ( let i = 1; i <= VENDOR_COUNT; i++ ) {
-			const id = await createVendor( requestUtils, i );
-			vendorIds.push( id );
-		}
+		const ids = await createVendors(
+			requestUtils,
+			Array.from( { length: VENDOR_COUNT }, ( _, i ) => i + 1 )
+		);
+		vendorIds.push( ...ids );
 	} );
 
 	// ---- Teardown: remove the vendors we created. ----
 	test.afterAll( async ( { requestUtils } ) => {
-		for ( const id of vendorIds ) {
-			await deleteVendor( requestUtils, id );
-		}
+		await deleteVendors( requestUtils, vendorIds );
 		vendorIds.length = 0;
 	} );
 
@@ -94,11 +93,11 @@ test.describe( 'Vendor Query Loop – frontend rendering', () => {
 		const lastPageLink = pageLinks.filter( {
 			hasText: `${ TOTAL_PAGES }`,
 		} );
-		// Start waiting for navigation before clicking to avoid race condition.
-		await Promise.all( [
-			page.waitForURL( /paged=/ ),
-			lastPageLink.click(),
-		] );
+		// Click triggers a full page navigation (not SPA).
+		await lastPageLink.click();
+		await page.waitForLoadState( 'load' );
+
+		expect( page.url() ).toMatch( /paged=/ );
 
 		const cardsLastPage = page.locator( '.theabd--single-vendor' );
 		await expect( cardsLastPage ).toHaveCount(
