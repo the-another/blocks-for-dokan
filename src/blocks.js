@@ -8,9 +8,6 @@
  * @since 1.0.0
  */
 
-// Shared form element styles (imported once to avoid CSS duplication).
-import '../blocks/_shared-forms.scss';
-
 // Import all block editor components (relative to src/).
 import '../blocks/vendor-store-header/index.js';
 import '../blocks/vendor-store-sidebar/index.js';

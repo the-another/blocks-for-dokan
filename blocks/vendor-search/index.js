@@ -18,6 +18,7 @@ import { useSelect } from '@wordpress/data';
 import { __ } from '@wordpress/i18n';
 import metadata from './block.json';
 import './editor.scss';
+import '../_shared/style.scss';
 import './style.scss';
 
 /**
