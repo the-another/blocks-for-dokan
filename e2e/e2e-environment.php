@@ -23,13 +23,17 @@ add_filter( 'got_url_rewrite', '__return_true' );
 
 // wp-now starts with "Plain" permalinks. Set a proper structure so
 // plugins like Dokan can register their rewrite rules (store pages, tabs, etc.).
-add_action( 'init', function () {
-	if ( get_option( 'permalink_structure' ) === '' ) {
-		global $wp_rewrite;
-		$wp_rewrite->set_permalink_structure( '/%postname%/' );
-		flush_rewrite_rules();
-	}
-}, 999 );
+add_action(
+	'init',
+	function () {
+		if ( get_option( 'permalink_structure' ) === '' ) {
+			global $wp_rewrite;
+			$wp_rewrite->set_permalink_structure( '/%postname%/' );
+			flush_rewrite_rules();
+		}
+	},
+	999
+);
 
 // --- WooCommerce onboarding suppression -------------------------------------
 
@@ -40,12 +44,15 @@ add_filter( 'woocommerce_prevent_automatic_wizard_redirect', '__return_true' );
 add_filter( 'woocommerce_admin_onboarding_valid', '__return_false' );
 
 // Skip the extended task list and inbox notes that trigger remote fetches.
-add_filter( 'woocommerce_admin_get_feature_config', function ( $features ) {
-	$features['onboarding']                 = false;
-	$features['remote-inbox-notifications'] = false;
-	$features['marketing']                  = false;
-	return $features;
-} );
+add_filter(
+	'woocommerce_admin_get_feature_config',
+	function ( $features ) {
+		$features['onboarding']                 = false;
+		$features['remote-inbox-notifications'] = false;
+		$features['marketing']                  = false;
+		return $features;
+	}
+);
 
 // Prevent WC from creating default pages (shop, cart, checkout, etc.) on the
 // first REST save.
@@ -55,23 +62,35 @@ add_filter( 'woocommerce_create_pages', '__return_empty_array' );
 
 // Dokan sets a transient on activation that redirects admin to its setup wizard.
 // Delete it on every load so the redirect never fires.
-add_action( 'admin_init', function () {
-	delete_transient( '_dokan_setup_page_redirect' );
-}, 1 );
+add_action(
+	'admin_init',
+	function () {
+		delete_transient( '_dokan_setup_page_redirect' );
+	},
+	1
+);
 
 // WooCommerce also sets a redirect transient on activation.
-add_action( 'admin_init', function () {
-	delete_transient( '_wc_activation_redirect' );
-}, 1 );
+add_action(
+	'admin_init',
+	function () {
+		delete_transient( '_wc_activation_redirect' );
+	},
+	1
+);
 
 // --- Dokan admin notice scripts suppression ---------------------------------
 
 // Dokan enqueues JS that fetches /dokan/v1/admin/notices/admin which 404s
 // under wp-now (REST route not fully registered). Dequeue the scripts.
-add_action( 'admin_enqueue_scripts', function () {
-	wp_dequeue_script( 'dokan-promo-notice-js' );
-	wp_dequeue_script( 'dokan-admin-notice-js' );
-}, 20 );
+add_action(
+	'admin_enqueue_scripts',
+	function () {
+		wp_dequeue_script( 'dokan-promo-notice-js' );
+		wp_dequeue_script( 'dokan-admin-notice-js' );
+	},
+	20
+);
 
 // --- Action Scheduler suppression -------------------------------------------
 
@@ -100,6 +119,7 @@ add_filter(
 add_filter( 'action_scheduler_allow_async_request_runner', '__return_false' );
 
 // Suppress PHP errors originating from Action Scheduler.
+// phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_set_error_handler -- E2E test environment only.
 set_error_handler(
 	function ( $errno, $errstr, $errfile ) {
 		if ( str_contains( $errfile, 'action-scheduler' ) || str_contains( $errfile, 'ActionScheduler' ) ) {
