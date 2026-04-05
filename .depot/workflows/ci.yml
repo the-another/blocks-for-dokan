@@ -41,6 +41,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 24
+          cache: npm
       - run: npm ci
       - run: npm run lint:js
       - run: npm run lint:css
@@ -53,6 +54,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 24
+          cache: npm
       - uses: shivammathur/setup-php@v2
         with:
           php-version: '8.3'
