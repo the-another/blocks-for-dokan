@@ -94,9 +94,11 @@ test.describe( 'Vendor Query Loop – frontend rendering', () => {
 		const lastPageLink = pageLinks.filter( {
 			hasText: `${ TOTAL_PAGES }`,
 		} );
-		await lastPageLink.click();
-		// Wait for the page URL to reflect the new page number.
-		await page.waitForURL( /paged=/ );
+		// Start waiting for navigation before clicking to avoid race condition.
+		await Promise.all( [
+			page.waitForURL( /paged=/ ),
+			lastPageLink.click(),
+		] );
 
 		const cardsLastPage = page.locator( '.theabd--single-vendor' );
 		await expect( cardsLastPage ).toHaveCount(
