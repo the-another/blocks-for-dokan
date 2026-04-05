@@ -40,6 +40,24 @@ export async function createVendor(
 	return result.id;
 }
 
+/**
+ * Create multiple vendors in a single request via the bulk REST endpoint.
+ */
+export async function createVendors(
+	requestUtils: RequestUtils,
+	vendors: Array< CreateVendorOptions | number >
+): Promise< number[] > {
+	const normalized = vendors.map( ( v ) =>
+		typeof v === 'number' ? { index: v } : v
+	);
+	const result = await requestUtils.rest< { ids: number[] } >( {
+		method: 'POST',
+		path: '/theabd-test/v1/create-vendors',
+		data: { vendors: normalized },
+	} );
+	return result.ids;
+}
+
 /** Delete a vendor via the custom REST endpoint. */
 export async function deleteVendor(
 	requestUtils: RequestUtils,
@@ -52,6 +70,27 @@ export async function deleteVendor(
 		} );
 	} catch ( error ) {
 		console.warn( `[cleanup] Failed to delete vendor ${ userId }:`, error );
+	}
+}
+
+/**
+ * Delete multiple vendors in a single request via the bulk REST endpoint.
+ */
+export async function deleteVendors(
+	requestUtils: RequestUtils,
+	userIds: number[]
+): Promise< void > {
+	if ( userIds.length === 0 ) {
+		return;
+	}
+	try {
+		await requestUtils.rest( {
+			method: 'POST',
+			path: '/theabd-test/v1/delete-vendors',
+			data: { ids: userIds },
+		} );
+	} catch ( error ) {
+		console.warn( '[cleanup] Failed to delete vendors:', error );
 	}
 }
 
@@ -97,6 +136,21 @@ export async function createProduct(
 	return result.id;
 }
 
+/**
+ * Create multiple products in a single request via the bulk REST endpoint.
+ */
+export async function createProducts(
+	requestUtils: RequestUtils,
+	products: CreateProductOptions[]
+): Promise< number[] > {
+	const result = await requestUtils.rest< { ids: number[] } >( {
+		method: 'POST',
+		path: '/theabd-test/v1/create-products',
+		data: { products },
+	} );
+	return result.ids;
+}
+
 /** Delete a product (force). */
 export async function deleteProduct(
 	requestUtils: RequestUtils,
@@ -109,6 +163,27 @@ export async function deleteProduct(
 		} );
 	} catch ( error ) {
 		console.warn( `[cleanup] Failed to delete product ${ productId }:`, error );
+	}
+}
+
+/**
+ * Delete multiple products in a single request via the bulk REST endpoint.
+ */
+export async function deleteProducts(
+	requestUtils: RequestUtils,
+	productIds: number[]
+): Promise< void > {
+	if ( productIds.length === 0 ) {
+		return;
+	}
+	try {
+		await requestUtils.rest( {
+			method: 'POST',
+			path: '/theabd-test/v1/delete-products',
+			data: { ids: productIds },
+		} );
+	} catch ( error ) {
+		console.warn( '[cleanup] Failed to delete products:', error );
 	}
 }
 
