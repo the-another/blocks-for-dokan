@@ -8,14 +8,11 @@
  */
 
 import { test, expect } from '@wordpress/e2e-test-utils-playwright';
-import { createVendors, deleteVendors } from './helpers';
+import { createVendors, deleteVendors, createPage, deletePage } from './helpers';
 
 const VENDOR_COUNT = 10;
 const PER_PAGE = 3;
 const TOTAL_PAGES = Math.ceil( VENDOR_COUNT / PER_PAGE );
-
-/** Vendor user IDs created during the test, cleaned up afterwards. */
-const vendorIds: number[] = [];
 
 /**
  * Build block markup for the query loop page.
@@ -32,42 +29,33 @@ function buildPageContent(): string {
 }
 
 test.describe( 'Vendor Query Loop – frontend rendering', () => {
-	// ---- Setup: create 10 vendors before the suite runs. ----
+	let vendorIds: number[] = [];
+	let testPage: { id: number; link: string };
+
 	test.beforeAll( async ( { requestUtils } ) => {
-		const ids = await createVendors(
+		vendorIds = await createVendors(
 			requestUtils,
 			Array.from( { length: VENDOR_COUNT }, ( _, i ) => i + 1 )
 		);
-		vendorIds.push( ...ids );
+
+		testPage = await createPage(
+			requestUtils,
+			'Vendor Query Loop E2E',
+			buildPageContent()
+		);
 	} );
 
-	// ---- Teardown: remove the vendors we created. ----
 	test.afterAll( async ( { requestUtils } ) => {
+		await deletePage( requestUtils, testPage.id );
 		await deleteVendors( requestUtils, vendorIds );
-		vendorIds.length = 0;
+		vendorIds = [];
 	} );
 
 	test( 'shows search bar, 4 pagination pages, 3 cards on page 1 and 1 card on page 4', async ( {
 		page,
-		requestUtils,
 	} ) => {
-		// --- 1. Create a page with block markup via REST API. ---
-		const newPage = await requestUtils.rest< { id: number; link: string } >(
-			{
-				method: 'POST',
-				path: '/wp/v2/pages',
-				data: {
-					title: 'Vendor Query Loop E2E',
-					content: buildPageContent(),
-					status: 'publish',
-				},
-			}
-		);
-
-		const frontendUrl = newPage.link;
-
-		// --- 2. Visit page 1 on the frontend. ---
-		await page.goto( frontendUrl );
+		// --- 1. Visit page 1 on the frontend. ---
+		await page.goto( testPage.link );
 
 		// Search bar: the search block wrapper should be present.
 		const searchBlock = page.locator(
@@ -89,7 +77,7 @@ test.describe( 'Vendor Query Loop – frontend rendering', () => {
 		);
 		await expect( pageLinks ).toHaveCount( TOTAL_PAGES );
 
-		// --- 3. Navigate to page 4 and verify 1 card. ---
+		// --- 2. Navigate to page 4 and verify 1 card. ---
 		const lastPageLink = pageLinks.filter( {
 			hasText: `${ TOTAL_PAGES }`,
 		} );

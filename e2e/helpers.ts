@@ -50,12 +50,12 @@ export async function createVendors(
 	const normalized = vendors.map( ( v ) =>
 		typeof v === 'number' ? { index: v } : v
 	);
-	const result = await requestUtils.rest< { ids: number[] } >( {
+	const results = await requestUtils.rest< Array< { id: number } > >( {
 		method: 'POST',
 		path: '/theabd-test/v1/create-vendors',
 		data: { vendors: normalized },
 	} );
-	return result.ids;
+	return results.map( ( r ) => r.id );
 }
 
 /** Delete a vendor via the custom REST endpoint. */
@@ -143,12 +143,12 @@ export async function createProducts(
 	requestUtils: RequestUtils,
 	products: CreateProductOptions[]
 ): Promise< number[] > {
-	const result = await requestUtils.rest< { ids: number[] } >( {
+	const results = await requestUtils.rest< Array< { id: number } > >( {
 		method: 'POST',
 		path: '/theabd-test/v1/create-products',
 		data: { products },
 	} );
-	return result.ids;
+	return results.map( ( r ) => r.id );
 }
 
 /** Delete a product (force). */

@@ -26,10 +26,6 @@ const CARD_WITH_NAME = `<!-- wp:the-another/blocks-for-dokan-vendor-card -->
 <!-- wp:the-another/blocks-for-dokan-vendor-store-name {"tagName":"h3","isLink":false} /-->
 <!-- /wp:the-another/blocks-for-dokan-vendor-card -->`;
 
-const CARD_WITH_NAME_LINK = `<!-- wp:the-another/blocks-for-dokan-vendor-card -->
-<!-- wp:the-another/blocks-for-dokan-vendor-store-name {"tagName":"h3","isLink":true} /-->
-<!-- /wp:the-another/blocks-for-dokan-vendor-card -->`;
-
 const SEARCH_BLOCK = `<!-- wp:the-another/blocks-for-dokan-vendor-search {"enableSearch":true,"enableSortBy":true} /-->`;
 
 // ---------------------------------------------------------------------------
