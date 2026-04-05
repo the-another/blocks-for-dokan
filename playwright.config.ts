@@ -20,6 +20,18 @@ export default defineConfig( {
 		screenshot: 'only-on-failure',
 		video: 'on',
 	},
+	projects: [
+		{
+			name: 'setup',
+			testMatch: '*.setup.ts',
+			retries: 0,
+		},
+		{
+			name: 'default',
+			testMatch: '*.spec.ts',
+			dependencies: [ 'setup' ],
+		},
+	],
 	globalSetup: './e2e/global-setup.ts',
 	globalTeardown: './e2e/global-teardown.ts',
 	webServer: {

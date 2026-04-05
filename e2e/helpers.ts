@@ -76,7 +76,8 @@ export async function deletePage(
 	try {
 		await requestUtils.rest( {
 			method: 'DELETE',
-			path: `/wp/v2/pages/${ pageId }?force=true`,
+			path: `/wp/v2/pages/${ pageId }`,
+			data: { force: true },
 		} );
 	} catch ( error ) {
 		console.warn( `[cleanup] Failed to delete page ${ pageId }:`, error );

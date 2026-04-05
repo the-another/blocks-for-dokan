@@ -1,4 +1,3 @@
-import { request } from '@playwright/test';
 import type { FullConfig } from '@playwright/test';
 import { RequestUtils } from '@wordpress/e2e-test-utils-playwright';
 import * as fs from 'node:fs';

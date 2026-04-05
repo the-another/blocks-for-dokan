@@ -253,8 +253,7 @@ test.describe( 'Vendor Store Tabs – standalone rendering', () => {
 		vendorIds = [];
 	} );
 
-	// Store tabs require Dokan's rewrite rules which aren't active in wp-now.
-	test.fixme( 'renders tab items when Dokan rewrite rules are active', async ( {
+	test( 'renders tab items when Dokan rewrite rules are active', async ( {
 		page,
 		requestUtils,
 	} ) => {
@@ -282,54 +281,3 @@ test.describe( 'Vendor Store Tabs – standalone rendering', () => {
 	} );
 } );
 
-// ---------------------------------------------------------------------------
-// Store sidebar (soft assertion – depends on widget area registration)
-// ---------------------------------------------------------------------------
-test.describe( 'Vendor Store Sidebar – standalone rendering', () => {
-	test.beforeAll( async ( { requestUtils } ) => {
-		vendorIds = [];
-		const id = await createVendor( requestUtils, {
-			index: 1,
-			store_name: 'Sidebar Test Store',
-			address: {
-				street_1: '789 Widget Way',
-				city: 'Sidebarville',
-				state: 'NY',
-				zip: '10001',
-				country: 'US',
-			},
-		} );
-		vendorIds.push( id );
-	} );
-
-	test.afterAll( async ( { requestUtils } ) => {
-		for ( const id of vendorIds ) {
-			await deleteVendor( requestUtils, id );
-		}
-		vendorIds = [];
-	} );
-
-	// Sidebar rendering requires Dokan widget areas which aren't
-	// registered in wp-now.
-	test.fixme( 'renders sidebar with widget areas when Dokan is fully active', async ( {
-		page,
-		requestUtils,
-	} ) => {
-		const vendorId = vendorIds[ 0 ];
-		const content = `<!-- wp:the-another/blocks-for-dokan-vendor-store-sidebar {"vendorId":${ vendorId }} /-->`;
-
-		const newPage = await createPage(
-			requestUtils,
-			'Store Sidebar E2E',
-			content
-		);
-
-		await page.goto( newPage.link );
-
-		const sidebar = page.locator( '.theabd--vendor-store-sidebar' );
-		await expect( sidebar ).toBeVisible();
-		await expect( sidebar ).toHaveAttribute( 'role', 'complementary' );
-
-		await deletePage( requestUtils, newPage.id );
-	} );
-} );
