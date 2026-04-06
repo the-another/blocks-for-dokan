@@ -4,7 +4,7 @@ Tags: dokan, woocommerce, multivendor, blocks, fse, full-site-editing, gutenberg
 Requires at least: 6.0
 Tested up to: 6.9
 Requires PHP: 8.3
-Stable tag: 1.0.7
+Stable tag: 1.0.8
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -40,6 +40,10 @@ PHP 8.3 or higher is required.
 
 
 
+
+
+= 1.0.8 - 2026-04-06 =
+* Fix: Increased Vendor Query Loop max items per page from 50 to 100
 
 = 1.0.7 - 2026-04-06 =
 * Add: GitHub Actions release workflow for automated plugin packaging
