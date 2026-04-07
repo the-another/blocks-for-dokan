@@ -10,6 +10,7 @@
 
 	function init( wrapper ) {
 		var queryId = wrapper.getAttribute( 'data-query-id' );
+		var postId = parseInt( wrapper.getAttribute( 'data-post-id' ), 10 ) || 0;
 		var totalPages = parseInt(
 			wrapper.getAttribute( 'data-total-pages' ),
 			10
@@ -58,6 +59,7 @@
 					method: 'GET',
 					data: {
 						queryId: queryId,
+						postId: postId,
 						page: nextPage,
 						attributes: attributes,
 						filters: filters,
@@ -68,6 +70,8 @@
 					'/wp-json/another-blocks-for-dokan/v1/vendor-query-loop?' +
 					'queryId=' +
 					encodeURIComponent( queryId ) +
+					'&postId=' +
+					postId +
 					'&page=' +
 					nextPage +
 					'&attributes=' +

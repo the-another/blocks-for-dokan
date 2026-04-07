@@ -355,6 +355,7 @@ function theabd_render_vendor_query_loop_block( array $attributes, string $conte
 
 	if ( $enable_infinite_scroll ) {
 		$wrapper_args['data-infinite']     = '1';
+		$wrapper_args['data-post-id']      = (string) $post_id_for_query;
 		$wrapper_args['data-query-id']     = $query_id;
 		$wrapper_args['data-per-page']     = (string) $per_page;
 		$wrapper_args['data-current-page'] = (string) $paged;

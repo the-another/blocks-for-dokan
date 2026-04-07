@@ -27,6 +27,8 @@ class QueryArgsBuilderTest extends TestCase {
 		Functions\when( 'wp_unslash' )->returnArg();
 		Functions\when( 'absint' )->alias( static fn( $v ) => (int) abs( (int) $v ) );
 		Functions\when( 'apply_filters' )->alias( static fn( $tag, $value ) => $value );
+		Functions\when( 'sanitize_key' )->alias( static fn( $v ) => preg_replace( '/[^a-z0-9_\-]/', '', strtolower( (string) $v ) ) );
+		Functions\when( 'wp_json_encode' )->alias( static fn( $v ) => \json_encode( $v ) ); // phpcs:ignore WordPress.WP.AlternativeFunctions.json_encode_json_encode
 		require_once dirname( __DIR__, 3 ) . '/blocks/vendor-query-loop/render.php';
 	}
 
@@ -97,6 +99,31 @@ class QueryArgsBuilderTest extends TestCase {
 		$keys = array_column( array_filter( $args['meta_query'], 'is_array' ), 'key' );
 		$this->assertContains( 'dokan_store_name', $keys );
 		$this->assertContains( 'dokan_profile_settings', $keys );
+	}
+
+	/**
+	 * Compute_query_id should be deterministic for identical inputs.
+	 */
+	public function test_compute_query_id_is_deterministic(): void {
+		$attrs = array(
+			'perPage' => 12,
+			'orderBy' => 'name',
+		);
+		$a     = theabd_vendor_query_loop_compute_query_id( 42, $attrs );
+		$b     = theabd_vendor_query_loop_compute_query_id( 42, $attrs );
+		$this->assertSame( $a, $b );
+		$this->assertStringStartsWith( 'store-query-', $a );
+	}
+
+	/**
+	 * Compute_query_id should honor an explicit attrs[queryId] when present.
+	 */
+	public function test_compute_query_id_uses_explicit_attr(): void {
+		$id = theabd_vendor_query_loop_compute_query_id(
+			42,
+			array( 'queryId' => 'my-loop' )
+		);
+		$this->assertSame( 'store-query-my-loop', $id );
 	}
 
 	/**
