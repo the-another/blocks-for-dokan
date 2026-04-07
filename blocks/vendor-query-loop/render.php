@@ -12,6 +12,23 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
+ * Compute a deterministic query ID for a vendor query loop block instance.
+ *
+ * Stable per (post, block-config) pair so the transient template cache key
+ * written at first render matches what subsequent REST requests look up.
+ *
+ * @param int                  $post_id Post containing the block.
+ * @param array<string, mixed> $attrs   Parsed block attributes.
+ * @return string
+ */
+function theabd_vendor_query_loop_compute_query_id( int $post_id, array $attrs ): string {
+	if ( ! empty( $attrs['queryId'] ) ) {
+		return 'store-query-' . sanitize_key( (string) $attrs['queryId'] );
+	}
+	return 'store-query-' . substr( md5( $post_id . '|' . wp_json_encode( $attrs ) ), 0, 12 );
+}
+
+/**
  * Build WP_User_Query args for the vendor query loop.
  *
  * Pure function — reads $_GET for sort/search/location filters but has no side effects.
@@ -265,8 +282,13 @@ function theabd_render_vendor_query_loop_block( array $attributes, string $conte
 	};
 	add_filter( 'theabd_store_search_block_count', $count_filter_callback, 10, 1 );
 
-	// Generate unique query ID for this block instance.
-	$query_id = 'store-query-' . ( isset( $block->parsed_block['attrs']['queryId'] ) ? $block->parsed_block['attrs']['queryId'] : wp_unique_id() );
+	// Compute deterministic query ID so the transient template cache key is stable across requests.
+	$current_id        = get_the_ID();
+	$post_id_for_query = $current_id ? (int) $current_id : 0;
+	$query_id          = theabd_vendor_query_loop_compute_query_id(
+		$post_id_for_query,
+		isset( $block->parsed_block['attrs'] ) && is_array( $block->parsed_block['attrs'] ) ? $block->parsed_block['attrs'] : array()
+	);
 
 	// Provide pagination context for child blocks (pagination block).
 	$query_context = array(
