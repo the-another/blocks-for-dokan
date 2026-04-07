@@ -171,7 +171,7 @@
 		width: 100%;
 	}
 
-	// Infinite-scroll loading indicator. Empty by default; only visible while loading.
+	// Infinite-scroll loading indicator. Hidden when empty.
 	.theabd--vendor-query-loop-status {
 		display: block;
 		text-align: center;
@@ -184,7 +184,7 @@
 		}
 
 		&:not(:empty)::after {
-			content: '';
+			content: "";
 			display: inline-block;
 			width: 1em;
 			text-align: left;
@@ -196,19 +196,19 @@
 @keyframes theabd-vendor-query-loop-dots {
 
 	0% {
-		content: '';
+		content: "";
 	}
 
 	25% {
-		content: '.';
+		content: ".";
 	}
 
 	50% {
-		content: '..';
+		content: "..";
 	}
 
 	75%,
 	100% {
-		content: '...';
+		content: "...";
 	}
 }

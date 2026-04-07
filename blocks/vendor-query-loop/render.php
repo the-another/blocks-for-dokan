@@ -364,14 +364,14 @@ function theabd_render_vendor_query_loop_block( array $attributes, string $conte
 	);
 
 	if ( $enable_infinite_scroll ) {
-		$wrapper_args['data-infinite']     = '1';
-		$wrapper_args['data-post-id']      = (string) $post_id_for_query;
-		$wrapper_args['data-query-id']     = $query_id;
-		$wrapper_args['data-per-page']     = (string) $per_page;
-		$wrapper_args['data-current-page'] = (string) $paged;
-		$wrapper_args['data-total-pages']  = (string) $total_pages;
+		$wrapper_args['data-infinite']      = '1';
+		$wrapper_args['data-post-id']       = (string) $post_id_for_query;
+		$wrapper_args['data-query-id']      = $query_id;
+		$wrapper_args['data-per-page']      = (string) $per_page;
+		$wrapper_args['data-current-page']  = (string) $paged;
+		$wrapper_args['data-total-pages']   = (string) $total_pages;
 		$wrapper_args['data-scroll-offset'] = (string) (int) ( $attributes['infiniteScrollOffset'] ?? 400 );
-		$active_filters                    = array(
+		$active_filters                     = array(
 			'stores_orderby'       => isset( $_GET['stores_orderby'] ) ? sanitize_text_field( wp_unslash( $_GET['stores_orderby'] ) ) : '', // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			'dokan_seller_search'  => isset( $_GET['dokan_seller_search'] ) ? sanitize_text_field( wp_unslash( $_GET['dokan_seller_search'] ) ) : '', // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			'dokan_store_location' => isset( $_GET['dokan_store_location'] ) ? sanitize_text_field( wp_unslash( $_GET['dokan_store_location'] ) ) : '', // phpcs:ignore WordPress.Security.NonceVerification.Recommended
