@@ -225,14 +225,30 @@ Rather than tracking individual line numbers (which shift as we edit), the imple
 
 **E. Local variable in main plugin file** (1 instance):
 - `another-blocks-for-dokan.php:45` — `$another_blocks_for_dokan_autoload_file` → `$theabd_autoload_file`
-- This is a local variable, not a global, but the reviewer may have counted it in the "another_blocks_for" tally.
+
+**F. Constants: `ANOTHER_BLOCKS_FOR_DOKAN_*` → `THE_ANOTHER_BLOCKS_FOR_DOKAN_*`** (7 defines, ~45 references):
+
+Rename all constants to use the `THE_ANOTHER_BLOCKS_FOR_DOKAN_` prefix to match the brand name:
+
+| Old | New |
+|-----|-----|
+| `ANOTHER_BLOCKS_FOR_DOKAN_VERSION` | `THE_ANOTHER_BLOCKS_FOR_DOKAN_VERSION` |
+| `ANOTHER_BLOCKS_FOR_DOKAN_PLUGIN_FILE` | `THE_ANOTHER_BLOCKS_FOR_DOKAN_PLUGIN_FILE` |
+| `ANOTHER_BLOCKS_FOR_DOKAN_PLUGIN_DIR` | `THE_ANOTHER_BLOCKS_FOR_DOKAN_PLUGIN_DIR` |
+| `ANOTHER_BLOCKS_FOR_DOKAN_PLUGIN_URL` | `THE_ANOTHER_BLOCKS_FOR_DOKAN_PLUGIN_URL` |
+| `ANOTHER_BLOCKS_FOR_DOKAN_PLUGIN_BASENAME` | `THE_ANOTHER_BLOCKS_FOR_DOKAN_PLUGIN_BASENAME` |
+| `ANOTHER_BLOCKS_FOR_DOKAN_MIN_WOOCOMMERCE_VERSION` | `THE_ANOTHER_BLOCKS_FOR_DOKAN_MIN_WOOCOMMERCE_VERSION` |
+| `ANOTHER_BLOCKS_FOR_DOKAN_MIN_DOKAN_VERSION` | `THE_ANOTHER_BLOCKS_FOR_DOKAN_MIN_DOKAN_VERSION` |
+
+**Affected files** (~45 references total): `another-blocks-for-dokan.php`, `includes/class-install.php`, `includes/class-blocks.php`, `includes/class-block-registry.php`, `includes/templates/class-store-template.php`, `includes/templates/class-abstract-dokan-template.php`, `includes/rest/class-vendor-query-loop-controller.php`, `tests/bootstrap.php`, `tests/Unit/Blocks/StoreHeaderBlockTest.php`, `tests/Integration/BlockRenderingTest.php`.
+
+Implementation: global find-and-replace `ANOTHER_BLOCKS_FOR_DOKAN_` → `THE_ANOTHER_BLOCKS_FOR_DOKAN_` across all `.php` files (excluding `vendor/`).
 
 ### Already correct (no changes needed)
 - All `theabd_render_*_block()` functions (21 instances)
 - All `theabd_*` filters (6 unique filters)
 - `theabd-vendor-query-loop-view` script handle
 - `theabd--*` CSS classes
-- `ANOTHER_BLOCKS_FOR_DOKAN_*` constants — these use a 22-character prefix (`ANOTHER_BLOCKS_FOR_DOKAN_`) that is unique and follows WordPress constant naming conventions. The reviewer likely counted them under the "another_blocks_for" group, but they are distinct enough to not conflict. We'll justify this in the review response.
 - Dokan core hooks like `dokan_is_store_open` (external API, not our prefix)
 - `$_wp_current_template_content` (WordPress core global, already has phpcs:ignore)
 
