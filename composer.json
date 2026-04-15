@@ -6,8 +6,8 @@
 	"version": "1.0.9",
 	"author": {
 		"name": "The Another",
-		"email": "hello@theanother.org",
-		"url": "https://theanother.org"
+		"email": "hello@the-another.org",
+		"url": "https://the-another.org"
 	},
 	"keywords": [
 		"wordpress",
@@ -18,10 +18,10 @@
 		"fse",
 		"gutenberg"
 	],
-	"homepage": "https://theanother.org/plugin/blocks-for-dokan/",
+	"homepage": "https://the-another.org/plugin/blocks-for-dokan/",
 	"support": {
-		"issues": "https://github.com/theanother/blocks-for-dokan/issues",
-		"source": "https://github.com/theanother/blocks-for-dokan"
+		"issues": "https://github.com/the-another/blocks-for-dokan/issues",
+		"source": "https://github.com/the-another/blocks-for-dokan"
 	},
 	"require": {
 		"php": ">=7.4"

@@ -1,11 +1,11 @@
 <?php
 /**
  * Plugin Name: Another Blocks for Dokan
- * Plugin URI: https://theanother.org/plugin/another-blocks-for-dokan/
+ * Plugin URI: https://the-another.org/plugin/another-blocks-for-dokan/
  * Description: FSE-compatible Gutenberg blocks for Dokan multi-vendor marketplace. Convert Dokan templates into dynamic blocks for Full Site Editing.
  * Version: 1.0.9
  * Author: The Another
- * Author URI: https://theanother.org
+ * Author URI: https://the-another.org
  * Requires at least: 6.0
  * Requires PHP: 8.3
  * Requires Plugins: woocommerce, dokan-lite
