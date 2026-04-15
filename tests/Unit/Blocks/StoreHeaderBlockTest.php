@@ -6,13 +6,13 @@
  * @since 1.0.0
  */
 
-namespace The_Another\Plugin\Blocks_Dokan\Blocks\Tests\Unit\Blocks;
+namespace The_Another\Plugin\Blocks_For_Dokan\Blocks\Tests\Unit\Blocks;
 
 use PHPUnit\Framework\TestCase;
 use Brain\Monkey;
 use Brain\Monkey\Functions;
 use Mockery;
-use The_Another\Plugin\Blocks_Dokan\Blocks\Tests\Factories\VendorFactory;
+use The_Another\Plugin\Blocks_For_Dokan\Blocks\Tests\Factories\VendorFactory;
 
 /**
  * Store header block test class.

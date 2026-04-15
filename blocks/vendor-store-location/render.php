@@ -24,7 +24,7 @@ function theabd_render_vendor_store_location_block( array $attributes, string $c
 	$vendor_id = ! empty( $attributes['vendorId'] ) ? absint( $attributes['vendorId'] ) : 0;
 
 	if ( ! $vendor_id ) {
-		$vendor_id = \The_Another\Plugin\Blocks_Dokan\Helpers\Context_Detector::get_vendor_id();
+		$vendor_id = \The_Another\Plugin\Blocks_For_Dokan\Helpers\Context_Detector::get_vendor_id();
 	}
 
 	if ( ! $vendor_id || ! dokan_is_user_seller( $vendor_id ) ) {

@@ -21,7 +21,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 function theabd_render_vendor_rating_block( array $attributes, string $content, WP_Block $block ): string {
 	// Get vendor data from context, falling back to page context detection.
-	$vendor = \The_Another\Plugin\Blocks_Dokan\Renderers\Vendor_Renderer::resolve_vendor_from_context(
+	$vendor = \The_Another\Plugin\Blocks_For_Dokan\Renderers\Vendor_Renderer::resolve_vendor_from_context(
 		$block->context['dokan/vendor'] ?? null,
 		array(
 			'rating' => 'rating',

@@ -6,9 +6,9 @@
  * @since 1.0.0
  */
 
-namespace The_Another\Plugin\Blocks_Dokan\Templates;
+namespace The_Another\Plugin\Blocks_For_Dokan\Templates;
 
-use The_Another\Plugin\Blocks_Dokan\Helpers\Context_Detector;
+use The_Another\Plugin\Blocks_For_Dokan\Helpers\Context_Detector;
 
 // Exit if accessed directly.
 if ( ! defined( 'ABSPATH' ) ) {

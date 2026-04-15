@@ -25,10 +25,10 @@ function theabd_render_vendor_store_status_block( array $attributes, string $con
 
 	// If no vendor in context, try to detect from current page.
 	if ( empty( $vendor ) || empty( $vendor['id'] ) ) {
-		$vendor_id = \The_Another\Plugin\Blocks_Dokan\Helpers\Context_Detector::get_vendor_id();
+		$vendor_id = \The_Another\Plugin\Blocks_For_Dokan\Helpers\Context_Detector::get_vendor_id();
 
 		if ( $vendor_id > 0 ) {
-			$vendor_data = \The_Another\Plugin\Blocks_Dokan\Renderers\Vendor_Renderer::get_vendor_data( $vendor_id );
+			$vendor_data = \The_Another\Plugin\Blocks_For_Dokan\Renderers\Vendor_Renderer::get_vendor_data( $vendor_id );
 			if ( $vendor_data ) {
 				$vendor = array(
 					'id'               => $vendor_data['id'],
@@ -46,7 +46,7 @@ function theabd_render_vendor_store_status_block( array $attributes, string $con
 
 	// Check if store is open using context data when available, avoiding a DB query.
 	if ( ! empty( $vendor['store_open_close'] ) ) {
-		$is_store_open = \The_Another\Plugin\Blocks_Dokan\Renderers\Vendor_Renderer::is_store_open_from_context( $vendor['store_open_close'], $vendor_id );
+		$is_store_open = \The_Another\Plugin\Blocks_For_Dokan\Renderers\Vendor_Renderer::is_store_open_from_context( $vendor['store_open_close'], $vendor_id );
 	} else {
 		$is_store_open = function_exists( 'dokan_is_store_open' ) ? dokan_is_store_open( $vendor_id ) : true;
 	}

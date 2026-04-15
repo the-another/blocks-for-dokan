@@ -6,7 +6,7 @@
  * @since 1.0.0
  */
 
-use The_Another\Plugin\Blocks_Dokan\Renderers\Vendor_Renderer;
+use The_Another\Plugin\Blocks_For_Dokan\Renderers\Vendor_Renderer;
 
 // Exit if accessed directly.
 if ( ! defined( 'ABSPATH' ) ) {

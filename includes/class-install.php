@@ -6,7 +6,7 @@
  * @since 1.0.0
  */
 
-namespace The_Another\Plugin\Blocks_Dokan;
+namespace The_Another\Plugin\Blocks_For_Dokan;
 
 // Exit if accessed directly.
 if ( ! defined( 'ABSPATH' ) ) {

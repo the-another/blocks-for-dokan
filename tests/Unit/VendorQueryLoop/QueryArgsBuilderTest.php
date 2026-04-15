@@ -6,7 +6,7 @@
  * @since 1.1.0
  */
 
-namespace The_Another\Plugin\Blocks_Dokan\Blocks\Tests\Unit\VendorQueryLoop;
+namespace The_Another\Plugin\Blocks_For_Dokan\Blocks\Tests\Unit\VendorQueryLoop;
 
 use PHPUnit\Framework\TestCase;
 use Brain\Monkey;

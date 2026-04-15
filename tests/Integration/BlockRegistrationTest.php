@@ -6,12 +6,12 @@
  * @since 1.0.0
  */
 
-namespace The_Another\Plugin\Blocks_Dokan\Blocks\Tests\Integration;
+namespace The_Another\Plugin\Blocks_For_Dokan\Blocks\Tests\Integration;
 
 use PHPUnit\Framework\TestCase;
 use Brain\Monkey;
 use Brain\Monkey\Functions;
-use The_Another\Plugin\Blocks_Dokan\Block_Registry;
+use The_Another\Plugin\Blocks_For_Dokan\Block_Registry;
 
 /**
  * Block registration test class.

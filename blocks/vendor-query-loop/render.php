@@ -346,13 +346,13 @@ function theabd_render_vendor_query_loop_block( array $attributes, string $conte
 	}
 
 	// Persist the inner-block template so the REST endpoint can re-render subsequent pages.
-	if ( $enable_infinite_scroll && ! empty( $template_blocks ) && class_exists( '\\The_Another\\Plugin\\Blocks_Dokan\\Rest\\Vendor_Query_Loop_Controller' ) ) {
+	if ( $enable_infinite_scroll && ! empty( $template_blocks ) && class_exists( '\\The_Another\\Plugin\\Blocks_For_Dokan\\Rest\\Vendor_Query_Loop_Controller' ) ) {
 		$template_block_arrays = array_map(
 			static fn( $b ) => $b->parsed_block,
 			$template_blocks
 		);
 		set_transient(
-			\The_Another\Plugin\Blocks_Dokan\Rest\Vendor_Query_Loop_Controller::template_cache_key( $query_id ),
+			\The_Another\Plugin\Blocks_For_Dokan\Rest\Vendor_Query_Loop_Controller::template_cache_key( $query_id ),
 			$template_block_arrays,
 			HOUR_IN_SECONDS
 		);

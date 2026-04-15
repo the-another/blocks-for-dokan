@@ -46,7 +46,7 @@
 	},
 	"autoload-dev": {
 		"psr-4": {
-			"The_Another\\Plugin\\Blocks_Dokan\\Blocks\\Tests\\": "tests/"
+			"The_Another\\Plugin\\Blocks_For_Dokan\\Blocks\\Tests\\": "tests/"
 		}
 	},
 	"config": {
@@ -74,10 +74,10 @@
 	},
 	"extra": {
 		"mozart": {
-			"dep_namespace": "The_Another\\Plugin\\Blocks_Dokan\\Blocks\\Dependencies\\",
+			"dep_namespace": "The_Another\\Plugin\\Blocks_For_Dokan\\Blocks\\Dependencies\\",
 			"dep_directory": "/dependencies/",
 			"classmap_directory": "/includes/classes/",
-			"classmap_prefix": "TheAnother_Plugin_Blocks_Dokan_",
+			"classmap_prefix": "TheAnother_Plugin_Blocks_For_Dokan_",
 			"packages": [],
 			"delete_vendor_directories": true
 		}

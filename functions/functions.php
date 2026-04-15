@@ -10,9 +10,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-use The_Another\Plugin\Blocks_Dokan\Blocks;
-use The_Another\Plugin\Blocks_Dokan\Container\Container;
-use The_Another\Plugin\Blocks_Dokan\Container\Hook_Manager;
+use The_Another\Plugin\Blocks_For_Dokan\Blocks;
+use The_Another\Plugin\Blocks_For_Dokan\Container\Container;
+use The_Another\Plugin\Blocks_For_Dokan\Container\Hook_Manager;
 
 /**
  * Get the Another Blocks for Dokan instance.

@@ -24,7 +24,7 @@ function theabd_render_vendor_store_sidebar_block( array $attributes, string $co
 	$vendor_id = ! empty( $attributes['vendorId'] ) ? absint( $attributes['vendorId'] ) : 0;
 
 	if ( ! $vendor_id ) {
-		$vendor_id = \The_Another\Plugin\Blocks_Dokan\Helpers\Context_Detector::get_vendor_id();
+		$vendor_id = \The_Another\Plugin\Blocks_For_Dokan\Helpers\Context_Detector::get_vendor_id();
 	}
 
 	if ( ! $vendor_id || ! dokan_is_user_seller( $vendor_id ) ) {
@@ -32,7 +32,7 @@ function theabd_render_vendor_store_sidebar_block( array $attributes, string $co
 	}
 
 	// Get vendor data.
-	$vendor_data = \The_Another\Plugin\Blocks_Dokan\Renderers\Vendor_Renderer::get_vendor_data( $vendor_id );
+	$vendor_data = \The_Another\Plugin\Blocks_For_Dokan\Renderers\Vendor_Renderer::get_vendor_data( $vendor_id );
 	if ( ! $vendor_data ) {
 		return '';
 	}

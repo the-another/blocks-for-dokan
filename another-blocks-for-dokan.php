@@ -23,8 +23,8 @@
 
 // Exit if accessed directly.
 
-use The_Another\Plugin\Blocks_Dokan\Blocks;
-use The_Another\Plugin\Blocks_Dokan\Install;
+use The_Another\Plugin\Blocks_For_Dokan\Blocks;
+use The_Another\Plugin\Blocks_For_Dokan\Install;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;

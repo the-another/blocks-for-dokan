@@ -46,7 +46,7 @@ function theabd_render_vendor_card_block( array $attributes, string $content, WP
 		$vendor_id = ! empty( $attributes['vendorId'] ) ? absint( $attributes['vendorId'] ) : 0;
 
 		if ( $vendor_id && dokan_is_user_seller( $vendor_id ) ) {
-			$vendor_data = \The_Another\Plugin\Blocks_Dokan\Renderers\Vendor_Renderer::get_vendor_data( $vendor_id );
+			$vendor_data = \The_Another\Plugin\Blocks_For_Dokan\Renderers\Vendor_Renderer::get_vendor_data( $vendor_id );
 		}
 	}
 

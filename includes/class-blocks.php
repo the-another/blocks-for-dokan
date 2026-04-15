@@ -6,13 +6,13 @@
  * @since 1.0.0
  */
 
-namespace The_Another\Plugin\Blocks_Dokan;
+namespace The_Another\Plugin\Blocks_For_Dokan;
 
-use The_Another\Plugin\Blocks_Dokan\Container\Container;
-use The_Another\Plugin\Blocks_Dokan\Container\Hook_Manager;
-use The_Another\Plugin\Blocks_Dokan\Exceptions\Container_Exception;
-use The_Another\Plugin\Blocks_Dokan\Rest\Vendor_Query_Loop_Controller;
-use The_Another\Plugin\Blocks_Dokan\Templates\Block_Templates_Controller;
+use The_Another\Plugin\Blocks_For_Dokan\Container\Container;
+use The_Another\Plugin\Blocks_For_Dokan\Container\Hook_Manager;
+use The_Another\Plugin\Blocks_For_Dokan\Exceptions\Container_Exception;
+use The_Another\Plugin\Blocks_For_Dokan\Rest\Vendor_Query_Loop_Controller;
+use The_Another\Plugin\Blocks_For_Dokan\Templates\Block_Templates_Controller;
 
 // Exit if accessed directly.
 if ( ! defined( 'ABSPATH' ) ) {

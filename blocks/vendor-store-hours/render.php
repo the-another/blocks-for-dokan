@@ -24,7 +24,7 @@ function theabd_render_vendor_store_hours_block( array $attributes, string $cont
 	$vendor_id = ! empty( $attributes['vendorId'] ) ? absint( $attributes['vendorId'] ) : 0;
 
 	if ( ! $vendor_id ) {
-		$vendor_id = \The_Another\Plugin\Blocks_Dokan\Helpers\Context_Detector::get_vendor_id();
+		$vendor_id = \The_Another\Plugin\Blocks_For_Dokan\Helpers\Context_Detector::get_vendor_id();
 	}
 
 	if ( ! $vendor_id || ! dokan_is_user_seller( $vendor_id ) ) {
@@ -32,7 +32,7 @@ function theabd_render_vendor_store_hours_block( array $attributes, string $cont
 	}
 
 	// Get vendor data.
-	$vendor_data = \The_Another\Plugin\Blocks_Dokan\Renderers\Vendor_Renderer::get_vendor_data( $vendor_id );
+	$vendor_data = \The_Another\Plugin\Blocks_For_Dokan\Renderers\Vendor_Renderer::get_vendor_data( $vendor_id );
 	if ( ! $vendor_data || empty( $vendor_data['store_info']['dokan_store_time'] ) ) {
 		return '';
 	}
@@ -81,7 +81,7 @@ function theabd_render_vendor_store_hours_block( array $attributes, string $cont
 		<?php if ( $show_current_status ) : ?>
 			<div class="theabd--vendor-store-hours-status">
 				<?php
-				if ( \The_Another\Plugin\Blocks_Dokan\Renderers\Vendor_Renderer::is_store_open( $vendor_id ) ) {
+				if ( \The_Another\Plugin\Blocks_For_Dokan\Renderers\Vendor_Renderer::is_store_open( $vendor_id ) ) {
 					$store_open_notice = isset( $store_info['dokan_store_open_notice'] ) && ! empty( $store_info['dokan_store_open_notice'] )
 						? $store_info['dokan_store_open_notice']
 						: __( 'Store Open', 'theanother-blocks-for-dokan' );

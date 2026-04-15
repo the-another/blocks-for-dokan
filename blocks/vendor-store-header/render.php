@@ -25,7 +25,7 @@ function theabd_render_vendor_store_header_block( array $attributes, string $con
 
 	if ( ! $vendor_id ) {
 		// Auto-detect from context.
-		$vendor_id = \The_Another\Plugin\Blocks_Dokan\Helpers\Context_Detector::get_vendor_id();
+		$vendor_id = \The_Another\Plugin\Blocks_For_Dokan\Helpers\Context_Detector::get_vendor_id();
 	}
 
 	if ( ! $vendor_id || ! dokan_is_user_seller( $vendor_id ) ) {
@@ -33,7 +33,7 @@ function theabd_render_vendor_store_header_block( array $attributes, string $con
 	}
 
 	// Get vendor data.
-	$vendor_data = \The_Another\Plugin\Blocks_Dokan\Renderers\Vendor_Renderer::get_vendor_data( $vendor_id );
+	$vendor_data = \The_Another\Plugin\Blocks_For_Dokan\Renderers\Vendor_Renderer::get_vendor_data( $vendor_id );
 	if ( ! $vendor_data ) {
 		return '';
 	}
@@ -74,13 +74,13 @@ function theabd_render_vendor_store_header_block( array $attributes, string $con
 
 			<?php if ( $show_contact_info ) : ?>
 				<ul class="theabd--store-contact-info">
-					<?php if ( ! \The_Another\Plugin\Blocks_Dokan\Renderers\Vendor_Renderer::is_vendor_info_hidden( 'address' ) && ! empty( $vendor_data['address'] ) ) : ?>
+					<?php if ( ! \The_Another\Plugin\Blocks_For_Dokan\Renderers\Vendor_Renderer::is_vendor_info_hidden( 'address' ) && ! empty( $vendor_data['address'] ) ) : ?>
 						<li class="theabd--vendor-store-address">
 							<?php echo wp_kses_post( $vendor_data['address'] ); ?>
 						</li>
 					<?php endif; ?>
 
-					<?php if ( ! \The_Another\Plugin\Blocks_Dokan\Renderers\Vendor_Renderer::is_vendor_info_hidden( 'phone' ) && ! empty( $vendor_data['phone'] ) ) : ?>
+					<?php if ( ! \The_Another\Plugin\Blocks_For_Dokan\Renderers\Vendor_Renderer::is_vendor_info_hidden( 'phone' ) && ! empty( $vendor_data['phone'] ) ) : ?>
 						<li class="theabd--vendor-store-phone">
 							<i class="fas fa-phone-alt"></i>
 							<a href="tel:<?php echo esc_attr( $vendor_data['phone'] ); ?>">
@@ -89,7 +89,7 @@ function theabd_render_vendor_store_header_block( array $attributes, string $con
 						</li>
 					<?php endif; ?>
 
-					<?php if ( ! \The_Another\Plugin\Blocks_Dokan\Renderers\Vendor_Renderer::is_vendor_info_hidden( 'email' ) && ! empty( $vendor_data['email'] ) ) : ?>
+					<?php if ( ! \The_Another\Plugin\Blocks_For_Dokan\Renderers\Vendor_Renderer::is_vendor_info_hidden( 'email' ) && ! empty( $vendor_data['email'] ) ) : ?>
 						<li class="theabd--store-email">
 							<i class="far fa-envelope"></i>
 							<a href="mailto:<?php echo esc_attr( antispambot( $vendor_data['email'] ) ); ?>">
@@ -100,14 +100,14 @@ function theabd_render_vendor_store_header_block( array $attributes, string $con
 
 					<li class="theabd--vendor-rating">
 						<i class="fas fa-star"></i>
-						<?php echo wp_kses_post( \The_Another\Plugin\Blocks_Dokan\Renderers\Vendor_Renderer::get_seller_rating_html( $vendor_id ) ); ?>
+						<?php echo wp_kses_post( \The_Another\Plugin\Blocks_For_Dokan\Renderers\Vendor_Renderer::get_seller_rating_html( $vendor_id ) ); ?>
 					</li>
 
 					<?php if ( $show_store_hours ) : ?>
 						<li class="theabd--vendor-store-hours">
 							<i class="fas fa-clock"></i>
 							<?php
-							if ( \The_Another\Plugin\Blocks_Dokan\Renderers\Vendor_Renderer::is_store_open( $vendor_id ) ) {
+							if ( \The_Another\Plugin\Blocks_For_Dokan\Renderers\Vendor_Renderer::is_store_open( $vendor_id ) ) {
 								echo '<span class="theabd--store-open">' . esc_html__( 'Store Open', 'theanother-blocks-for-dokan' ) . '</span>';
 							} else {
 								echo '<span class="theabd--store-closed">' . esc_html__( 'Store Closed', 'theanother-blocks-for-dokan' ) . '</span>';

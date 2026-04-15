@@ -6,13 +6,13 @@
  * @since 1.0.0
  */
 
-namespace The_Another\Plugin\Blocks_Dokan\Blocks\Tests\Unit\Helpers;
+namespace The_Another\Plugin\Blocks_For_Dokan\Blocks\Tests\Unit\Helpers;
 
 use PHPUnit\Framework\TestCase;
 use Brain\Monkey;
 use Brain\Monkey\Functions;
 use Mockery;
-use The_Another\Plugin\Blocks_Dokan\Helpers\Context_Detector;
+use The_Another\Plugin\Blocks_For_Dokan\Helpers\Context_Detector;
 
 /**
  * Context detector test class.

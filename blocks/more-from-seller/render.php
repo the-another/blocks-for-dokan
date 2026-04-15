@@ -24,7 +24,7 @@ function theabd_render_more_from_seller_block( array $attributes, string $conten
 	$product_id = ! empty( $attributes['productId'] ) ? absint( $attributes['productId'] ) : 0;
 
 	if ( ! $product_id ) {
-		$product_id = \The_Another\Plugin\Blocks_Dokan\Helpers\Context_Detector::get_product_id();
+		$product_id = \The_Another\Plugin\Blocks_For_Dokan\Helpers\Context_Detector::get_product_id();
 	}
 
 	if ( ! $product_id ) {
@@ -89,7 +89,7 @@ function theabd_render_more_from_seller_block( array $attributes, string $conten
 	$products_query = new WP_Query( $query_args );
 
 	// Get vendor data for store URL.
-	$vendor_data = \The_Another\Plugin\Blocks_Dokan\Renderers\Vendor_Renderer::get_vendor_data( $vendor_id );
+	$vendor_data = \The_Another\Plugin\Blocks_For_Dokan\Renderers\Vendor_Renderer::get_vendor_data( $vendor_id );
 
 	// Get wrapper attributes.
 	$wrapper_attributes = get_block_wrapper_attributes(
