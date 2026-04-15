@@ -15,14 +15,14 @@
 
 	function toggleFilterForm() {
 		if ( filterButton && filterForm ) {
-			var isExpanded = filterButton.getAttribute( 'aria-expanded' ) === 'true';
-			filterButton.setAttribute( 'aria-expanded', ! isExpanded );
-			filterForm.style.display = isExpanded ? 'none' : 'block';
+			var isHidden = filterForm.classList.contains( 'tanbfd--hidden' );
+			filterButton.setAttribute( 'aria-expanded', isHidden ? 'true' : 'false' );
+			filterForm.classList.toggle( 'tanbfd--hidden' );
 		}
 	}
 
 	if ( filterButton && filterForm ) {
-		var isInitiallyVisible = filterForm.style.display !== 'none';
+		var isInitiallyVisible = ! filterForm.classList.contains( 'tanbfd--hidden' );
 		filterButton.setAttribute( 'aria-expanded', isInitiallyVisible ? 'true' : 'false' );
 
 		filterButton.addEventListener( 'click', function ( e ) {

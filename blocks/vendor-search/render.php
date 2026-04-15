@@ -156,7 +156,7 @@ function tanbfd_render_vendor_search_block( array $attributes, string $content, 
 			// Show filter form if there's an active search query.
 			$has_active_filters = ! empty( $search_query ) || ! empty( $_GET['dokan_store_location'] ) || ! empty( $_GET['dokan_store_rating'] ) || ! empty( $_GET['dokan_store_category'] ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			?>
-			<form role="search" method="get" name="dokan_store_lists_filter_form" id="tanbfd--vendor-query-looping-filter-form-wrap" class="tanbfd--vendor-search-filter-form" data-testid="vendor-filter-form" style="<?php echo $has_active_filters ? 'display: block;' : 'display: none;'; ?>">
+			<form role="search" method="get" name="dokan_store_lists_filter_form" id="tanbfd--vendor-query-looping-filter-form-wrap" class="tanbfd--vendor-search-filter-form<?php echo $has_active_filters ? '' : ' tanbfd--hidden'; ?>" data-testid="vendor-filter-form">
 				<?php do_action( 'dokan_before_store_lists_filter_search' ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Dokan core action for compatibility. ?>
 
 				<?php

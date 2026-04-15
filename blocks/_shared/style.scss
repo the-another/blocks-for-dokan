@@ -8,6 +8,10 @@
  * @since 1.0.4
  */
 
+.tanbfd--hidden {
+	display: none !important;
+}
+
 // ---------------------------------------------------------------------------
 // Mixin: form-control base styles
 // Used by .tanbfd--form-control below. Other blocks that can't add classes
