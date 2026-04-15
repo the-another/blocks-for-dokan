@@ -202,33 +202,66 @@ Rather than tracking individual line numbers (which shift as we edit), the imple
 
 **Decision**: We will **not** rename the `The_Another\Plugin\Blocks_Dokan` namespace. "The Another" is a proper brand name, not a generic "the" prefix. We'll note this in the review response.
 
+### Prefix strategy
+
+| Identifier type | Prefix | Example |
+|----------------|--------|---------|
+| Standalone functions | `tanbfd_` | `tanbfd_render_vendor_card_block()` |
+| Constants | `THE_ANOTHER_BLOCKS_FOR_DOKAN_` | `THE_ANOTHER_BLOCKS_FOR_DOKAN_VERSION` |
+| Filter/action hook names | `tanbfd_` | `tanbfd_registered_blocks` |
+| Script/style handles | `tanbfd-` | `tanbfd-blocks-frontend` |
+| Transient names | `tanbfd_` | `tanbfd_store_listing_random_orderby` |
+| CSS classes | `theabd--` | unchanged |
+| Namespace | `The_Another\Plugin\Blocks_Dokan` | unchanged |
+| Class methods | unchanged | unchanged |
+
 ### Identifiers to rename
 
-**A. Functions using `another_blocks_for_` prefix → rename to `theabd_`** (3 functions):
-- `functions/functions.php:22` — `another_blocks_for_dokan()` → `theabd_plugin()`
-- `functions/functions.php:31` — `another_blocks_for_dokan_container()` → `theabd_container()`
-- `functions/functions.php:40` — `another_blocks_for_dokan_hooks()` → `theabd_hooks()`
-- Call sites are internal to `functions/functions.php` (they call each other). Search codebase for any external callers to update.
+**A. All standalone functions: `theabd_` → `tanbfd_`** (31 functions, ~70 call sites):
 
-**B. Filter using `another_blocks_for_` prefix → rename to `theabd_`** (1 filter):
-- `includes/templates/class-block-templates-controller.php:57` — `another_blocks_for_dokan_registered_templates` → `theabd_registered_templates`
+Global find-and-replace of `theabd_` → `tanbfd_` in function definitions and all call sites. Covers:
+- 21 render functions (`theabd_render_*_block` → `tanbfd_render_*_block`)
+- 4 vendor-query-loop helpers (`theabd_vendor_query_loop_*` → `tanbfd_vendor_query_loop_*`)
+- 2 store-tabs helpers (`theabd_get_current_store_tab`, `theabd_is_tab_active`)
+- 1 address helper (`theabd_format_address`)
+- All references in `includes/class-block-registry.php` (21 render callback strings)
+- All references in `includes/rest/class-vendor-query-loop-controller.php`
+- All references in test files
 
-**C. Script/style handles using `dokan_` prefix → rename to `theabd-`** (3 handles):
-- `includes/class-blocks.php:183` — `dokan-blocks-frontend` → `theabd-blocks-frontend`
-- `includes/class-blocks.php:195` — `dokan-blocks-editor` → `theabd-blocks-editor`
-- `includes/class-blocks.php:223` — `dokan-blocks-editor` → `theabd-blocks-editor`
-- Line 197 also references `dokan-blocks-frontend` as a dependency — update there too.
+**B. Functions using `another_blocks_for_` prefix → rename to `tanbfd_`** (3 functions):
+- `functions/functions.php:22` — `another_blocks_for_dokan()` → `tanbfd_plugin()`
+- `functions/functions.php:31` — `another_blocks_for_dokan_container()` → `tanbfd_container()`
+- `functions/functions.php:40` — `another_blocks_for_dokan_hooks()` → `tanbfd_hooks()`
+- Call sites are internal to `functions/functions.php` (they call each other).
 
-**D. Transient names using `dokan_` prefix → rename to `theabd_`** (2 instances):
-- `blocks/vendor-query-loop/render.php:170` — `dokan_store_listing_random_orderby` → `theabd_store_listing_random_orderby`
+**C. Filter/action hook names: `theabd_` → `tanbfd_`** (6 unique filters):
+- `theabd_registered_blocks` → `tanbfd_registered_blocks`
+- `theabd_store_list_query_args` → `tanbfd_store_list_query_args`
+- `theabd_store_search_block_count` → `tanbfd_store_search_block_count`
+- `theabd_vendor_query_loop_infinite_filters` → `tanbfd_vendor_query_loop_infinite_filters`
+- `theabd_more_from_seller_query_args` → `tanbfd_more_from_seller_query_args`
+- `theabd_store_template_override` → `tanbfd_store_template_override`
+
+**D. Filter using `another_blocks_for_` prefix** (1 filter):
+- `includes/templates/class-block-templates-controller.php:57` — `another_blocks_for_dokan_registered_templates` → `tanbfd_registered_templates`
+
+**E. Script/style handles using `dokan_` prefix → rename to `tanbfd-`** (3 handles + 1 existing):
+- `includes/class-blocks.php:183` — `dokan-blocks-frontend` → `tanbfd-blocks-frontend`
+- `includes/class-blocks.php:195` — `dokan-blocks-editor` → `tanbfd-blocks-editor`
+- `includes/class-blocks.php:223` — `dokan-blocks-editor` → `tanbfd-blocks-editor`
+- Line 197 dependency reference `dokan-blocks-frontend` → `tanbfd-blocks-frontend`
+- `includes/class-blocks.php:145` — `theabd-vendor-query-loop-view` → `tanbfd-vendor-query-loop-view`
+- `blocks/vendor-query-loop/render.php:402` — same handle in `wp_enqueue_script()`
+
+**F. Transient names using `dokan_` prefix → rename to `tanbfd_`** (2 instances):
+- `blocks/vendor-query-loop/render.php:170` — `dokan_store_listing_random_orderby` → `tanbfd_store_listing_random_orderby`
 - `blocks/vendor-query-loop/render.php:173` — same transient in `set_transient()`
+- Also rename `theabd_vql_tpl_` transient prefix in `class-vendor-query-loop-controller.php:34` → `tanbfd_vql_tpl_`
 
-**E. Local variable in main plugin file** (1 instance):
-- `another-blocks-for-dokan.php:45` — `$another_blocks_for_dokan_autoload_file` → `$theabd_autoload_file`
+**G. Local variable in main plugin file** (1 instance):
+- `another-blocks-for-dokan.php:45` — `$another_blocks_for_dokan_autoload_file` → `$tanbfd_autoload_file`
 
-**F. Constants: `ANOTHER_BLOCKS_FOR_DOKAN_*` → `THE_ANOTHER_BLOCKS_FOR_DOKAN_*`** (7 defines, ~45 references):
-
-Rename all constants to use the `THE_ANOTHER_BLOCKS_FOR_DOKAN_` prefix to match the brand name:
+**H. Constants: `ANOTHER_BLOCKS_FOR_DOKAN_*` → `THE_ANOTHER_BLOCKS_FOR_DOKAN_*`** (7 defines, ~45 references):
 
 | Old | New |
 |-----|-----|
@@ -240,14 +273,11 @@ Rename all constants to use the `THE_ANOTHER_BLOCKS_FOR_DOKAN_` prefix to match 
 | `ANOTHER_BLOCKS_FOR_DOKAN_MIN_WOOCOMMERCE_VERSION` | `THE_ANOTHER_BLOCKS_FOR_DOKAN_MIN_WOOCOMMERCE_VERSION` |
 | `ANOTHER_BLOCKS_FOR_DOKAN_MIN_DOKAN_VERSION` | `THE_ANOTHER_BLOCKS_FOR_DOKAN_MIN_DOKAN_VERSION` |
 
-**Affected files** (~45 references total): `another-blocks-for-dokan.php`, `includes/class-install.php`, `includes/class-blocks.php`, `includes/class-block-registry.php`, `includes/templates/class-store-template.php`, `includes/templates/class-abstract-dokan-template.php`, `includes/rest/class-vendor-query-loop-controller.php`, `tests/bootstrap.php`, `tests/Unit/Blocks/StoreHeaderBlockTest.php`, `tests/Integration/BlockRenderingTest.php`.
-
 Implementation: global find-and-replace `ANOTHER_BLOCKS_FOR_DOKAN_` → `THE_ANOTHER_BLOCKS_FOR_DOKAN_` across all `.php` files (excluding `vendor/`).
 
 ### Already correct (no changes needed)
-- All `theabd_render_*_block()` functions (21 instances)
-- All `theabd_*` filters (6 unique filters)
-- `theabd-vendor-query-loop-view` script handle
+- `theabd--*` CSS classes (not function names, keep as-is)
+- `The_Another\Plugin\Blocks_Dokan` namespace (brand name argument)
 - `theabd--*` CSS classes
 - Dokan core hooks like `dokan_is_store_open` (external API, not our prefix)
 - `$_wp_current_template_content` (WordPress core global, already has phpcs:ignore)
