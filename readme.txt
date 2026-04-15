@@ -34,6 +34,28 @@ The latest stable version of Dokan is recommended.
 
 PHP 8.3 or higher is required.
 
+== External services ==
+
+= Mapbox Static Maps =
+
+The Vendor Store Location block can display a static map image using the Mapbox Static Images API. When a vendor has configured a Mapbox access token and store coordinates (latitude/longitude), the block loads a map image from Mapbox's servers.
+
+* **Data sent**: Store latitude, longitude, zoom level, and the site's Mapbox access token.
+* **When**: Each time the Vendor Store Location block renders on the frontend with Mapbox selected as the map provider.
+* **Service provider**: Mapbox, Inc.
+* [Mapbox Terms of Service](https://www.mapbox.com/tos/)
+* [Mapbox Privacy Policy](https://www.mapbox.com/privacy/)
+
+= Google Maps Embed =
+
+The Vendor Store Location block can alternatively display an interactive embedded map using the Google Maps Embed API. When a vendor has configured a Google Maps API key and store address, the block loads a map iframe from Google's servers.
+
+* **Data sent**: Store address, zoom level, and the site's Google Maps API key.
+* **When**: Each time the Vendor Store Location block renders on the frontend with Google Maps selected as the map provider.
+* **Service provider**: Google LLC.
+* [Google Maps Platform Terms of Service](https://cloud.google.com/maps-platform/terms)
+* [Google Privacy Policy](https://policies.google.com/privacy)
+
 == Changelog ==
 
 
