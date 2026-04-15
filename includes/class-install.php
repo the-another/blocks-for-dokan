@@ -50,8 +50,11 @@ class Install {
 		if ( $use_constants && defined( 'WC_VERSION' ) ) {
 			$wc_version = WC_VERSION;
 		} else {
-			$wc_plugin_file = WP_PLUGIN_DIR . '/woocommerce/woocommerce.php';
-			$wc_version     = self::get_plugin_version( $wc_plugin_file );
+			if ( ! function_exists( 'get_plugins' ) ) {
+				require_once ABSPATH . 'wp-admin/includes/plugin.php';
+			}
+			$all_plugins = get_plugins();
+			$wc_version  = $all_plugins['woocommerce/woocommerce.php']['Version'] ?? null;
 		}
 
 		if ( ! $wc_version ) {
@@ -73,8 +76,11 @@ class Install {
 		if ( $use_constants && defined( 'DOKAN_PLUGIN_VERSION' ) ) {
 			$dokan_version = DOKAN_PLUGIN_VERSION;
 		} else {
-			$dokan_plugin_file = WP_PLUGIN_DIR . '/dokan-lite/dokan.php';
-			$dokan_version     = self::get_plugin_version( $dokan_plugin_file );
+			if ( ! function_exists( 'get_plugins' ) ) {
+				require_once ABSPATH . 'wp-admin/includes/plugin.php';
+			}
+			$all_plugins   = get_plugins();
+			$dokan_version = $all_plugins['dokan-lite/dokan.php']['Version'] ?? null;
 		}
 
 		if ( ! $dokan_version ) {

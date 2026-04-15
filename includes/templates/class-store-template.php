@@ -156,7 +156,7 @@ class Store_Template extends Abstract_Dokan_Template {
 
 		// Return path to WordPress block template canvas.
 		// This will trigger WordPress to render our registered block template.
-		$canvas_path = ABSPATH . WPINC . '/template-canvas.php';
+		$canvas_path = wp_normalize_path( ABSPATH . WPINC . '/template-canvas.php' );
 		if ( file_exists( $canvas_path ) ) {
 			return $canvas_path;
 		}
