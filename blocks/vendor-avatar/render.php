@@ -93,14 +93,14 @@ function tanbfd_render_vendor_avatar_block( array $attributes, string $content, 
 
 	ob_start();
 	?>
-	<div <?php echo $wrapper_attributes; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?><?php echo $wrapper_style_attr; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
+	<div <?php echo wp_kses_post( $wrapper_attributes ); ?><?php echo wp_kses_post( $wrapper_style_attr ); ?>>
 		<?php if ( $is_link && ! empty( $shop_url ) ) : ?>
 			<a href="<?php echo esc_url( $shop_url ); ?>" class="tanbfd--vendor-avatar-link">
 				<img
 					src="<?php echo esc_url( $avatar_url ); ?>"
 					alt="<?php echo esc_attr( $shop_name ); ?>"
 					class="tanbfd--vendor-avatar-image"
-					<?php echo $img_style_attr; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+					<?php echo wp_kses_post( $img_style_attr ); ?>
 				/>
 			</a>
 		<?php else : ?>
@@ -108,7 +108,7 @@ function tanbfd_render_vendor_avatar_block( array $attributes, string $content, 
 				src="<?php echo esc_url( $avatar_url ); ?>"
 				alt="<?php echo esc_attr( $shop_name ); ?>"
 				class="tanbfd--vendor-avatar-image"
-				<?php echo $img_style_attr; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+				<?php echo wp_kses_post( $img_style_attr ); ?>
 			/>
 		<?php endif; ?>
 	</div>

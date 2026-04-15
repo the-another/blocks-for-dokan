@@ -61,7 +61,7 @@ function tanbfd_render_vendor_contact_form_block( array $attributes, string $con
 
 	ob_start();
 	?>
-	<div <?php echo $wrapper_attributes; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
+	<div <?php echo wp_kses_post( $wrapper_attributes ); ?>>
 		<?php
 		// Use Dokan's contact form template for full compatibility.
 		if ( function_exists( 'dokan_get_template_part' ) ) {

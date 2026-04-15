@@ -77,7 +77,7 @@ function tanbfd_render_vendor_store_hours_block( array $attributes, string $cont
 
 	ob_start();
 	?>
-	<div <?php echo $wrapper_attributes; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
+	<div <?php echo wp_kses_post( $wrapper_attributes ); ?>>
 		<?php if ( $show_current_status ) : ?>
 			<div class="tanbfd--vendor-store-hours-status">
 				<?php

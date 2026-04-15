@@ -82,7 +82,7 @@ function tanbfd_render_vendor_search_block( array $attributes, string $content, 
 
 	ob_start();
 	?>
-	<div <?php echo $wrapper_attributes; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
+	<div <?php echo wp_kses_post( $wrapper_attributes ); ?>>
 		<?php do_action( 'dokan_before_store_lists_filter' ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Dokan core action for compatibility. ?>
 
 		<div class="tanbfd--vendor-query-looping-filter-wrap">

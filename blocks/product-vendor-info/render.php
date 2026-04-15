@@ -41,7 +41,7 @@ function tanbfd_render_product_vendor_info_block( array $attributes, string $con
 
 			ob_start();
 			?>
-			<div <?php echo $wrapper_attributes; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
+			<div <?php echo wp_kses_post( $wrapper_attributes ); ?>>
 				<div class="tanbfd--product-vendor-info-placeholder">
 					<p style="padding: 1rem; background: #f0f0f0; border-radius: 4px; font-size: 0.875rem; color: #666;">
 						<?php echo esc_html__( 'Product Vendor Info: Add this block to a product page or specify a product ID in the block settings.', 'the-another-blocks-for-dokan' ); ?>
@@ -148,7 +148,7 @@ function tanbfd_render_product_vendor_info_block( array $attributes, string $con
 	// Render the product vendor info with inner blocks.
 	ob_start();
 	?>
-	<div <?php echo $wrapper_attributes; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?><?php echo $style_attr; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
+	<div <?php echo wp_kses_post( $wrapper_attributes ); ?><?php echo wp_kses_post( $style_attr ); ?>>
 		<?php
 		// Render inner blocks with vendor context.
 		if ( ! empty( $block->inner_blocks ) && $vendor_data ) {
@@ -159,11 +159,11 @@ function tanbfd_render_product_vendor_info_block( array $attributes, string $con
 					$inner_block->parsed_block,
 					array( 'dokan/vendor' => $vendor_data )
 				);
-				echo $inner_block_instance->render(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+				echo wp_kses_post( $inner_block_instance->render() );
 			}
 		} elseif ( ! empty( $content ) ) {
 			// Fallback to pre-rendered content if no inner blocks.
-			echo $content; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			echo wp_kses_post( $content );
 		} else {
 			// No inner blocks and no content - show minimal default.
 			?>

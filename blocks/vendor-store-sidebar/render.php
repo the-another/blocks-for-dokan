@@ -56,7 +56,7 @@ function tanbfd_render_vendor_store_sidebar_block( array $attributes, string $co
 	} else {
 		// Use Dokan sidebar widgets.
 		?>
-		<div <?php echo $wrapper_attributes; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
+		<div <?php echo wp_kses_post( $wrapper_attributes ); ?>>
 			<div class="tanbfd--widget-area tanbfd--widget-collapse">
 				<?php
 				if ( ! dynamic_sidebar( 'sidebar-store' ) ) {

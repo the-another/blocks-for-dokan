@@ -90,7 +90,7 @@ function tanbfd_render_vendor_store_location_block( array $attributes, string $c
 		);
 
 		?>
-		<div <?php echo $wrapper_attributes; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
+		<div <?php echo wp_kses_post( $wrapper_attributes ); ?>>
 			<?php dokan_get_template_part( 'widgets/store-map', $map_provider, $template_args ); ?>
 		</div>
 		<?php
@@ -99,7 +99,7 @@ function tanbfd_render_vendor_store_location_block( array $attributes, string $c
 		$mapbox_token = get_option( 'dokan_mapbox_token', '' );
 		if ( ! empty( $mapbox_token ) ) {
 			?>
-			<div <?php echo $wrapper_attributes; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
+			<div <?php echo wp_kses_post( $wrapper_attributes ); ?>>
 				<iframe
 					width="100%"
 					height="<?php echo esc_attr( $height ); ?>"
@@ -116,7 +116,7 @@ function tanbfd_render_vendor_store_location_block( array $attributes, string $c
 		$google_api_key  = get_option( 'dokan_google_api_key', '' );
 		$address_encoded = rawurlencode( $address );
 		?>
-		<div <?php echo $wrapper_attributes; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
+		<div <?php echo wp_kses_post( $wrapper_attributes ); ?>>
 			<iframe
 				width="100%"
 				height="<?php echo esc_attr( $height ); ?>"

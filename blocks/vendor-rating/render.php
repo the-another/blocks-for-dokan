@@ -45,10 +45,10 @@ function tanbfd_render_vendor_rating_block( array $attributes, string $content, 
 
 	ob_start();
 	?>
-	<div <?php echo $wrapper_attributes; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
+	<div <?php echo wp_kses_post( $wrapper_attributes ); ?>>
 		<?php
 		if ( function_exists( 'dokan_generate_ratings' ) ) {
-			echo dokan_generate_ratings( $rating, $count ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			echo wp_kses_post( dokan_generate_ratings( $rating, $count ) );
 		} else {
 			// Fallback rating display.
 			$percentage = ( $rating / 5 ) * 100;

@@ -66,7 +66,7 @@ function tanbfd_render_vendor_store_terms_conditions_block( array $attributes, s
 
 	ob_start();
 	?>
-	<div <?php echo $wrapper_attributes; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
+	<div <?php echo wp_kses_post( $wrapper_attributes ); ?>>
 		<div id="tanbfd--store-toc-wrapper">
 			<div id="tanbfd--store-toc">
 				<?php if ( $show_title ) : ?>

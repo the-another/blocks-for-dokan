@@ -63,7 +63,7 @@ function tanbfd_render_vendor_query_pagination_block( array $attributes, string 
 	ob_start();
 	?>
 
-	<nav <?php echo $wrapper_attributes; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
+	<nav <?php echo wp_kses_post( $wrapper_attributes ); ?>>
 		<?php
 		echo wp_kses_post(
 			paginate_links(

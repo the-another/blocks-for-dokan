@@ -53,7 +53,7 @@ function tanbfd_render_vendor_store_name_block( array $attributes, string $conte
 
 	ob_start();
 	?>
-	<<?php echo esc_attr( $tag_name ); ?> <?php echo $wrapper_attributes; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
+	<<?php echo esc_attr( $tag_name ); ?> <?php echo wp_kses_post( $wrapper_attributes ); ?>>
 		<?php if ( $is_link && ! empty( $shop_url ) ) : ?>
 			<a href="<?php echo esc_url( $shop_url ); ?>">
 				<?php echo esc_html( $shop_name ); ?>

@@ -137,7 +137,7 @@ function tanbfd_render_vendor_card_block( array $attributes, string $content, WP
 		if ( is_admin() || ( defined( 'REST_REQUEST' ) && REST_REQUEST ) ) {
 			ob_start();
 			?>
-			<div <?php echo $wrapper_attributes; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?><?php echo $style_attr; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
+			<div <?php echo wp_kses_post( $wrapper_attributes ); ?><?php echo wp_kses_post( $style_attr ); ?>>
 				<div class="tanbfd--vendor-card-placeholder">
 					<?php if ( ! $vendor_id ) : ?>
 						<p class="tanbfd--store-placeholder-notice" style="padding: 1rem; background: #f0f0f0; border-radius: 4px; font-size: 0.875rem; color: #666;">
@@ -157,10 +157,10 @@ function tanbfd_render_vendor_card_block( array $attributes, string $content, WP
 								$inner_block->parsed_block,
 								array()
 							);
-							echo $inner_block_instance->render(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+							echo wp_kses_post( $inner_block_instance->render() );
 						}
 					} elseif ( ! empty( $content ) ) {
-						echo $content; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+						echo wp_kses_post( $content );
 					}
 					?>
 				</div>
@@ -174,7 +174,7 @@ function tanbfd_render_vendor_card_block( array $attributes, string $content, WP
 	// Render the store card with inner blocks.
 	ob_start();
 	?>
-	<div <?php echo $wrapper_attributes; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?><?php echo $style_attr; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
+	<div <?php echo wp_kses_post( $wrapper_attributes ); ?><?php echo wp_kses_post( $style_attr ); ?>>
 		<?php
 		// Render inner blocks with vendor context.
 		if ( ! empty( $block->inner_blocks ) && $vendor_data ) {
@@ -185,11 +185,11 @@ function tanbfd_render_vendor_card_block( array $attributes, string $content, WP
 					$inner_block->parsed_block,
 					array( 'dokan/vendor' => $vendor_data )
 				);
-				echo $inner_block_instance->render(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+				echo wp_kses_post( $inner_block_instance->render() );
 			}
 		} else {
 			// Fallback to pre-rendered content if no vendor data or no inner blocks.
-			echo $content; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			echo wp_kses_post( $content );
 		}
 		?>
 	</div>

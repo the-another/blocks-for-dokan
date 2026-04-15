@@ -102,7 +102,7 @@ function tanbfd_render_more_from_seller_block( array $attributes, string $conten
 
 	if ( $products_query->have_posts() ) {
 		?>
-		<div <?php echo $wrapper_attributes; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
+		<div <?php echo wp_kses_post( $wrapper_attributes ); ?>>
 			<h2 class="tanbfd--more-from-vendor-title">
 				<?php echo esc_html__( 'More from this seller', 'the-another-blocks-for-dokan' ); ?>
 			</h2>
@@ -138,7 +138,7 @@ function tanbfd_render_more_from_seller_block( array $attributes, string $conten
 		<?php
 	} else {
 		?>
-		<div <?php echo $wrapper_attributes; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
+		<div <?php echo wp_kses_post( $wrapper_attributes ); ?>>
 			<p class="tanbfd--more-from-vendor-empty">
 				<?php echo esc_html__( 'No other products found from this seller.', 'the-another-blocks-for-dokan' ); ?>
 			</p>

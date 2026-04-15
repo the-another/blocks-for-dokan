@@ -95,7 +95,7 @@ function tanbfd_render_vendor_store_address_block( array $attributes, string $co
 
 	ob_start();
 	?>
-	<p <?php echo $wrapper_attributes; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
+	<p <?php echo wp_kses_post( $wrapper_attributes ); ?>>
 		<?php if ( $show_icon ) : ?>
 			<span class="dashicons dashicons-location" aria-hidden="true"></span>
 		<?php endif; ?>

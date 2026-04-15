@@ -54,7 +54,7 @@ function tanbfd_render_vendor_store_header_block( array $attributes, string $con
 
 	ob_start();
 	?>
-	<div <?php echo $wrapper_attributes; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
+	<div <?php echo wp_kses_post( $wrapper_attributes ); ?>>
 		<?php if ( $show_banner && ! empty( $vendor_data['banner'] ) ) : ?>
 			<div class="tanbfd--vendor-store-banner">
 				<img src="<?php echo esc_url( $vendor_data['banner'] ); ?>" alt="<?php echo esc_attr( $vendor_data['shop_name'] ); ?>" />

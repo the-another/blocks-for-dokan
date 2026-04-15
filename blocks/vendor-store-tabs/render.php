@@ -94,7 +94,7 @@ function tanbfd_render_vendor_store_tabs_block( array $attributes, string $conte
 
 	ob_start();
 	?>
-	<div <?php echo $wrapper_attributes; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
+	<div <?php echo wp_kses_post( $wrapper_attributes ); ?>>
 		<ul class="tanbfd--list-inline tanbfd--vendor-store-tabs-list" role="tablist">
 			<?php foreach ( $store_tabs as $key => $tab ) : ?>
 				<?php if ( ! empty( $tab['url'] ) ) : ?>
@@ -107,7 +107,7 @@ function tanbfd_render_vendor_store_tabs_block( array $attributes, string $conte
 						<a
 							href="<?php echo esc_url( $tab['url'] ); ?>"
 							role="tab"
-							<?php echo $aria_attrs; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+							<?php echo wp_kses_post( $aria_attrs ); ?>
 						>
 							<?php echo esc_html( $tab['title'] ?? $key ); ?>
 						</a>

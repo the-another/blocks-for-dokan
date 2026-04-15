@@ -49,7 +49,7 @@ function tanbfd_render_become_vendor_cta_block( array $attributes, string $conte
 
 	ob_start();
 	?>
-	<div <?php echo $wrapper_attributes; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
+	<div <?php echo wp_kses_post( $wrapper_attributes ); ?>>
 		<ul class="tanbfd--account-migration-lists">
 			<li>
 				<div class="tanbfd--w8 tanbfd--left-content">
