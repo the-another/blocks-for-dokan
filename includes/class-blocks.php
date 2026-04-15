@@ -148,6 +148,13 @@ final class Blocks {
 					ANOTHER_BLOCKS_FOR_DOKAN_VERSION,
 					true
 				);
+				wp_register_script(
+					'theabd-vendor-search-view',
+					ANOTHER_BLOCKS_FOR_DOKAN_PLUGIN_URL . 'blocks/vendor-search/view.js',
+					array(),
+					ANOTHER_BLOCKS_FOR_DOKAN_VERSION,
+					true
+				);
 			}
 		);
 	}

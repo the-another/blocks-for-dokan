@@ -296,55 +296,8 @@ function theabd_render_vendor_search_block( array $attributes, string $content, 
 		</div>
 	<?php
 
-	// Add JavaScript for filter toggle functionality.
-	?>
-	<script>
-	(function() {
-		var filterButton = document.querySelector('.theabd--vendor-query-loop-filter-button');
-		var filterForm = document.getElementById('theabd--vendor-query-looping-filter-form-wrap');
-		var cancelButton = document.getElementById('cancel-filter-btn');
-		var sortSelect = document.getElementById('stores_orderby');
-
-		// Toggle function for filter form.
-		function toggleFilterForm() {
-			if (filterButton && filterForm) {
-				var isExpanded = filterButton.getAttribute('aria-expanded') === 'true';
-				filterButton.setAttribute('aria-expanded', !isExpanded);
-				filterForm.style.display = isExpanded ? 'none' : 'block';
-			}
-		}
-
-		if (filterButton && filterForm) {
-			// Initialize aria-expanded based on current visibility.
-			var isInitiallyVisible = filterForm.style.display !== 'none';
-			filterButton.setAttribute('aria-expanded', isInitiallyVisible ? 'true' : 'false');
-
-			// Toggle filter form visibility.
-			filterButton.addEventListener('click', function(e) {
-				e.preventDefault();
-				toggleFilterForm();
-			});
-
-			// Cancel button uses the same toggle function.
-			if (cancelButton) {
-				cancelButton.addEventListener('click', function(e) {
-					e.preventDefault();
-					toggleFilterForm();
-				});
-			}
-		}
-
-		// Auto-submit sort by select.
-		if (sortSelect) {
-			sortSelect.addEventListener('change', function() {
-				if (this.form) {
-					this.form.submit();
-				}
-			});
-		}
-	})();
-	</script>
 	<?php
+	wp_enqueue_script( 'theabd-vendor-search-view' );
 
 	return ob_get_clean();
 }
