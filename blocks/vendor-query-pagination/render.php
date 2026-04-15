@@ -19,7 +19,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @param WP_Block             $block      Block instance.
  * @return string Rendered HTML.
  */
-function theabd_render_vendor_query_pagination_block( array $attributes, string $content, WP_Block $block ): string {
+function tanbfd_render_vendor_query_pagination_block( array $attributes, string $content, WP_Block $block ): string {
 	// Get context from parent store query loop block.
 	$query_id = $block->context['dokan/queryId'] ?? null;
 	$query    = $block->context['dokan/query'] ?? null;
@@ -46,7 +46,7 @@ function theabd_render_vendor_query_pagination_block( array $attributes, string 
 	// Get wrapper attributes.
 	$wrapper_attributes = get_block_wrapper_attributes(
 		array(
-			'class'       => 'theabd--vendor-query-pagination',
+			'class'       => 'tanbfd--vendor-query-pagination',
 			'data-testid' => 'vendor-pagination',
 		)
 	);

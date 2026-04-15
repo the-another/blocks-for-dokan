@@ -19,7 +19,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @param WP_Block             $block      Block instance.
  * @return string Rendered HTML.
  */
-function theabd_render_vendor_store_name_block( array $attributes, string $content, WP_Block $block ): string {
+function tanbfd_render_vendor_store_name_block( array $attributes, string $content, WP_Block $block ): string {
 	// Get vendor data from context, falling back to page context detection.
 	$vendor = \The_Another\Plugin\Blocks_For_Dokan\Renderers\Vendor_Renderer::resolve_vendor_from_context(
 		$block->context['dokan/vendor'] ?? null,
@@ -47,7 +47,7 @@ function theabd_render_vendor_store_name_block( array $attributes, string $conte
 	// WordPress handles color, typography, and spacing styles automatically via block.json supports.
 	$wrapper_attributes = get_block_wrapper_attributes(
 		array(
-			'class' => 'theabd--vendor-store-name',
+			'class' => 'tanbfd--vendor-store-name',
 		)
 	);
 

@@ -42,8 +42,8 @@ define( 'THE_ANOTHER_BLOCKS_FOR_DOKAN_MIN_WOOCOMMERCE_VERSION', '10.0.0' );
 define( 'THE_ANOTHER_BLOCKS_FOR_DOKAN_MIN_DOKAN_VERSION', '4.0.0' );
 
 // Load Composer autoloader.
-$another_blocks_for_dokan_autoload_file = THE_ANOTHER_BLOCKS_FOR_DOKAN_PLUGIN_DIR . 'vendor/autoload.php';
-require_once $another_blocks_for_dokan_autoload_file;
+$tanbfd_autoload_file = THE_ANOTHER_BLOCKS_FOR_DOKAN_PLUGIN_DIR . 'vendor/autoload.php';
+require_once $tanbfd_autoload_file;
 
 // Load helper functions.
 require_once THE_ANOTHER_BLOCKS_FOR_DOKAN_PLUGIN_DIR . 'functions/functions.php';

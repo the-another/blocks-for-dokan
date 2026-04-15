@@ -22,7 +22,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @param WP_Block             $block      Block instance.
  * @return string Rendered HTML.
  */
-function theabd_render_product_vendor_info_block( array $attributes, string $content, WP_Block $block ): string {
+function tanbfd_render_product_vendor_info_block( array $attributes, string $content, WP_Block $block ): string {
 	// Get product ID from attributes or context.
 	$product_id = ! empty( $attributes['productId'] ) ? absint( $attributes['productId'] ) : 0;
 
@@ -35,14 +35,14 @@ function theabd_render_product_vendor_info_block( array $attributes, string $con
 		if ( is_admin() || ( defined( 'REST_REQUEST' ) && REST_REQUEST ) ) {
 			$wrapper_attributes = get_block_wrapper_attributes(
 				array(
-					'class' => 'theabd--product-vendor-info',
+					'class' => 'tanbfd--product-vendor-info',
 				)
 			);
 
 			ob_start();
 			?>
 			<div <?php echo $wrapper_attributes; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
-				<div class="theabd--product-vendor-info-placeholder">
+				<div class="tanbfd--product-vendor-info-placeholder">
 					<p style="padding: 1rem; background: #f0f0f0; border-radius: 4px; font-size: 0.875rem; color: #666;">
 						<?php echo esc_html__( 'Product Vendor Info: Add this block to a product page or specify a product ID in the block settings.', 'theanother-blocks-for-dokan' ); ?>
 					</p>
@@ -73,7 +73,7 @@ function theabd_render_product_vendor_info_block( array $attributes, string $con
 	}
 
 	// Build wrapper classes.
-	$wrapper_classes = array( 'theabd--product-vendor-info' );
+	$wrapper_classes = array( 'tanbfd--product-vendor-info' );
 
 	// Initialize inline styles array.
 	$inline_styles = array();
@@ -167,7 +167,7 @@ function theabd_render_product_vendor_info_block( array $attributes, string $con
 		} else {
 			// No inner blocks and no content - show minimal default.
 			?>
-			<div class="theabd--product-vendor-info-default">
+			<div class="tanbfd--product-vendor-info-default">
 				<?php if ( ! empty( $vendor_data['shop_name'] ) ) : ?>
 					<h3>
 						<a href="<?php echo esc_url( $vendor_data['shop_url'] ); ?>">

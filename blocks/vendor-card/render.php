@@ -19,13 +19,13 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @param WP_Block             $block      Block instance.
  * @return string Rendered HTML.
  */
-function theabd_render_vendor_card_block( array $attributes, string $content, WP_Block $block ): string {
+function tanbfd_render_vendor_card_block( array $attributes, string $content, WP_Block $block ): string {
 	// Extract attributes with defaults.
 	$use_banner_as_background = $attributes['useBannerAsBackground'] ?? false;
 	$background_overlay       = $attributes['backgroundOverlay'] ?? 0.5;
 
 	// Build wrapper classes.
-	$wrapper_classes = array( 'theabd--vendor-card' );
+	$wrapper_classes = array( 'tanbfd--vendor-card' );
 	if ( $use_banner_as_background ) {
 		$wrapper_classes[] = 'has-banner-background';
 	}
@@ -138,13 +138,13 @@ function theabd_render_vendor_card_block( array $attributes, string $content, WP
 			ob_start();
 			?>
 			<div <?php echo $wrapper_attributes; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?><?php echo $style_attr; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
-				<div class="theabd--vendor-card-placeholder">
+				<div class="tanbfd--vendor-card-placeholder">
 					<?php if ( ! $vendor_id ) : ?>
-						<p class="theabd--store-placeholder-notice" style="padding: 1rem; background: #f0f0f0; border-radius: 4px; font-size: 0.875rem; color: #666;">
+						<p class="tanbfd--store-placeholder-notice" style="padding: 1rem; background: #f0f0f0; border-radius: 4px; font-size: 0.875rem; color: #666;">
 							<?php echo esc_html__( 'Please enter a valid Vendor ID in the block settings to display a store card.', 'theanother-blocks-for-dokan' ); ?>
 						</p>
 					<?php else : ?>
-						<p class="theabd--store-placeholder-notice" style="padding: 1rem; background: #fff3cd; border-radius: 4px; font-size: 0.875rem; color: #856404;">
+						<p class="tanbfd--store-placeholder-notice" style="padding: 1rem; background: #fff3cd; border-radius: 4px; font-size: 0.875rem; color: #856404;">
 							<?php echo esc_html__( 'Vendor ID not found or user is not a seller.', 'theanother-blocks-for-dokan' ); ?>
 						</p>
 					<?php endif; ?>

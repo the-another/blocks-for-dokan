@@ -139,7 +139,7 @@ class Store_Template extends Abstract_Dokan_Template {
 		$template_slug = self::TAB_TEMPLATE_MAP[ $current_tab ];
 
 		// Allow other plugins to override the template.
-		$override_template = apply_filters( 'theabd_store_template_override', null, $template_slug, $current_tab );
+		$override_template = apply_filters( 'tanbfd_store_template_override', null, $template_slug, $current_tab );
 
 		$block_template = $override_template ? $override_template : $this->get_block_template_for_slug( $template_slug );
 

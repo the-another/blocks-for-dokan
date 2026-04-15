@@ -22,7 +22,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @param WP_Block             $block      Block instance.
  * @return string Rendered HTML.
  */
-function theabd_render_vendor_contact_form_block( array $attributes, string $content, WP_Block $block ): string {
+function tanbfd_render_vendor_contact_form_block( array $attributes, string $content, WP_Block $block ): string {
 	// Get vendor ID from attributes or context.
 	$vendor_id = ! empty( $attributes['vendorId'] ) ? absint( $attributes['vendorId'] ) : 0;
 
@@ -55,7 +55,7 @@ function theabd_render_vendor_contact_form_block( array $attributes, string $con
 	// Get wrapper attributes.
 	$wrapper_attributes = get_block_wrapper_attributes(
 		array(
-			'class' => 'theabd--vendor-contact-form',
+			'class' => 'tanbfd--vendor-contact-form',
 		)
 	);
 

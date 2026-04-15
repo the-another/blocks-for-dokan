@@ -7,8 +7,8 @@
  */
 
 ( function () {
-	var filterButton = document.querySelector( '.theabd--vendor-query-loop-filter-button' );
-	var filterForm = document.getElementById( 'theabd--vendor-query-looping-filter-form-wrap' );
+	var filterButton = document.querySelector( '.tanbfd--vendor-query-loop-filter-button' );
+	var filterForm = document.getElementById( 'tanbfd--vendor-query-looping-filter-form-wrap' );
 	var cancelButton = document.getElementById( 'cancel-filter-btn' );
 	var sortSelect = document.getElementById( 'stores_orderby' );
 

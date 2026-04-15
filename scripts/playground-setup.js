@@ -223,7 +223,7 @@ async function activateLocalPlugin( cookies, nonce ) {
 async function ensureVendor( vendorData, cookies, nonce ) {
 	const result = await restRequest(
 		'POST',
-		'/theabd-playground/v1/ensure-vendor',
+		'/tanbfd-playground/v1/ensure-vendor',
 		cookies,
 		nonce,
 		vendorData

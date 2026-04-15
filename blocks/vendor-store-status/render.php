@@ -19,7 +19,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @param WP_Block             $block      Block instance.
  * @return string Rendered HTML.
  */
-function theabd_render_vendor_store_status_block( array $attributes, string $content, WP_Block $block ): string {
+function tanbfd_render_vendor_store_status_block( array $attributes, string $content, WP_Block $block ): string {
 	// Get vendor data from context.
 	$vendor = $block->context['dokan/vendor'] ?? null;
 
@@ -39,7 +39,7 @@ function theabd_render_vendor_store_status_block( array $attributes, string $con
 	}
 
 	if ( empty( $vendor ) || empty( $vendor['id'] ) ) {
-		return '<span class="theabd--vendor-store-status theabd--store-open">' . esc_html__( 'Open Now', 'theanother-blocks-for-dokan' ) . '</span>';
+		return '<span class="tanbfd--vendor-store-status tanbfd--store-open">' . esc_html__( 'Open Now', 'theanother-blocks-for-dokan' ) . '</span>';
 	}
 
 	$vendor_id = absint( $vendor['id'] );
@@ -57,10 +57,10 @@ function theabd_render_vendor_store_status_block( array $attributes, string $con
 	$close_notice     = $store_open_close['close_notice'] ?? __( 'Closed', 'theanother-blocks-for-dokan' );
 
 	// Get wrapper attributes.
-	$status_class       = $is_store_open ? 'theabd--store-open' : 'theabd--store-closed';
+	$status_class       = $is_store_open ? 'tanbfd--store-open' : 'tanbfd--store-closed';
 	$wrapper_attributes = get_block_wrapper_attributes(
 		array(
-			'class' => "theabd--vendor-store-status {$status_class}",
+			'class' => "tanbfd--vendor-store-status {$status_class}",
 		)
 	);
 

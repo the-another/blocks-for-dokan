@@ -19,7 +19,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @param WP_Block             $block      Block instance.
  * @return string Rendered HTML.
  */
-function theabd_render_vendor_store_hours_block( array $attributes, string $content, WP_Block $block ): string {
+function tanbfd_render_vendor_store_hours_block( array $attributes, string $content, WP_Block $block ): string {
 	// Get vendor ID from attributes or context.
 	$vendor_id = ! empty( $attributes['vendorId'] ) ? absint( $attributes['vendorId'] ) : 0;
 
@@ -71,7 +71,7 @@ function theabd_render_vendor_store_hours_block( array $attributes, string $cont
 	// Get wrapper attributes.
 	$wrapper_attributes = get_block_wrapper_attributes(
 		array(
-			'class' => "theabd--vendor-store-hours theabd--vendor-store-hours-{$layout}",
+			'class' => "tanbfd--vendor-store-hours tanbfd--vendor-store-hours-{$layout}",
 		)
 	);
 
@@ -79,14 +79,14 @@ function theabd_render_vendor_store_hours_block( array $attributes, string $cont
 	?>
 	<div <?php echo $wrapper_attributes; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
 		<?php if ( $show_current_status ) : ?>
-			<div class="theabd--vendor-store-hours-status">
+			<div class="tanbfd--vendor-store-hours-status">
 				<?php
 				if ( \The_Another\Plugin\Blocks_For_Dokan\Renderers\Vendor_Renderer::is_store_open( $vendor_id ) ) {
 					$store_open_notice = isset( $store_info['dokan_store_open_notice'] ) && ! empty( $store_info['dokan_store_open_notice'] )
 						? $store_info['dokan_store_open_notice']
 						: __( 'Store Open', 'theanother-blocks-for-dokan' );
 					?>
-					<span class="theabd--store-open">
+					<span class="tanbfd--store-open">
 						<i class="fas fa-check-circle"></i>
 						<?php echo esc_html( $store_open_notice ); ?>
 					</span>
@@ -96,7 +96,7 @@ function theabd_render_vendor_store_hours_block( array $attributes, string $cont
 						? $store_info['dokan_store_close_notice']
 						: __( 'Store Closed', 'theanother-blocks-for-dokan' );
 					?>
-					<span class="theabd--store-closed">
+					<span class="tanbfd--store-closed">
 						<i class="fas fa-times-circle"></i>
 						<?php echo esc_html( $store_closed_notice ); ?>
 					</span>
@@ -107,9 +107,9 @@ function theabd_render_vendor_store_hours_block( array $attributes, string $cont
 		<?php endif; ?>
 
 		<?php if ( 'detailed' === $layout ) : ?>
-			<div class="theabd--vendor-store-hours-details">
+			<div class="tanbfd--vendor-store-hours-details">
 				<h3><?php echo esc_html__( 'Weekly Store Timing', 'theanother-blocks-for-dokan' ); ?></h3>
-				<ul class="theabd--vendor-store-hours-list">
+				<ul class="tanbfd--vendor-store-hours-list">
 					<?php foreach ( $dokan_days as $day_key => $day_label ) : ?>
 						<?php
 						$day_schedule = $dokan_store_times[ $day_key ] ?? array();
@@ -118,17 +118,17 @@ function theabd_render_vendor_store_hours_block( array $attributes, string $cont
 						$opening_time = $day_schedule['opening_time'] ?? '';
 						$closing_time = $day_schedule['closing_time'] ?? '';
 						?>
-						<li class="theabd--vendor-store-hours-day <?php echo $today === $day_key ? 'theabd--today' : ''; ?>">
-							<span class="theabd--day-name"><?php echo esc_html( $day_label ); ?></span>
-							<span class="theabd--day-hours">
+						<li class="tanbfd--vendor-store-hours-day <?php echo $today === $day_key ? 'tanbfd--today' : ''; ?>">
+							<span class="tanbfd--day-name"><?php echo esc_html( $day_label ); ?></span>
+							<span class="tanbfd--day-hours">
 								<?php if ( $is_closed ) : ?>
-									<span class="theabd--closed"><?php echo esc_html__( 'CLOSED', 'theanother-blocks-for-dokan' ); ?></span>
+									<span class="tanbfd--closed"><?php echo esc_html__( 'CLOSED', 'theanother-blocks-for-dokan' ); ?></span>
 								<?php elseif ( $is_open && ! empty( $opening_time ) && ! empty( $closing_time ) ) : ?>
-									<span class="theabd--open">
+									<span class="tanbfd--open">
 										<?php echo esc_html( $opening_time ); ?> - <?php echo esc_html( $closing_time ); ?>
 									</span>
 								<?php else : ?>
-									<span class="theabd--closed"><?php echo esc_html__( 'CLOSED', 'theanother-blocks-for-dokan' ); ?></span>
+									<span class="tanbfd--closed"><?php echo esc_html__( 'CLOSED', 'theanother-blocks-for-dokan' ); ?></span>
 								<?php endif; ?>
 							</span>
 						</li>
@@ -136,7 +136,7 @@ function theabd_render_vendor_store_hours_block( array $attributes, string $cont
 				</ul>
 			</div>
 		<?php else : ?>
-			<div class="theabd--vendor-store-hours-compact">
+			<div class="tanbfd--vendor-store-hours-compact">
 				<p>
 					<?php
 					$current_day_schedule = $dokan_store_times[ $today ] ?? array();

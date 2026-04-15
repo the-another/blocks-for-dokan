@@ -19,7 +19,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @param WP_Block             $block      Block instance.
  * @return string Rendered HTML.
  */
-function theabd_render_more_from_seller_block( array $attributes, string $content, WP_Block $block ): string {
+function tanbfd_render_more_from_seller_block( array $attributes, string $content, WP_Block $block ): string {
 	// Get product ID from attributes or context.
 	$product_id = ! empty( $attributes['productId'] ) ? absint( $attributes['productId'] ) : 0;
 
@@ -84,7 +84,7 @@ function theabd_render_more_from_seller_block( array $attributes, string $conten
 	 * @param int                  $vendor_id  Vendor ID.
 	 * @param int                  $product_id Product ID.
 	 */
-	$query_args = apply_filters( 'theabd_more_from_seller_query_args', $query_args, $attributes, $vendor_id, $product_id );
+	$query_args = apply_filters( 'tanbfd_more_from_seller_query_args', $query_args, $attributes, $vendor_id, $product_id );
 
 	$products_query = new WP_Query( $query_args );
 
@@ -94,7 +94,7 @@ function theabd_render_more_from_seller_block( array $attributes, string $conten
 	// Get wrapper attributes.
 	$wrapper_attributes = get_block_wrapper_attributes(
 		array(
-			'class' => "theabd--more-from-vendor theabd--more-from-vendor-columns-{$columns}",
+			'class' => "tanbfd--more-from-vendor tanbfd--more-from-vendor-columns-{$columns}",
 		)
 	);
 
@@ -103,11 +103,11 @@ function theabd_render_more_from_seller_block( array $attributes, string $conten
 	if ( $products_query->have_posts() ) {
 		?>
 		<div <?php echo $wrapper_attributes; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
-			<h2 class="theabd--more-from-vendor-title">
+			<h2 class="tanbfd--more-from-vendor-title">
 				<?php echo esc_html__( 'More from this seller', 'theanother-blocks-for-dokan' ); ?>
 			</h2>
 
-			<div class="woocommerce theabd--more-from-vendor-grid">
+			<div class="woocommerce tanbfd--more-from-vendor-grid">
 				<ul class="products columns-<?php echo esc_attr( $columns ); ?>">
 					<?php
 					while ( $products_query->have_posts() ) {
@@ -120,8 +120,8 @@ function theabd_render_more_from_seller_block( array $attributes, string $conten
 			</div>
 
 			<?php if ( ! empty( $vendor_data['shop_url'] ) ) : ?>
-				<div class="theabd--more-from-vendor-footer">
-					<a href="<?php echo esc_url( $vendor_data['shop_url'] ); ?>" class="wp-element-button theabd--btn">
+				<div class="tanbfd--more-from-vendor-footer">
+					<a href="<?php echo esc_url( $vendor_data['shop_url'] ); ?>" class="wp-element-button tanbfd--btn">
 						<?php
 						echo esc_html(
 							sprintf(
@@ -139,7 +139,7 @@ function theabd_render_more_from_seller_block( array $attributes, string $conten
 	} else {
 		?>
 		<div <?php echo $wrapper_attributes; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
-			<p class="theabd--more-from-vendor-empty">
+			<p class="tanbfd--more-from-vendor-empty">
 				<?php echo esc_html__( 'No other products found from this seller.', 'theanother-blocks-for-dokan' ); ?>
 			</p>
 		</div>

@@ -142,14 +142,14 @@ final class Blocks {
 			'init',
 			static function (): void {
 				wp_register_script(
-					'theabd-vendor-query-loop-view',
+					'tanbfd-vendor-query-loop-view',
 					THE_ANOTHER_BLOCKS_FOR_DOKAN_PLUGIN_URL . 'blocks/vendor-query-loop/view.js',
 					array( 'wp-api-fetch' ),
 					THE_ANOTHER_BLOCKS_FOR_DOKAN_VERSION,
 					true
 				);
 				wp_register_script(
-					'theabd-vendor-search-view',
+					'tanbfd-vendor-search-view',
 					THE_ANOTHER_BLOCKS_FOR_DOKAN_PLUGIN_URL . 'blocks/vendor-search/view.js',
 					array(),
 					THE_ANOTHER_BLOCKS_FOR_DOKAN_VERSION,
@@ -187,7 +187,7 @@ final class Blocks {
 		$frontend_style = 'dist/style-blocks.css';
 		if ( file_exists( THE_ANOTHER_BLOCKS_FOR_DOKAN_PLUGIN_DIR . $frontend_style ) ) {
 			wp_enqueue_style(
-				'dokan-blocks-frontend',
+				'tanbfd-blocks-frontend',
 				THE_ANOTHER_BLOCKS_FOR_DOKAN_PLUGIN_URL . $frontend_style,
 				array(),
 				THE_ANOTHER_BLOCKS_FOR_DOKAN_VERSION
@@ -199,9 +199,9 @@ final class Blocks {
 			$editor_style = 'dist/blocks.css';
 			if ( file_exists( THE_ANOTHER_BLOCKS_FOR_DOKAN_PLUGIN_DIR . $editor_style ) ) {
 				wp_enqueue_style(
-					'dokan-blocks-editor',
+					'tanbfd-blocks-editor',
 					THE_ANOTHER_BLOCKS_FOR_DOKAN_PLUGIN_URL . $editor_style,
-					array( 'dokan-blocks-frontend' ),
+					array( 'tanbfd-blocks-frontend' ),
 					THE_ANOTHER_BLOCKS_FOR_DOKAN_VERSION
 				);
 			}
@@ -227,7 +227,7 @@ final class Blocks {
 			);
 
 			wp_enqueue_script(
-				'dokan-blocks-editor',
+				'tanbfd-blocks-editor',
 				THE_ANOTHER_BLOCKS_FOR_DOKAN_PLUGIN_URL . $editor_script,
 				$asset['dependencies'],
 				$asset['version'],

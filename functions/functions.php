@@ -19,7 +19,7 @@ use The_Another\Plugin\Blocks_For_Dokan\Container\Hook_Manager;
  *
  * @return Blocks The Blocks instance.
  */
-function another_blocks_for_dokan(): Blocks {
+function tanbfd_plugin(): Blocks {
 	return Blocks::get_instance();
 }
 
@@ -28,8 +28,8 @@ function another_blocks_for_dokan(): Blocks {
  *
  * @return Container The container instance.
  */
-function another_blocks_for_dokan_container(): Container {
-	return another_blocks_for_dokan()->get_container();
+function tanbfd_container(): Container {
+	return tanbfd_plugin()->get_container();
 }
 
 /**
@@ -37,6 +37,6 @@ function another_blocks_for_dokan_container(): Container {
  *
  * @return Hook_Manager The hook manager instance.
  */
-function another_blocks_for_dokan_hooks(): Hook_Manager {
-	return another_blocks_for_dokan()->get_hook_manager();
+function tanbfd_hooks(): Hook_Manager {
+	return tanbfd_plugin()->get_hook_manager();
 }

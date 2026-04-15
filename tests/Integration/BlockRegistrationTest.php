@@ -99,7 +99,7 @@ class BlockRegistrationTest extends TestCase {
 		Functions\when( 'register_block_type_from_metadata' )->justReturn( true );
 		Functions\when( 'apply_filters' )->alias(
 			function ( $filter, $value ) {
-				if ( 'theabd_registered_blocks' === $filter ) {
+				if ( 'tanbfd_registered_blocks' === $filter ) {
 					$value['the-another/blocks-for-dokan-custom-block'] = '/path/to/custom-block';
 				}
 				return $value;

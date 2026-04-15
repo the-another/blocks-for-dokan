@@ -16,7 +16,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  * @return string Current tab key.
  */
-function theabd_get_current_store_tab(): string {
+function tanbfd_get_current_store_tab(): string {
 	// Check for Terms & Conditions tab.
 	if ( get_query_var( 'toc' ) ) {
 		return 'terms_and_conditions';
@@ -38,8 +38,8 @@ function theabd_get_current_store_tab(): string {
  * @param string $tab_url Tab URL.
  * @return bool Whether the tab is currently active.
  */
-function theabd_is_tab_active( string $tab_key, string $tab_url ): bool {
-	$current_tab = theabd_get_current_store_tab();
+function tanbfd_is_tab_active( string $tab_key, string $tab_url ): bool {
+	$current_tab = tanbfd_get_current_store_tab();
 
 	// Direct key match.
 	if ( $current_tab === $tab_key ) {
@@ -67,7 +67,7 @@ function theabd_is_tab_active( string $tab_key, string $tab_url ): bool {
  * @param WP_Block             $block      Block instance.
  * @return string Rendered HTML.
  */
-function theabd_render_vendor_store_tabs_block( array $attributes, string $content, WP_Block $block ): string {
+function tanbfd_render_vendor_store_tabs_block( array $attributes, string $content, WP_Block $block ): string {
 	// Get vendor ID from attributes or context.
 	$vendor_id = ! empty( $attributes['vendorId'] ) ? absint( $attributes['vendorId'] ) : 0;
 
@@ -88,19 +88,19 @@ function theabd_render_vendor_store_tabs_block( array $attributes, string $conte
 	// Get wrapper attributes.
 	$wrapper_attributes = get_block_wrapper_attributes(
 		array(
-			'class' => 'theabd--vendor-store-tabs',
+			'class' => 'tanbfd--vendor-store-tabs',
 		)
 	);
 
 	ob_start();
 	?>
 	<div <?php echo $wrapper_attributes; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
-		<ul class="theabd--list-inline theabd--vendor-store-tabs-list" role="tablist">
+		<ul class="tanbfd--list-inline tanbfd--vendor-store-tabs-list" role="tablist">
 			<?php foreach ( $store_tabs as $key => $tab ) : ?>
 				<?php if ( ! empty( $tab['url'] ) ) : ?>
 					<?php
-					$is_active  = theabd_is_tab_active( $key, $tab['url'] );
-					$tab_class  = $is_active ? 'theabd--store-tab-item theabd--active' : 'theabd--store-tab-item';
+					$is_active  = tanbfd_is_tab_active( $key, $tab['url'] );
+					$tab_class  = $is_active ? 'tanbfd--store-tab-item tanbfd--active' : 'tanbfd--store-tab-item';
 					$aria_attrs = $is_active ? 'aria-selected="true" aria-current="page"' : 'aria-selected="false"';
 					?>
 					<li class="<?php echo esc_attr( $tab_class ); ?>" role="presentation">

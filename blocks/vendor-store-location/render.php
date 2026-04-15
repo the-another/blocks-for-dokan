@@ -19,7 +19,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @param WP_Block             $block      Block instance.
  * @return string Rendered HTML.
  */
-function theabd_render_vendor_store_location_block( array $attributes, string $content, WP_Block $block ): string {
+function tanbfd_render_vendor_store_location_block( array $attributes, string $content, WP_Block $block ): string {
 	// Get vendor ID from attributes or context.
 	$vendor_id = ! empty( $attributes['vendorId'] ) ? absint( $attributes['vendorId'] ) : 0;
 
@@ -73,7 +73,7 @@ function theabd_render_vendor_store_location_block( array $attributes, string $c
 	// Get wrapper attributes.
 	$wrapper_attributes = get_block_wrapper_attributes(
 		array(
-			'class' => "theabd--vendor-store-location theabd--vendor-store-location-{$map_provider}",
+			'class' => "tanbfd--vendor-store-location tanbfd--vendor-store-location-{$map_provider}",
 			'style' => "height: {$height}px;",
 		)
 	);

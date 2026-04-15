@@ -73,7 +73,7 @@ class BlockRenderingTest extends TestCase {
 		$dokan_mock->vendor = $vendor_manager;
 
 		Functions\when( 'dokan' )->justReturn( $dokan_mock );
-		Functions\when( 'get_block_wrapper_attributes' )->justReturn( 'class="theabd--vendor-store-header"' );
+		Functions\when( 'get_block_wrapper_attributes' )->justReturn( 'class="tanbfd--vendor-store-header"' );
 		Functions\when( 'dokan_get_seller_short_address' )->justReturn( '123 Main St' );
 		Functions\when( 'dokan_is_vendor_info_hidden' )->justReturn( false );
 		Functions\when( 'dokan_get_readable_seller_rating' )->justReturn( '<div>4.5</div>' );
@@ -107,9 +107,9 @@ class BlockRenderingTest extends TestCase {
 			'layout'          => 'default',
 		);
 
-		$output = theabd_render_vendor_store_header_block( $attributes, '', $block_mock );
+		$output = tanbfd_render_vendor_store_header_block( $attributes, '', $block_mock );
 
 		$this->assertNotEmpty( $output );
-		$this->assertStringContainsString( 'theabd--vendor-store-header', $output );
+		$this->assertStringContainsString( 'tanbfd--vendor-store-header', $output );
 	}
 }

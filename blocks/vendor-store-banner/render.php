@@ -19,7 +19,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @param WP_Block             $block      Block instance.
  * @return string Rendered HTML.
  */
-function theabd_render_vendor_store_banner_block( array $attributes, string $content, WP_Block $block ): string {
+function tanbfd_render_vendor_store_banner_block( array $attributes, string $content, WP_Block $block ): string {
 	// Get vendor data from context first (passed from parent block like store-list).
 	$vendor = $block->context['dokan/vendor'] ?? null;
 
@@ -49,7 +49,7 @@ function theabd_render_vendor_store_banner_block( array $attributes, string $con
 		// Still render InnerBlocks content with placeholder styling.
 		$wrapper_attributes = get_block_wrapper_attributes(
 			array(
-				'class' => 'theabd--vendor-store-banner theabd--vendor-store-banner--no-vendor',
+				'class' => 'tanbfd--vendor-store-banner tanbfd--vendor-store-banner--no-vendor',
 				'style' => 'min-height: 200px; background: #f0f0f0;',
 			)
 		);
@@ -117,7 +117,7 @@ function theabd_render_vendor_store_banner_block( array $attributes, string $con
 	// Get wrapper attributes.
 	$wrapper_attributes = get_block_wrapper_attributes(
 		array(
-			'class' => 'theabd--vendor-store-banner',
+			'class' => 'tanbfd--vendor-store-banner',
 			'style' => trim( $style_string ),
 		)
 	);

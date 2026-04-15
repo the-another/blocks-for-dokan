@@ -21,7 +21,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @param WP_Block             $block      Block instance.
  * @return string Rendered HTML.
  */
-function theabd_render_vendor_avatar_block( array $attributes, string $content, WP_Block $block ): string {
+function tanbfd_render_vendor_avatar_block( array $attributes, string $content, WP_Block $block ): string {
 	// Get vendor data from context, falling back to page context detection.
 	$vendor = Vendor_Renderer::resolve_vendor_from_context(
 		$block->context['dokan/vendor'] ?? null,
@@ -33,7 +33,7 @@ function theabd_render_vendor_avatar_block( array $attributes, string $content, 
 	);
 
 	if ( empty( $vendor ) || empty( $vendor['id'] ) ) {
-		return '<div class="theabd--vendor-avatar"><img src="' . esc_url( get_avatar_url( 0 ) ) . '" alt="" /></div>';
+		return '<div class="tanbfd--vendor-avatar"><img src="' . esc_url( get_avatar_url( 0 ) ) . '" alt="" /></div>';
 	}
 
 	$shop_url   = $vendor['shop_url'] ?? '';
@@ -45,7 +45,7 @@ function theabd_render_vendor_avatar_block( array $attributes, string $content, 
 	$align      = $attributes['align'] ?? '';
 
 	// Build wrapper classes.
-	$wrapper_classes = array( 'theabd--vendor-avatar' );
+	$wrapper_classes = array( 'tanbfd--vendor-avatar' );
 	if ( ! empty( $align ) ) {
 		$wrapper_classes[] = 'has-text-align-' . $align;
 	}
@@ -95,11 +95,11 @@ function theabd_render_vendor_avatar_block( array $attributes, string $content, 
 	?>
 	<div <?php echo $wrapper_attributes; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?><?php echo $wrapper_style_attr; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
 		<?php if ( $is_link && ! empty( $shop_url ) ) : ?>
-			<a href="<?php echo esc_url( $shop_url ); ?>" class="theabd--vendor-avatar-link">
+			<a href="<?php echo esc_url( $shop_url ); ?>" class="tanbfd--vendor-avatar-link">
 				<img
 					src="<?php echo esc_url( $avatar_url ); ?>"
 					alt="<?php echo esc_attr( $shop_name ); ?>"
-					class="theabd--vendor-avatar-image"
+					class="tanbfd--vendor-avatar-image"
 					<?php echo $img_style_attr; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 				/>
 			</a>
@@ -107,7 +107,7 @@ function theabd_render_vendor_avatar_block( array $attributes, string $content, 
 			<img
 				src="<?php echo esc_url( $avatar_url ); ?>"
 				alt="<?php echo esc_attr( $shop_name ); ?>"
-				class="theabd--vendor-avatar-image"
+				class="tanbfd--vendor-avatar-image"
 				<?php echo $img_style_attr; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 			/>
 		<?php endif; ?>
