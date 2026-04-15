@@ -211,7 +211,7 @@ Rather than tracking individual line numbers (which shift as we edit), the imple
 | Filter/action hook names | `tanbfd_` | `tanbfd_registered_blocks` |
 | Script/style handles | `tanbfd-` | `tanbfd-blocks-frontend` |
 | Transient names | `tanbfd_` | `tanbfd_store_listing_random_orderby` |
-| CSS classes | `theabd--` | unchanged |
+| CSS classes | `tanbfd--` | `tanbfd--vendor-store-header` |
 | Namespace | `The_Another\Plugin\Blocks_Dokan` | unchanged |
 | Class methods | unchanged | unchanged |
 
@@ -275,10 +275,23 @@ Global find-and-replace of `theabd_` → `tanbfd_` in function definitions and a
 
 Implementation: global find-and-replace `ANOTHER_BLOCKS_FOR_DOKAN_` → `THE_ANOTHER_BLOCKS_FOR_DOKAN_` across all `.php` files (excluding `vendor/`).
 
+**I. CSS classes: `theabd--` → `tanbfd--`** (~415 references across ~45 source files):
+
+Global find-and-replace `theabd--` → `tanbfd--` across all `.php`, `.scss`, `.js` files (excluding `vendor/`, `node_modules/`, `dist/`).
+
+**Affected file types**:
+- `blocks/*/render.php` — class names in HTML output
+- `blocks/*/style.scss` — frontend styles
+- `blocks/*/editor.scss` — editor styles
+- `blocks/*/index.js` — editor JSX class names
+- `blocks/*/view.js` — frontend JS selectors
+- `blocks/_shared/style.scss` — shared styles
+- Test files referencing CSS classes
+
+**Important**: After renaming, `dist/` files must be rebuilt with `npm run build`. The built CSS/JS files in `dist/` will be regenerated automatically — do not manually edit them.
+
 ### Already correct (no changes needed)
-- `theabd--*` CSS classes (not function names, keep as-is)
 - `The_Another\Plugin\Blocks_Dokan` namespace (brand name argument)
-- `theabd--*` CSS classes
 - Dokan core hooks like `dokan_is_store_open` (external API, not our prefix)
 - `$_wp_current_template_content` (WordPress core global, already has phpcs:ignore)
 
