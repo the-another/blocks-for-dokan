@@ -128,7 +128,7 @@ class Vendor_Query_Loop_Controller {
 		}
 
 		if ( ! function_exists( 'theabd_vendor_query_loop_compute_query_id' ) ) {
-			$render_file = ANOTHER_BLOCKS_FOR_DOKAN_PLUGIN_DIR . 'blocks/vendor-query-loop/render.php';
+			$render_file = THE_ANOTHER_BLOCKS_FOR_DOKAN_PLUGIN_DIR . 'blocks/vendor-query-loop/render.php';
 			if ( file_exists( $render_file ) ) {
 				require_once $render_file;
 			}
@@ -209,7 +209,7 @@ class Vendor_Query_Loop_Controller {
 
 		// Ensure the render-time helpers are loaded — they live in the block render.php file.
 		if ( ! function_exists( 'theabd_vendor_query_loop_build_query_args' ) ) {
-			$render_file = ANOTHER_BLOCKS_FOR_DOKAN_PLUGIN_DIR . 'blocks/vendor-query-loop/render.php';
+			$render_file = THE_ANOTHER_BLOCKS_FOR_DOKAN_PLUGIN_DIR . 'blocks/vendor-query-loop/render.php';
 			if ( file_exists( $render_file ) ) {
 				require_once $render_file;
 			}

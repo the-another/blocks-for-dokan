@@ -31,22 +31,22 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 // Define plugin constants.
-define( 'ANOTHER_BLOCKS_FOR_DOKAN_VERSION', '1.0.3' );
-define( 'ANOTHER_BLOCKS_FOR_DOKAN_PLUGIN_FILE', __FILE__ );
-define( 'ANOTHER_BLOCKS_FOR_DOKAN_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
-define( 'ANOTHER_BLOCKS_FOR_DOKAN_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
-define( 'ANOTHER_BLOCKS_FOR_DOKAN_PLUGIN_BASENAME', plugin_basename( __FILE__ ) );
+define( 'THE_ANOTHER_BLOCKS_FOR_DOKAN_VERSION', '1.0.3' );
+define( 'THE_ANOTHER_BLOCKS_FOR_DOKAN_PLUGIN_FILE', __FILE__ );
+define( 'THE_ANOTHER_BLOCKS_FOR_DOKAN_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
+define( 'THE_ANOTHER_BLOCKS_FOR_DOKAN_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
+define( 'THE_ANOTHER_BLOCKS_FOR_DOKAN_PLUGIN_BASENAME', plugin_basename( __FILE__ ) );
 
 // Required plugin versions.
-define( 'ANOTHER_BLOCKS_FOR_DOKAN_MIN_WOOCOMMERCE_VERSION', '10.0.0' );
-define( 'ANOTHER_BLOCKS_FOR_DOKAN_MIN_DOKAN_VERSION', '4.0.0' );
+define( 'THE_ANOTHER_BLOCKS_FOR_DOKAN_MIN_WOOCOMMERCE_VERSION', '10.0.0' );
+define( 'THE_ANOTHER_BLOCKS_FOR_DOKAN_MIN_DOKAN_VERSION', '4.0.0' );
 
 // Load Composer autoloader.
-$another_blocks_for_dokan_autoload_file = ANOTHER_BLOCKS_FOR_DOKAN_PLUGIN_DIR . 'vendor/autoload.php';
+$another_blocks_for_dokan_autoload_file = THE_ANOTHER_BLOCKS_FOR_DOKAN_PLUGIN_DIR . 'vendor/autoload.php';
 require_once $another_blocks_for_dokan_autoload_file;
 
 // Load helper functions.
-require_once ANOTHER_BLOCKS_FOR_DOKAN_PLUGIN_DIR . 'functions/functions.php';
+require_once THE_ANOTHER_BLOCKS_FOR_DOKAN_PLUGIN_DIR . 'functions/functions.php';
 
 // Register activation hook.
 register_activation_hook( __FILE__, array( Install::class, 'activation_check' ) );

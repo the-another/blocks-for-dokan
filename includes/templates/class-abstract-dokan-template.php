@@ -98,7 +98,7 @@ abstract class Abstract_Dokan_Template {
 			? $template_file_map[ static::SLUG ]
 			: static::SLUG . '.html';
 
-		return ANOTHER_BLOCKS_FOR_DOKAN_PLUGIN_DIR . 'templates/' . $template_file;
+		return THE_ANOTHER_BLOCKS_FOR_DOKAN_PLUGIN_DIR . 'templates/' . $template_file;
 	}
 
 	/**

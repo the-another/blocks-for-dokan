@@ -143,16 +143,16 @@ final class Blocks {
 			static function (): void {
 				wp_register_script(
 					'theabd-vendor-query-loop-view',
-					ANOTHER_BLOCKS_FOR_DOKAN_PLUGIN_URL . 'blocks/vendor-query-loop/view.js',
+					THE_ANOTHER_BLOCKS_FOR_DOKAN_PLUGIN_URL . 'blocks/vendor-query-loop/view.js',
 					array( 'wp-api-fetch' ),
-					ANOTHER_BLOCKS_FOR_DOKAN_VERSION,
+					THE_ANOTHER_BLOCKS_FOR_DOKAN_VERSION,
 					true
 				);
 				wp_register_script(
 					'theabd-vendor-search-view',
-					ANOTHER_BLOCKS_FOR_DOKAN_PLUGIN_URL . 'blocks/vendor-search/view.js',
+					THE_ANOTHER_BLOCKS_FOR_DOKAN_PLUGIN_URL . 'blocks/vendor-search/view.js',
 					array(),
-					ANOTHER_BLOCKS_FOR_DOKAN_VERSION,
+					THE_ANOTHER_BLOCKS_FOR_DOKAN_VERSION,
 					true
 				);
 			}
@@ -185,24 +185,24 @@ final class Blocks {
 	public function enqueue_block_assets(): void {
 		// Always enqueue frontend/shared styles (both frontend and editor need them).
 		$frontend_style = 'dist/style-blocks.css';
-		if ( file_exists( ANOTHER_BLOCKS_FOR_DOKAN_PLUGIN_DIR . $frontend_style ) ) {
+		if ( file_exists( THE_ANOTHER_BLOCKS_FOR_DOKAN_PLUGIN_DIR . $frontend_style ) ) {
 			wp_enqueue_style(
 				'dokan-blocks-frontend',
-				ANOTHER_BLOCKS_FOR_DOKAN_PLUGIN_URL . $frontend_style,
+				THE_ANOTHER_BLOCKS_FOR_DOKAN_PLUGIN_URL . $frontend_style,
 				array(),
-				ANOTHER_BLOCKS_FOR_DOKAN_VERSION
+				THE_ANOTHER_BLOCKS_FOR_DOKAN_VERSION
 			);
 		}
 
 		// Enqueue editor-specific styles when in admin/editor context.
 		if ( is_admin() ) {
 			$editor_style = 'dist/blocks.css';
-			if ( file_exists( ANOTHER_BLOCKS_FOR_DOKAN_PLUGIN_DIR . $editor_style ) ) {
+			if ( file_exists( THE_ANOTHER_BLOCKS_FOR_DOKAN_PLUGIN_DIR . $editor_style ) ) {
 				wp_enqueue_style(
 					'dokan-blocks-editor',
-					ANOTHER_BLOCKS_FOR_DOKAN_PLUGIN_URL . $editor_style,
+					THE_ANOTHER_BLOCKS_FOR_DOKAN_PLUGIN_URL . $editor_style,
 					array( 'dokan-blocks-frontend' ),
-					ANOTHER_BLOCKS_FOR_DOKAN_VERSION
+					THE_ANOTHER_BLOCKS_FOR_DOKAN_VERSION
 				);
 			}
 		}
@@ -216,19 +216,19 @@ final class Blocks {
 	public function enqueue_block_editor_assets(): void {
 		// Check if build file exists.
 		$editor_script      = 'dist/blocks.js';
-		$editor_script_path = ANOTHER_BLOCKS_FOR_DOKAN_PLUGIN_DIR . $editor_script;
+		$editor_script_path = THE_ANOTHER_BLOCKS_FOR_DOKAN_PLUGIN_DIR . $editor_script;
 
 		if ( file_exists( $editor_script_path ) ) {
 			// Load asset file for dependencies and version.
-			$asset_file = ANOTHER_BLOCKS_FOR_DOKAN_PLUGIN_DIR . 'dist/blocks.asset.php';
+			$asset_file = THE_ANOTHER_BLOCKS_FOR_DOKAN_PLUGIN_DIR . 'dist/blocks.asset.php';
 			$asset      = file_exists( $asset_file ) ? require $asset_file : array(
 				'dependencies' => array( 'wp-blocks', 'wp-element', 'wp-editor', 'wp-components', 'wp-i18n' ),
-				'version'      => ANOTHER_BLOCKS_FOR_DOKAN_VERSION,
+				'version'      => THE_ANOTHER_BLOCKS_FOR_DOKAN_VERSION,
 			);
 
 			wp_enqueue_script(
 				'dokan-blocks-editor',
-				ANOTHER_BLOCKS_FOR_DOKAN_PLUGIN_URL . $editor_script,
+				THE_ANOTHER_BLOCKS_FOR_DOKAN_PLUGIN_URL . $editor_script,
 				$asset['dependencies'],
 				$asset['version'],
 				true

@@ -61,14 +61,14 @@ class Install {
 			$missing_dependencies[] = sprintf(
 				/* translators: %s: minimum WooCommerce version */
 				__( 'WooCommerce %s or higher is not installed.', 'theanother-blocks-for-dokan' ),
-				ANOTHER_BLOCKS_FOR_DOKAN_MIN_WOOCOMMERCE_VERSION
+				THE_ANOTHER_BLOCKS_FOR_DOKAN_MIN_WOOCOMMERCE_VERSION
 			);
-		} elseif ( version_compare( $wc_version, ANOTHER_BLOCKS_FOR_DOKAN_MIN_WOOCOMMERCE_VERSION, '<' ) ) {
+		} elseif ( version_compare( $wc_version, THE_ANOTHER_BLOCKS_FOR_DOKAN_MIN_WOOCOMMERCE_VERSION, '<' ) ) {
 			$missing_dependencies[] = sprintf(
 				/* translators: 1: installed version, 2: minimum required version */
 				__( 'WooCommerce %1$s is installed, but version %2$s or higher is required.', 'theanother-blocks-for-dokan' ),
 				$wc_version,
-				ANOTHER_BLOCKS_FOR_DOKAN_MIN_WOOCOMMERCE_VERSION
+				THE_ANOTHER_BLOCKS_FOR_DOKAN_MIN_WOOCOMMERCE_VERSION
 			);
 		}
 
@@ -87,14 +87,14 @@ class Install {
 			$missing_dependencies[] = sprintf(
 				/* translators: %s: minimum Dokan version */
 				__( 'Dokan Lite %s or higher is not installed.', 'theanother-blocks-for-dokan' ),
-				ANOTHER_BLOCKS_FOR_DOKAN_MIN_DOKAN_VERSION
+				THE_ANOTHER_BLOCKS_FOR_DOKAN_MIN_DOKAN_VERSION
 			);
-		} elseif ( version_compare( $dokan_version, ANOTHER_BLOCKS_FOR_DOKAN_MIN_DOKAN_VERSION, '<' ) ) {
+		} elseif ( version_compare( $dokan_version, THE_ANOTHER_BLOCKS_FOR_DOKAN_MIN_DOKAN_VERSION, '<' ) ) {
 			$missing_dependencies[] = sprintf(
 				/* translators: 1: installed version, 2: minimum required version */
 				__( 'Dokan Lite %1$s is installed, but version %2$s or higher is required.', 'theanother-blocks-for-dokan' ),
 				$dokan_version,
-				ANOTHER_BLOCKS_FOR_DOKAN_MIN_DOKAN_VERSION
+				THE_ANOTHER_BLOCKS_FOR_DOKAN_MIN_DOKAN_VERSION
 			);
 		}
 
@@ -113,7 +113,7 @@ class Install {
 
 		if ( ! empty( $missing_dependencies ) ) {
 			// Deactivate the plugin immediately.
-			deactivate_plugins( ANOTHER_BLOCKS_FOR_DOKAN_PLUGIN_BASENAME );
+			deactivate_plugins( THE_ANOTHER_BLOCKS_FOR_DOKAN_PLUGIN_BASENAME );
 
 			$error_message  = '<h3>' . esc_html__( 'Another Blocks for Dokan - Activation Failed', 'theanother-blocks-for-dokan' ) . '</h3>';
 			$error_message .= '<p>' . esc_html__( 'The following requirements are not met:', 'theanother-blocks-for-dokan' ) . '</p>';

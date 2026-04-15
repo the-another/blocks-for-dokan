@@ -112,7 +112,7 @@ class Block_Registry {
 	 * @return void
 	 */
 	private function register_block_paths(): void {
-		$blocks_dir = ANOTHER_BLOCKS_FOR_DOKAN_PLUGIN_DIR . 'blocks/';
+		$blocks_dir = THE_ANOTHER_BLOCKS_FOR_DOKAN_PLUGIN_DIR . 'blocks/';
 
 		// Vendor store profile blocks.
 		$this->blocks['the-another/blocks-for-dokan-vendor-store-header']           = $blocks_dir . 'vendor-store-header';

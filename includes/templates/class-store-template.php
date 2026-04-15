@@ -88,7 +88,7 @@ class Store_Template extends Abstract_Dokan_Template {
 		}
 
 		$template_name = self::PLUGIN_SLUG . '//' . self::SLUG_TOC;
-		$template_path = ANOTHER_BLOCKS_FOR_DOKAN_PLUGIN_DIR . 'templates/store-toc.html';
+		$template_path = THE_ANOTHER_BLOCKS_FOR_DOKAN_PLUGIN_DIR . 'templates/store-toc.html';
 
 		if ( ! file_exists( $template_path ) ) {
 			return;
@@ -215,7 +215,7 @@ class Store_Template extends Abstract_Dokan_Template {
 
 		$template_file = $template_file_map[ $slug ] ?? $slug . '.html';
 
-		return ANOTHER_BLOCKS_FOR_DOKAN_PLUGIN_DIR . 'templates/' . $template_file;
+		return THE_ANOTHER_BLOCKS_FOR_DOKAN_PLUGIN_DIR . 'templates/' . $template_file;
 	}
 
 	/**
