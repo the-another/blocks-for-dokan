@@ -157,9 +157,11 @@ function tanbfd_render_vendor_card_block( array $attributes, string $content, WP
 								$inner_block->parsed_block,
 								array()
 							);
+							// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- tanbfd_kses_block() wraps wp_kses().
 							echo tanbfd_kses_block( $inner_block_instance->render() );
 						}
 					} elseif ( ! empty( $content ) ) {
+						// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- tanbfd_kses_block() wraps wp_kses().
 						echo tanbfd_kses_block( $content );
 					}
 					?>
@@ -185,10 +187,12 @@ function tanbfd_render_vendor_card_block( array $attributes, string $content, WP
 					$inner_block->parsed_block,
 					array( 'dokan/vendor' => $vendor_data )
 				);
+				// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- tanbfd_kses_block() wraps wp_kses().
 				echo tanbfd_kses_block( $inner_block_instance->render() );
 			}
 		} else {
 			// Fallback to pre-rendered content if no vendor data or no inner blocks.
+			// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- tanbfd_kses_block() wraps wp_kses().
 			echo tanbfd_kses_block( $content );
 		}
 		?>
