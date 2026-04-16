@@ -2,5 +2,5 @@
 /**
  * Silence is golden.
  *
- * @package AnotherBlocksForDokan
+ * @package The_Another_Blocks_For_Dokan
  */

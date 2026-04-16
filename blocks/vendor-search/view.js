@@ -4,7 +4,7 @@
  * Handles filter form toggle and sort-by auto-submit.
  * Loaded in the footer via wp_enqueue_script — DOM is already available.
  *
- * @package AnotherBlocksForDokan
+ * @package The_Another_Blocks_For_Dokan
  */
 
 ( function () {

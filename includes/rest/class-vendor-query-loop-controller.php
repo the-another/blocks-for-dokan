@@ -2,7 +2,7 @@
 /**
  * REST controller for the Vendor Query Loop infinite scroll endpoint.
  *
- * @package AnotherBlocksForDokan
+ * @package The_Another_Blocks_For_Dokan
  * @since 1.1.0
  */
 

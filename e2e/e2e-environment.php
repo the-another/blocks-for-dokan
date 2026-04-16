@@ -8,7 +8,7 @@
  * Installed as a wp-now mu-plugin by the Playwright global setup.
  * Never loaded by the main plugin; not shipped in production releases.
  *
- * @package AnotherBlocksForDokan
+ * @package The_Another_Blocks_For_Dokan
  * @since 1.0.3
  */
 

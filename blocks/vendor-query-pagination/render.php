@@ -2,7 +2,7 @@
 /**
  * Store Query Pagination block render function.
  *
- * @package AnotherBlocksForDokan
+ * @package The_Another_Blocks_For_Dokan
  * @since 1.0.0
  */
 

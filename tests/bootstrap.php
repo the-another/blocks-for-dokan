@@ -2,7 +2,7 @@
 /**
  * PHPUnit bootstrap file for Another Blocks for Dokan plugin tests.
  *
- * @package AnotherBlocksForDokan
+ * @package The_Another_Blocks_For_Dokan
  * @since 1.0.0
  */
 

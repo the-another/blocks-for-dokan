@@ -6,7 +6,7 @@
  * with selective override - only overrides tabs we have block templates for,
  * falling back to Dokan's native templates for unknown tabs (Pro features, extensions).
  *
- * @package AnotherBlocksForDokan
+ * @package The_Another_Blocks_For_Dokan
  * @since 1.0.0
  */
 

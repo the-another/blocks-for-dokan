@@ -5,7 +5,7 @@
  * Uses Dokan's built-in contact form template for full compatibility
  * with Dokan's AJAX handling, reCAPTCHA, and privacy policy.
  *
- * @package AnotherBlocksForDokan
+ * @package The_Another_Blocks_For_Dokan
  * @since 1.0.0
  */
 
