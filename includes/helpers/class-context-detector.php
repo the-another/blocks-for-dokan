@@ -84,21 +84,15 @@ class Context_Detector {
 	 * @return bool
 	 */
 	public static function is_store_page(): bool {
-		// If we're on a single product page, we're NOT on a store page.
-		// This prevents auction/item products from being treated as store pages.
+		// Product pages within a store have the 'store' query var set,
+		// so dokan_is_store_page() returns true for them. Exclude those
+		// since a product page is not a store listing.
 		if ( is_singular( 'product' ) ) {
 			return false;
 		}
 
-		// First, try Dokan's native function if available.
-		if ( function_exists( 'dokan_is_store_page' ) && dokan_is_store_page() ) {
-			return true;
-		}
-
-		// Check query vars.
-		$store_name = get_query_var( 'store', '' );
-		if ( ! empty( $store_name ) ) {
-			return true;
+		if ( function_exists( 'dokan_is_store_page' ) ) {
+			return dokan_is_store_page();
 		}
 
 		return false;
