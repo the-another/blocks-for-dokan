@@ -43,6 +43,15 @@ function tanbfd_hooks(): Hook_Manager {
 }
 
 /**
+ * Get the context detector instance from the container.
+ *
+ * @return Context_Detector The context detector instance.
+ */
+function tanbfd_context(): Context_Detector {
+	return tanbfd_container()->get( Context_Detector::class );
+}
+
+/**
  * Get vendor ID from current context.
  *
  * Public API for other plugins to detect the current vendor without
@@ -52,7 +61,43 @@ function tanbfd_hooks(): Hook_Manager {
  * @return int|null Vendor ID or null if not found.
  */
 function tanbfd_get_vendor_id(): ?int {
-	return Context_Detector::get_vendor_id();
+	return tanbfd_context()->get_vendor_id();
+}
+
+/**
+ * Get product ID from current context.
+ *
+ * @return int|null Product ID or null if not found.
+ */
+function tanbfd_get_product_id(): ?int {
+	return tanbfd_context()->get_product_id();
+}
+
+/**
+ * Check if we're on a vendor store page.
+ *
+ * @return bool True if on a store page, false otherwise.
+ */
+function tanbfd_is_store_page(): bool {
+	return tanbfd_context()->is_store_page();
+}
+
+/**
+ * Check if we're on a product page.
+ *
+ * @return bool True if on a product page, false otherwise.
+ */
+function tanbfd_is_product_page(): bool {
+	return tanbfd_context()->is_product_page();
+}
+
+/**
+ * Check if we're on a vendor listing page.
+ *
+ * @return bool True if on a store list page, false otherwise.
+ */
+function tanbfd_is_store_list_page(): bool {
+	return tanbfd_context()->is_store_list_page();
 }
 
 /**

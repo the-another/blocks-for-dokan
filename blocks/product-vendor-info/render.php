@@ -7,7 +7,6 @@
  */
 
 // Exit if accessed directly.
-use The_Another\Plugin\Blocks_For_Dokan\Helpers\Context_Detector;
 use The_Another\Plugin\Blocks_For_Dokan\Renderers\Vendor_Renderer;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -27,7 +26,7 @@ function tanbfd_render_product_vendor_info_block( array $attributes, string $con
 	$product_id = ! empty( $attributes['productId'] ) ? absint( $attributes['productId'] ) : 0;
 
 	if ( ! $product_id ) {
-		$product_id = Context_Detector::get_product_id();
+		$product_id = tanbfd_get_product_id();
 	}
 
 	if ( ! $product_id ) {

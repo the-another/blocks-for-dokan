@@ -13,7 +13,6 @@
 namespace The_Another\Plugin\Blocks_For_Dokan\Templates;
 
 // Exit if accessed directly.
-use The_Another\Plugin\Blocks_For_Dokan\Helpers\Context_Detector;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -117,7 +116,7 @@ class Store_Template extends Abstract_Dokan_Template {
 	 * @return string Modified template path.
 	 */
 	public function override_store_template( string $template ): string {
-		if ( ! Context_Detector::is_store_page() ) {
+		if ( ! tanbfd_is_store_page() ) {
 			return $template;
 		}
 
@@ -301,7 +300,7 @@ class Store_Template extends Abstract_Dokan_Template {
 	 * @return bool
 	 */
 	protected function should_render_template(): bool {
-		return Context_Detector::is_store_page();
+		return tanbfd_is_store_page();
 	}
 
 	/**

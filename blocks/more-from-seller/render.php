@@ -24,7 +24,7 @@ function tanbfd_render_more_from_seller_block( array $attributes, string $conten
 	$product_id = ! empty( $attributes['productId'] ) ? absint( $attributes['productId'] ) : 0;
 
 	if ( ! $product_id ) {
-		$product_id = \The_Another\Plugin\Blocks_For_Dokan\Helpers\Context_Detector::get_product_id();
+		$product_id = tanbfd_get_product_id();
 	}
 
 	if ( ! $product_id ) {

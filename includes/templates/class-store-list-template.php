@@ -8,8 +8,6 @@
 
 namespace The_Another\Plugin\Blocks_For_Dokan\Templates;
 
-use The_Another\Plugin\Blocks_For_Dokan\Helpers\Context_Detector;
-
 // Exit if accessed directly.
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -45,7 +43,7 @@ class Store_List_Template extends Abstract_Dokan_Template {
 	 * @return array Modified template hierarchy array.
 	 */
 	public function add_template_to_hierarchy( array $templates ): array {
-		if ( ! Context_Detector::is_store_list_page() ) {
+		if ( ! tanbfd_is_store_list_page() ) {
 			return $templates;
 		}
 
@@ -61,7 +59,7 @@ class Store_List_Template extends Abstract_Dokan_Template {
 	 * @return bool
 	 */
 	protected function should_render_template(): bool {
-		return Context_Detector::is_store_list_page();
+		return tanbfd_is_store_list_page();
 	}
 
 	/**

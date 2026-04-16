@@ -25,7 +25,7 @@ function tanbfd_render_vendor_store_header_block( array $attributes, string $con
 
 	if ( ! $vendor_id ) {
 		// Auto-detect from context.
-		$vendor_id = \The_Another\Plugin\Blocks_For_Dokan\Helpers\Context_Detector::get_vendor_id();
+		$vendor_id = tanbfd_get_vendor_id();
 	}
 
 	if ( ! $vendor_id || ! dokan_is_user_seller( $vendor_id ) ) {

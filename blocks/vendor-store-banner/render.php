@@ -25,7 +25,7 @@ function tanbfd_render_vendor_store_banner_block( array $attributes, string $con
 
 	// If no vendor in context, try to detect from current page.
 	if ( empty( $vendor ) || empty( $vendor['id'] ) ) {
-		$vendor_id = \The_Another\Plugin\Blocks_For_Dokan\Helpers\Context_Detector::get_vendor_id();
+		$vendor_id = tanbfd_get_vendor_id();
 
 		if ( $vendor_id > 0 ) {
 			// Get vendor data using our renderer.

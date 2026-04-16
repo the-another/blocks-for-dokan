@@ -11,6 +11,7 @@ namespace The_Another\Plugin\Blocks_For_Dokan;
 use The_Another\Plugin\Blocks_For_Dokan\Container\Container;
 use The_Another\Plugin\Blocks_For_Dokan\Container\Hook_Manager;
 use The_Another\Plugin\Blocks_For_Dokan\Exceptions\Container_Exception;
+use The_Another\Plugin\Blocks_For_Dokan\Helpers\Context_Detector;
 use The_Another\Plugin\Blocks_For_Dokan\Rest\Vendor_Query_Loop_Controller;
 use The_Another\Plugin\Blocks_For_Dokan\Templates\Block_Templates_Controller;
 
@@ -93,6 +94,10 @@ final class Blocks {
 	 * @return void
 	 */
 	private function setup_container(): void {
+		$this->container->register(
+			Context_Detector::class,
+			static fn() => new Context_Detector()
+		);
 		$this->container->register(
 			Block_Registry::class,
 			static fn() => new Block_Registry()
