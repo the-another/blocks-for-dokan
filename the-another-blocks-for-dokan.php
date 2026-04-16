@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name: Another Blocks for Dokan
- * Plugin URI: https://the-another.org/plugin/another-blocks-for-dokan/
+ * Plugin URI: https://the-another.org/plugin/the-another-blocks-for-dokan/
  * Description: FSE-compatible Gutenberg blocks for Dokan multi-vendor marketplace. Convert Dokan templates into dynamic blocks for Full Site Editing.
  * Version: 1.0.10
  * Author: The Another
@@ -13,7 +13,7 @@
  * Domain Path: /languages
  * License: GPL v2 or later
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
- * GitHub Plugin URI: https://github.com/the-another/another-blocks-for-dokan
+ * GitHub Plugin URI: https://github.com/the-another/the-another-blocks-for-dokan
  * Primary Branch: master
  * Release Asset: true
  *

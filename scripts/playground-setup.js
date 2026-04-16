@@ -202,7 +202,7 @@ async function installRemotePlugin( slug, cookies, nonce, retries = 3 ) {
 
 /** Activate the local plugin (already on disk via wp-now mount). */
 async function activateLocalPlugin( cookies, nonce ) {
-	const slug = 'another-blocks-for-dokan';
+	const slug = 'the-another-blocks-for-dokan';
 	const pluginId = await findPluginId( slug, cookies, nonce ).catch( () => null );
 	const id = pluginId || `${ slug }/${ slug }`;
 	try {

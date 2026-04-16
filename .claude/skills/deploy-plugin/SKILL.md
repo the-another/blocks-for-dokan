@@ -92,7 +92,7 @@ Wait for their answer. Do not assume.
 npm run version:<type>
 ```
 
-This script updates: `package.json`, `composer.json`, `another-blocks-for-dokan.php` (header + constant), `readme.txt` (stable tag), and syncs lock files.
+This script updates: `package.json`, `composer.json`, `the-another-blocks-for-dokan.php` (header + constant), `readme.txt` (stable tag), and syncs lock files.
 
 ## Step 3: Update Changelog
 

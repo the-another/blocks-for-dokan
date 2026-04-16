@@ -30,8 +30,8 @@ The plugin includes DDEV configuration for local development with a complete Wor
 ## Project Structure
 
 ```
-another-blocks-for-dokan/
-├── another-blocks-for-dokan.php    # Main plugin file
+the-another-blocks-for-dokan/
+├── the-another-blocks-for-dokan.php    # Main plugin file
 ├── blocks/                          # Block definitions
 │   ├── [block-name]/
 │   │   ├── block.json              # Block metadata (API v3)

@@ -154,7 +154,7 @@ if ( file_exists( dirname( __DIR__ ) . '/vendor/autoload.php' ) ) {
 
 // Define plugin constants for tests
 if ( ! defined( 'THE_ANOTHER_BLOCKS_FOR_DOKAN_PLUGIN_FILE' ) ) {
-	define( 'THE_ANOTHER_BLOCKS_FOR_DOKAN_PLUGIN_FILE', dirname( __DIR__ ) . '/another-blocks-for-dokan.php' );
+	define( 'THE_ANOTHER_BLOCKS_FOR_DOKAN_PLUGIN_FILE', dirname( __DIR__ ) . '/the-another-blocks-for-dokan.php' );
 }
 
 if ( ! defined( 'THE_ANOTHER_BLOCKS_FOR_DOKAN_PLUGIN_DIR' ) ) {
