@@ -76,50 +76,33 @@ class Store_Template extends Abstract_Dokan_Template {
 	/**
 	 * Initialization method.
 	 *
-	 * @return void
-	 */
-	public function init(): void {
-		parent::init();
-
-		// Also register the TOC template.
-		$this->register_toc_template();
-
-		// Hook into template_include at priority 100 (after Dokan's priority 99).
-		add_filter( 'template_include', array( $this, 'override_store_template' ), 100, 1 );
-
-		// Feed our plugin-provided templates into WP core's block template registry
-		// so locate_block_template() can resolve them via the normal flow.
-		add_filter( 'get_block_templates', array( $this, 'provide_store_block_templates' ), 10, 3 );
-	}
-
-	/**
-	 * Register the Terms & Conditions template.
+	 * Intentionally does NOT call `parent::init()`. The abstract parent class
+	 * registers the current template via `register_block_template()` (WP 6.7+),
+	 * which puts it into WP core's block-template registry. That registry is
+	 * consumed by `get_block_templates()` BEFORE our `provide_store_block_templates`
+	 * filter fires — so our own default would pre-populate the query result and
+	 * silently out-precede any `tanbfd_store_template_override` substitution.
+	 *
+	 * Instead, we provide both `dokan-store` and `dokan-store-toc` exclusively
+	 * through the `get_block_templates` filter, where we can arbitrate precedence
+	 * correctly (request-scoped override → theme / DB / registry / other plugins →
+	 * plugin default as last-resort).
+	 *
+	 * Trade-off: our templates are not auto-listed in the Site Editor template
+	 * browser. Users wanting to customize can still create a theme file at
+	 * `templates/dokan-store.html`, or create a custom template in the Site
+	 * Editor with the matching slug — both will be resolved by our filter and
+	 * take precedence over the plugin default.
 	 *
 	 * @return void
 	 */
-	protected function register_toc_template(): void {
-		if ( ! function_exists( 'register_block_template' ) ) {
-			return;
-		}
+	public function init(): void {
+		// Hook into template_include at priority 100 (after Dokan's priority 99).
+		add_filter( 'template_include', array( $this, 'override_store_template' ), 100, 1 );
 
-		$template_name = self::PLUGIN_SLUG . '//' . self::SLUG_TOC;
-		$template_path = THE_ANOTHER_BLOCKS_FOR_DOKAN_PLUGIN_DIR . 'templates/store-toc.html';
-
-		if ( ! file_exists( $template_path ) ) {
-			return;
-		}
-
-		$content = file_get_contents( $template_path ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents -- Reading local template file.
-
-		register_block_template(
-			$template_name,
-			array(
-				'title'       => __( 'Vendor Terms & Conditions', 'the-another-blocks-for-dokan' ),
-				'description' => __( 'Displays a vendor\'s terms and conditions page.', 'the-another-blocks-for-dokan' ),
-				'plugin'      => self::PLUGIN_SLUG,
-				'content'     => false !== $content ? $content : '',
-			)
-		);
+		// Provide the store templates on demand instead of via the block-template
+		// registry. See class docblock above for the reasoning.
+		add_filter( 'get_block_templates', array( $this, 'provide_store_block_templates' ), 10, 3 );
 	}
 
 	/**
@@ -224,43 +207,6 @@ class Store_Template extends Abstract_Dokan_Template {
 			return $query_result;
 		}
 
-		// (1) Request-scoped override from tanbfd_store_template_override.
-		// Our plugin also calls register_block_template() for these slugs, which
-		// makes WP core's block template registry pre-populate $query_result with
-		// our own default BEFORE this filter fires. When a downstream integration
-		// returns a substitute via tanbfd_store_template_override, we need to
-		// remove our own registry-registered default for the target slug so the
-		// override actually wins resolution in resolve_block_template().
-		if ( $this->request_override instanceof \WP_Block_Template
-			&& is_string( $this->request_override->slug )
-			&& in_array( $this->request_override->slug, $requested_slugs, true )
-		) {
-			$override_slug = $this->request_override->slug;
-
-			$query_result = array_values(
-				array_filter(
-					$query_result,
-					fn ( $existing ) => ! ( $existing instanceof \WP_Block_Template )
-						|| $existing->slug !== $override_slug
-						|| ! $this->is_own_registered_template( $existing )
-				)
-			);
-
-			$already_has_override_slug = false;
-			foreach ( $query_result as $existing ) {
-				if ( $existing instanceof \WP_Block_Template && $existing->slug === $override_slug ) {
-					$already_has_override_slug = true;
-					break;
-				}
-			}
-
-			if ( ! $already_has_override_slug ) {
-				$query_result[] = $this->request_override;
-			}
-		}
-
-		// (2) Plugin default as last-resort fallback — only if nothing (including
-		// our own registry registration) provided a template for the slug.
 		$existing_slugs = array();
 		foreach ( $query_result as $existing ) {
 			if ( $existing instanceof \WP_Block_Template && is_string( $existing->slug ) ) {
@@ -268,6 +214,18 @@ class Store_Template extends Abstract_Dokan_Template {
 			}
 		}
 
+		// (1) Request-scoped override from tanbfd_store_template_override.
+		if ( $this->request_override instanceof \WP_Block_Template
+			&& is_string( $this->request_override->slug )
+			&& in_array( $this->request_override->slug, $requested_slugs, true )
+			&& ! isset( $existing_slugs[ $this->request_override->slug ] )
+		) {
+			$override_slug                    = $this->request_override->slug;
+			$query_result[]                   = $this->request_override;
+			$existing_slugs[ $override_slug ] = true;
+		}
+
+		// (2) Plugin default as last-resort fallback.
 		foreach ( self::TAB_TEMPLATE_MAP as $slug ) {
 			if ( ! in_array( $slug, $requested_slugs, true ) ) {
 				continue;
@@ -284,26 +242,6 @@ class Store_Template extends Abstract_Dokan_Template {
 		}
 
 		return $query_result;
-	}
-
-	/**
-	 * Determine whether a block template is one we registered ourselves via
-	 * {@see register_block_template()} for one of our store tab slugs.
-	 *
-	 * Used to strip our own default out of a `get_block_templates` result when
-	 * a `tanbfd_store_template_override` substitute should take priority. We
-	 * do NOT remove plugin defaults from any other plugin, the active theme,
-	 * or Site Editor DB customizations — those are legitimate precedence wins.
-	 *
-	 * @param \WP_Block_Template $template Template to inspect.
-	 * @return bool True if the template originated from this plugin's registry.
-	 */
-	private function is_own_registered_template( \WP_Block_Template $template ): bool {
-		if ( self::PLUGIN_SLUG !== $template->theme ) {
-			return false;
-		}
-
-		return in_array( $template->slug, array( self::SLUG, self::SLUG_TOC ), true );
 	}
 
 	/**
