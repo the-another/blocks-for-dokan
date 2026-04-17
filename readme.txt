@@ -4,7 +4,7 @@ Tags: dokan, woocommerce, multivendor, blocks, gutenberg
 Requires at least: 6.0
 Tested up to: 6.9
 Requires PHP: 8.3
-Stable tag: 1.0.13
+Stable tag: 1.0.14
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -68,6 +68,11 @@ The Vendor Store Location block can alternatively display an interactive embedde
 
 
 
+
+
+= 1.0.14 - 2026-04-17 =
+* Fix: `block.json` render callbacks now use the correct `tanbfd_` prefix — seven blocks previously referenced legacy `theabd_render_*` callbacks that did not match the actual function definitions
+* Refactor: Store template override no longer dereferences WordPress core's `wp-includes/template-canvas.php`; now hooks `pre_get_block_file_template` and lets WP core's own block template loader resolve the canvas
 
 = 1.0.13 - 2026-04-16 =
 * Version bump
