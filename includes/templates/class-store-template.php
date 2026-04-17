@@ -62,6 +62,18 @@ class Store_Template extends Abstract_Dokan_Template {
 	);
 
 	/**
+	 * Request-scoped override produced by the `tanbfd_store_template_override`
+	 * filter inside {@see self::override_store_template()}. Consumed by
+	 * {@see self::provide_store_block_templates()} during the WP core
+	 * `get_block_templates` call so the filter's return value reaches
+	 * `locate_block_template()` without re-firing the filter in unrelated
+	 * contexts (Site Editor, REST, theme.json processing).
+	 *
+	 * @var \WP_Block_Template|null
+	 */
+	private ?\WP_Block_Template $request_override = null;
+
+	/**
 	 * Initialization method.
 	 *
 	 * @return void
@@ -148,22 +160,47 @@ class Store_Template extends Abstract_Dokan_Template {
 			return $template;
 		}
 
-		return locate_block_template( $template, 'wp_template', array( $template_slug ) );
+		/**
+		 * Filter the block template used for a given store tab.
+		 *
+		 * Fires exactly once per vendor page render (not during Site Editor /
+		 * REST / theme.json lookups). Returning a {@see \WP_Block_Template}
+		 * swaps it in for the default; returning null keeps the plugin default.
+		 *
+		 * @since 1.0.0
+		 *
+		 * @param \WP_Block_Template|null $template      Override template, or null to use the plugin default.
+		 * @param string                  $template_slug Internal slug (dokan-store / dokan-store-toc).
+		 * @param string                  $current_tab   Store tab identifier (products / toc).
+		 */
+		$override = apply_filters( 'tanbfd_store_template_override', null, $template_slug, $current_tab );
+
+		$this->request_override = $override instanceof \WP_Block_Template ? $override : null;
+
+		try {
+			return locate_block_template( $template, 'wp_template', array( $template_slug ) );
+		} finally {
+			$this->request_override = null;
+		}
 	}
 
 	/**
-	 * Feed our plugin templates into WP core's block template query results as
-	 * a last-resort fallback.
+	 * Feed our plugin templates into WP core's block template query results.
 	 *
-	 * Hooked on `get_block_templates`. When WordPress queries the block template
-	 * registry with a `slug__in` filter that matches one of our supported slugs,
-	 * we append the plugin-provided {@see \WP_Block_Template} ONLY IF no other
-	 * source (active theme file, Site Editor DB customization, WP block template
-	 * registry, or an earlier plugin on this same filter) has already provided
-	 * a template with that slug. This preserves theme and user customizations.
+	 * Hooked on `get_block_templates`. Two responsibilities:
 	 *
-	 * Honors the `tanbfd_store_template_override` filter so third parties can
-	 * swap in a custom {@see \WP_Block_Template} for a given slug/tab.
+	 * 1. If {@see self::override_store_template()} captured a request-scoped
+	 *    override (from the `tanbfd_store_template_override` filter), inject
+	 *    that into `$query_result` for the matching slug so
+	 *    `locate_block_template()` finds it.
+	 * 2. Otherwise, append our plugin default as a last-resort fallback — only
+	 *    when no other source (active theme file, Site Editor DB customization,
+	 *    WP block template registry, earlier-priority plugin) has already
+	 *    provided a template with the same slug.
+	 *
+	 * The `tanbfd_store_template_override` filter is NOT fired from here — it
+	 * fires once per vendor page render from `override_store_template()` so its
+	 * timing and side effects match the pre-1.0.14 contract.
 	 *
 	 * @param \WP_Block_Template[] $query_result  Current list of resolved templates.
 	 * @param array<string,mixed>  $query         The query being processed.
@@ -187,8 +224,6 @@ class Store_Template extends Abstract_Dokan_Template {
 			return $query_result;
 		}
 
-		// Collect slugs already present so we can defer to theme / DB / registry /
-		// earlier-priority plugin templates.
 		$existing_slugs = array();
 		foreach ( $query_result as $existing ) {
 			if ( $existing instanceof \WP_Block_Template && is_string( $existing->slug ) ) {
@@ -196,38 +231,29 @@ class Store_Template extends Abstract_Dokan_Template {
 			}
 		}
 
-		foreach ( self::TAB_TEMPLATE_MAP as $tab => $slug ) {
+		// (1) Request-scoped override from tanbfd_store_template_override.
+		if ( $this->request_override instanceof \WP_Block_Template
+			&& is_string( $this->request_override->slug )
+			&& in_array( $this->request_override->slug, $requested_slugs, true )
+			&& ! isset( $existing_slugs[ $this->request_override->slug ] )
+		) {
+			$override_slug                    = $this->request_override->slug;
+			$query_result[]                   = $this->request_override;
+			$existing_slugs[ $override_slug ] = true;
+		}
+
+		// (2) Plugin default as last-resort fallback.
+		foreach ( self::TAB_TEMPLATE_MAP as $slug ) {
 			if ( ! in_array( $slug, $requested_slugs, true ) ) {
 				continue;
 			}
-
-			// Another source already provided a template with this slug — defer.
 			if ( isset( $existing_slugs[ $slug ] ) ) {
 				continue;
 			}
 
-			/**
-			 * Filter the block template used for a given store tab.
-			 *
-			 * Fires only when no other source (theme, Site Editor, registry,
-			 * earlier-priority plugin) has already provided a template for this
-			 * slug. Returning a {@see \WP_Block_Template} swaps in a custom
-			 * template; returning null falls through to the plugin default.
-			 *
-			 * @since 1.0.0
-			 *
-			 * @param \WP_Block_Template|null $template       Override template, or null to use the plugin default.
-			 * @param string                  $template_slug  Internal slug (dokan-store / dokan-store-toc).
-			 * @param string                  $current_tab    Store tab identifier (products / toc).
-			 */
-			$override = apply_filters( 'tanbfd_store_template_override', null, $slug, $tab );
-
-			$template = $override instanceof \WP_Block_Template
-				? $override
-				: $this->get_block_template_for_slug( $slug );
-
-			if ( $template instanceof \WP_Block_Template ) {
-				$query_result[]          = $template;
+			$default = $this->get_block_template_for_slug( $slug );
+			if ( $default instanceof \WP_Block_Template ) {
+				$query_result[]          = $default;
 				$existing_slugs[ $slug ] = true;
 			}
 		}
