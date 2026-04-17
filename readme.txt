@@ -1,4 +1,4 @@
-=== Another Blocks for Dokan ===
+=== The Another Blocks for Dokan ===
 Contributors: theanother
 Tags: dokan, woocommerce, multivendor, blocks, gutenberg
 Requires at least: 6.0
@@ -12,7 +12,7 @@ FSE-compatible Gutenberg blocks for Dokan multi-vendor marketplace. Convert Doka
 
 == Description ==
 
-Dokan Blocks provides FSE-compatible Gutenberg blocks for Dokan multi-vendor marketplace. This plugin converts Dokan templates into dynamic blocks for Full Site Editing, allowing you to build vendor store pages using the block editor.
+The Another's Blocks for Dokan provides FSE-compatible Gutenberg blocks for Dokan multi-vendor marketplace. This plugin converts Dokan templates into dynamic blocks for Full Site Editing, allowing you to build vendor store pages using the block editor.
 
 == Installation ==
 
@@ -57,18 +57,6 @@ The Vendor Store Location block can alternatively display an interactive embedde
 * [Google Privacy Policy](https://policies.google.com/privacy)
 
 == Changelog ==
-
-
-
-
-
-
-
-
-
-
-
-
 
 = 1.0.14 - 2026-04-17 =
 * Fix: `block.json` render callbacks now use the correct `tanbfd_` prefix — seven blocks previously referenced legacy `theabd_render_*` callbacks that did not match the actual function definitions
