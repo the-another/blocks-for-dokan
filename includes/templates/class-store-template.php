@@ -152,13 +152,15 @@ class Store_Template extends Abstract_Dokan_Template {
 	}
 
 	/**
-	 * Feed our plugin templates into WP core's block template query results.
+	 * Feed our plugin templates into WP core's block template query results as
+	 * a last-resort fallback.
 	 *
 	 * Hooked on `get_block_templates`. When WordPress queries the block template
 	 * registry with a `slug__in` filter that matches one of our supported slugs,
-	 * we append the plugin-provided {@see \WP_Block_Template} so
-	 * {@see locate_block_template()} can resolve it without requiring our
-	 * templates to live in the active theme.
+	 * we append the plugin-provided {@see \WP_Block_Template} ONLY IF no other
+	 * source (active theme file, Site Editor DB customization, WP block template
+	 * registry, or an earlier plugin on this same filter) has already provided
+	 * a template with that slug. This preserves theme and user customizations.
 	 *
 	 * Honors the `tanbfd_store_template_override` filter so third parties can
 	 * swap in a custom {@see \WP_Block_Template} for a given slug/tab.
@@ -185,13 +187,32 @@ class Store_Template extends Abstract_Dokan_Template {
 			return $query_result;
 		}
 
+		// Collect slugs already present so we can defer to theme / DB / registry /
+		// earlier-priority plugin templates.
+		$existing_slugs = array();
+		foreach ( $query_result as $existing ) {
+			if ( $existing instanceof \WP_Block_Template && is_string( $existing->slug ) ) {
+				$existing_slugs[ $existing->slug ] = true;
+			}
+		}
+
 		foreach ( self::TAB_TEMPLATE_MAP as $tab => $slug ) {
 			if ( ! in_array( $slug, $requested_slugs, true ) ) {
 				continue;
 			}
 
+			// Another source already provided a template with this slug — defer.
+			if ( isset( $existing_slugs[ $slug ] ) ) {
+				continue;
+			}
+
 			/**
 			 * Filter the block template used for a given store tab.
+			 *
+			 * Fires only when no other source (theme, Site Editor, registry,
+			 * earlier-priority plugin) has already provided a template for this
+			 * slug. Returning a {@see \WP_Block_Template} swaps in a custom
+			 * template; returning null falls through to the plugin default.
 			 *
 			 * @since 1.0.0
 			 *
@@ -206,7 +227,8 @@ class Store_Template extends Abstract_Dokan_Template {
 				: $this->get_block_template_for_slug( $slug );
 
 			if ( $template instanceof \WP_Block_Template ) {
-				$query_result[] = $template;
+				$query_result[]          = $template;
+				$existing_slugs[ $slug ] = true;
 			}
 		}
 
