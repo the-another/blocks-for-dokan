@@ -4,7 +4,7 @@ Tags: dokan, woocommerce, multivendor, blocks, gutenberg
 Requires at least: 6.0
 Tested up to: 6.9
 Requires PHP: 8.3
-Stable tag: 1.1.2
+Stable tag: 1.1.3
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -60,6 +60,11 @@ The Vendor Store Location block can alternatively display an interactive embedde
 
 
 
+
+
+= 1.1.3 - 2026-09-11 =
+* Add: `enableStoreCount` attribute on the Vendor Search block (default `true`) with an "Enable Store Count" toggle in the inspector — turning it off drops the `.tanbfd--store-count` line entirely, leaving the Filter button and Sort-by row as the only chrome. Previously the count was unconditional: clearing "Store Count Label" still printed the bare number, and removing the attribute fell back to the default label
+* Refactor: the fallback `WP_User_Query` that counts active sellers moved inside the new toggle, so hiding the count also skips the query — standalone Vendor Search blocks with the toggle off no longer run a full seller count on every render
 
 = 1.1.2 - 2026-07-28 =
 * Fix: opening any page that renders a Dokan block emitted `Function _load_textdomain_just_in_time was called incorrectly` — `Blocks::init()` registered the FSE block templates on `plugins_loaded`, and `register_block_template()` stores each template's translated title and description, so the text domain loaded before `init`. Six strings were affected, not the one in the reported trace: the title and description of the store, store-TOC and store-list templates. Template registration now runs on `init` priority 5, matching how the blocks themselves are already registered — only the timing moved, registration itself is unchanged

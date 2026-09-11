@@ -33,6 +33,10 @@
 			"type": "string",
 			"default": "Sort by:"
 		},
+		"enableStoreCount": {
+			"type": "boolean",
+			"default": true
+		},
 		"storeCountLabel": {
 			"type": "string",
 			"default": "Total store showing: %s"
