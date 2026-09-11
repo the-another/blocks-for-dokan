@@ -28,6 +28,8 @@ const CARD_WITH_NAME = `<!-- wp:the-another/blocks-for-dokan-vendor-card -->
 
 const SEARCH_BLOCK = `<!-- wp:the-another/blocks-for-dokan-vendor-search {"enableSearch":true,"enableSortBy":true} /-->`;
 
+const SEARCH_BLOCK_NO_COUNT = `<!-- wp:the-another/blocks-for-dokan-vendor-search {"enableSearch":true,"enableSortBy":true,"enableStoreCount":false} /-->`;
+
 // ---------------------------------------------------------------------------
 // Group A — search filtering, sort order, and stores_orderby URL param
 // Vendors: Alpha Goods, Beta Market, Gamma Supplies
@@ -297,10 +299,16 @@ test.describe( 'Vendor Query Loop – layout, columns, and count', () => {
 			`${ SEARCH_BLOCK }\n${ CARD_WITH_NAME }\n<!-- wp:the-another/blocks-for-dokan-vendor-query-pagination /-->`
 		);
 
+		const countOffMarkup = queryLoopMarkup(
+			{ perPage: 3, columns: 3, displayLayout: 'grid' },
+			`${ SEARCH_BLOCK_NO_COUNT }\n${ CARD_WITH_NAME }`
+		);
+
 		pages = [
 			await createPage( requestUtils, 'List Layout E2E', listMarkup ),
 			await createPage( requestUtils, 'Columns E2E', columnsMarkup ),
 			await createPage( requestUtils, 'Store Count E2E', countMarkup ),
+			await createPage( requestUtils, 'Store Count Off E2E', countOffMarkup ),
 		];
 	} );
 
@@ -368,6 +376,27 @@ test.describe( 'Vendor Query Loop – layout, columns, and count', () => {
 		const storeCount = page.locator( '.tanbfd--store-count' );
 		await expect( storeCount ).toBeVisible();
 		await expect( storeCount ).toContainText( '5' );
+	} );
+
+	test( 'hides the store count when enableStoreCount is false', async ( {
+		page,
+	} ) => {
+		await page.goto( pages[ 3 ].link );
+
+		// The search block itself still renders.
+		await expect(
+			page.locator(
+				'.wp-block-the-another-blocks-for-dokan-vendor-search'
+			)
+		).toBeVisible();
+
+		// The count line is gone entirely.
+		await expect( page.locator( '.tanbfd--store-count' ) ).toHaveCount( 0 );
+
+		// The Filter button is still there.
+		await expect(
+			page.locator( '[data-testid="vendor-filter-toggle"]' )
+		).toBeVisible();
 	} );
 } );
 

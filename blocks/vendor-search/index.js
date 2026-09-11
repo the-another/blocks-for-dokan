@@ -45,6 +45,7 @@ function Edit( { attributes, setAttributes } ) {
 		searchPlaceholder = __( 'Search stores…', 'dokan-blocks' ),
 		enableSortBy = true,
 		sortByLabel = __( 'Sort by:', 'dokan-blocks' ),
+		enableStoreCount = true,
 		/* translators: %s: store count number */
 		storeCountLabel = __( 'Total store showing: %s', 'dokan-blocks' ),
 		enableLocationFilter = false,
@@ -89,21 +90,34 @@ function Edit( { attributes, setAttributes } ) {
 						type="url"
 						placeholder="https://"
 					/>
-					{ /* translators: %s: store count number placeholder */ }
-					<TextControl
-						label={ __( 'Store Count Label', 'dokan-blocks' ) }
-						help={
-							/* translators: %s: store count number placeholder */
-							__(
-								'Use %s as placeholder for the store count number. Example: "Total store showing: %s"',
-								'dokan-blocks'
-							)
-						}
-						value={ storeCountLabel }
+					<ToggleControl
+						label={ __( 'Enable Store Count', 'dokan-blocks' ) }
+						help={ __(
+							'Show the total number of stores above the filter row.',
+							'dokan-blocks'
+						) }
+						checked={ enableStoreCount }
 						onChange={ ( value ) =>
-							setAttributes( { storeCountLabel: value } )
+							setAttributes( { enableStoreCount: value } )
 						}
 					/>
+
+					{ enableStoreCount && (
+						<TextControl
+							label={ __( 'Store Count Label', 'dokan-blocks' ) }
+							help={
+								/* translators: %s: store count number placeholder */
+								__(
+									'Use %s as placeholder for the store count number. Example: "Total store showing: %s"',
+									'dokan-blocks'
+								)
+							}
+							value={ storeCountLabel }
+							onChange={ ( value ) =>
+								setAttributes( { storeCountLabel: value } )
+							}
+						/>
+					) }
 
 					{ enableSearch && (
 						<TextControl
@@ -238,11 +252,16 @@ function Edit( { attributes, setAttributes } ) {
 					<div className="tanbfd--store-filter-row">
 						<div className="tanbfd--store-filter-row-inner">
 							<div className="tanbfd--store-filter-left">
-								<p className="tanbfd--item tanbfd--store-count">
-									{ storeCountLabel.includes( '%s' )
-										? storeCountLabel.replace( '%s', '1' )
-										: storeCountLabel + ' 1' }
-								</p>
+								{ enableStoreCount && (
+									<p className="tanbfd--item tanbfd--store-count">
+										{ storeCountLabel.includes( '%s' )
+											? storeCountLabel.replace(
+													'%s',
+													'1'
+											  )
+											: storeCountLabel + ' 1' }
+									</p>
+								) }
 							</div>
 
 							{ enableSearch && (

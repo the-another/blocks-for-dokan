@@ -25,6 +25,7 @@ function tanbfd_render_vendor_search_block( array $attributes, string $content, 
 	$search_placeholder = $attributes['searchPlaceholder'] ?? __( 'Search stores...', 'the-another-blocks-for-dokan' );
 	$enable_sort_by     = $attributes['enableSortBy'] ?? true;
 	$sort_by_label      = $attributes['sortByLabel'] ?? __( 'Sort by:', 'the-another-blocks-for-dokan' );
+	$enable_store_count = $attributes['enableStoreCount'] ?? true;
 	/* translators: %s: store count number */
 	$store_count_label      = $attributes['storeCountLabel'] ?? __( 'Total store showing: %s', 'the-another-blocks-for-dokan' );
 	$enable_location_filter = $attributes['enableLocationFilter'] ?? false;
@@ -91,27 +92,27 @@ function tanbfd_render_vendor_search_block( array $attributes, string $content, 
 				<div class="tanbfd--store-filter-row-inner">
 					<div class="tanbfd--store-filter-left">
 						<?php
-						// Store count: prefer parent query loop value via filter, fall back to own count.
-						$store_count = apply_filters( 'tanbfd_store_search_block_count', 0 );
-						if ( 0 === $store_count && function_exists( 'dokan_is_user_seller' ) ) {
-							$count_query = new \WP_User_Query(
-								array(
-									'role'        => 'seller',
-									'count_total' => true,
-									'number'      => 0,
-									'fields'      => 'ID',
-									'meta_query'  => array( // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
-										array(
-											'key'     => 'dokan_enable_selling',
-											'value'   => 'yes',
-											'compare' => '=',
+						if ( $enable_store_count ) : // Shown even when 0; hidden entirely by the enableStoreCount toggle.
+							// Store count: prefer parent query loop value via filter, fall back to own count.
+							$store_count = apply_filters( 'tanbfd_store_search_block_count', 0 );
+							if ( 0 === $store_count && function_exists( 'dokan_is_user_seller' ) ) {
+								$count_query = new \WP_User_Query(
+									array(
+										'role'        => 'seller',
+										'count_total' => true,
+										'number'      => 0,
+										'fields'      => 'ID',
+										'meta_query'  => array( // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
+											array(
+												'key'     => 'dokan_enable_selling',
+												'value'   => 'yes',
+												'compare' => '=',
+											),
 										),
-									),
-								)
-							);
-							$store_count = (int) $count_query->get_total();
-						}
-						if ( $store_count >= 0 ) : // Show even if 0, allows customization.
+									)
+								);
+								$store_count = (int) $count_query->get_total();
+							}
 							// Use custom label if provided, replace %s with count if placeholder exists.
 							$count_text = strpos( $store_count_label, '%s' ) !== false
 								? sprintf( $store_count_label, esc_html( number_format_i18n( $store_count ) ) )
